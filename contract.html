@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Contract Builder | Generate Business Contracts Online</title>
+    <meta name="description" content="Generate professional freelance contracts, NDAs, and service agreements for free. Customizable templates, instant PDF download. No signup required.">
+    <meta name="keywords" content="free contract builder, contract generator, freelance contract template, NDA template, service agreement">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/contract.html">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Free Contract Builder","url":"https://biztoolkit-free.netlify.app/contract.html","description":"Generate freelance contracts, NDAs, and service agreements for free.","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"BizToolkit"}}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #f5f6fa; }
+        nav { background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        nav a:hover { opacity: 1; }
+        nav .brand { font-weight: 700; font-size: 1.1rem; opacity: 1; }
+        .app { display: grid; grid-template-columns: 400px 1fr; min-height: calc(100vh - 44px); }
+        .sidebar { background: white; padding: 24px; overflow-y: auto; border-right: 1px solid #e0e0e0; }
+        .preview-area { padding: 30px; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; }
+        .section-title { font-size: 0.85rem; font-weight: 600; color: #6366f1; text-transform: uppercase; letter-spacing: 0.5px; margin: 20px 0 10px; }
+        .section-title:first-child { margin-top: 0; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: #444; margin-bottom: 4px; }
+        input, select, textarea { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; font-family: inherit; margin-bottom: 12px; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.1); }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .template-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+        .template-btn { padding: 14px 12px; border: 2px solid #e5e7eb; border-radius: 8px; background: white; cursor: pointer; text-align: center; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
+        .template-btn:hover { border-color: #6366f1; background: #f0f0ff; }
+        .template-btn.active { border-color: #6366f1; background: #eef2ff; color: #4f46e5; }
+        .template-btn .icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+        .clause-toggle { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; margin-bottom: 6px; cursor: pointer; }
+        .clause-toggle label { margin: 0; cursor: pointer; }
+        .clause-toggle input[type="checkbox"] { width: auto; margin: 0; }
+        .actions { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; flex: 1; }
+        .btn-download { background: #4f46e5; color: white; }
+        .btn-download:hover { background: #4338ca; }
+        .btn-copy { background: #f3f4f6; color: #374151; }
+
+        .contract-preview { background: white; width: 210mm; min-height: 297mm; padding: 50px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); font-size: 14px; line-height: 1.8; }
+        .contract-preview h1 { text-align: center; font-size: 24px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; border-bottom: 3px solid #1a1a2e; padding-bottom: 16px; }
+        .contract-preview h2 { font-size: 16px; margin: 24px 0 8px; color: #1a1a2e; }
+        .contract-preview p { margin-bottom: 12px; color: #333; text-align: justify; }
+        .contract-preview .sig-block { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 50px; }
+        .contract-preview .sig-line { border-top: 1px solid #333; padding-top: 8px; margin-top: 50px; font-size: 13px; }
+
+        .upsell { background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; padding: 20px; border-radius: 12px; margin-top: 24px; text-align: center; }
+        .upsell h4 { margin-bottom: 8px; font-size: 1rem; }
+        .upsell p { opacity: 0.8; font-size: 0.85rem; margin-bottom: 12px; }
+        .upsell a { color: white; background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: inline-block; }
+
+        @media print {
+            nav, .sidebar, .upsell { display: none !important; }
+            .app { display: block; }
+            .preview-area { padding: 0; }
+            .contract-preview { box-shadow: none; padding: 30px; width: 100%; }
+        }
+        @media (max-width: 900px) { .app { grid-template-columns: 1fr; } .preview-area { display: none; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="brand">BizToolkit</a>
+        <a href="index.html">Tools</a>
+        <a href="invoice.html">Invoice</a>
+        <a href="contract.html" style="opacity:1; border-bottom: 2px solid #6366f1; padding-bottom: 2px;">Contract</a>
+        <a href="privacy.html">Privacy Policy</a>
+    </nav>
+
+    <div class="app">
+        <div class="sidebar">
+            <h2 style="font-size: 1.3rem; margin-bottom: 4px;">Contract Builder</h2>
+            <p style="color: #666; font-size: 0.85rem; margin-bottom: 16px;">Select a template, fill in details, and download.</p>
+
+            <div class="section-title">Contract Type</div>
+            <div class="template-grid">
+                <button class="template-btn active" onclick="selectTemplate('freelance')" id="tmpl-freelance">
+                    <span class="icon">💼</span>Freelance Agreement
+                </button>
+                <button class="template-btn" onclick="selectTemplate('nda')" id="tmpl-nda">
+                    <span class="icon">🤐</span>NDA
+                </button>
+                <button class="template-btn" onclick="selectTemplate('service')" id="tmpl-service">
+                    <span class="icon">🔧</span>Service Contract
+                </button>
+                <button class="template-btn" onclick="selectTemplate('consulting')" id="tmpl-consulting">
+                    <span class="icon">📊</span>Consulting Agreement
+                </button>
+            </div>
+
+            <div class="section-title">Parties</div>
+            <label>Party A (You / Company)</label>
+            <input type="text" id="partyA" placeholder="Your Name or Company" oninput="updateContract()">
+            <label>Party A Address</label>
+            <input type="text" id="partyAAddr" placeholder="Your Address" oninput="updateContract()">
+            <label>Party B (Client / Other Party)</label>
+            <input type="text" id="partyB" placeholder="Client Name or Company" oninput="updateContract()">
+            <label>Party B Address</label>
+            <input type="text" id="partyBAddr" placeholder="Client Address" oninput="updateContract()">
+
+            <div class="section-title">Terms</div>
+            <label>Effective Date</label>
+            <input type="date" id="effectiveDate" oninput="updateContract()">
+            <div class="row">
+                <div>
+                    <label>Duration</label>
+                    <select id="duration" onchange="updateContract()">
+                        <option value="30 days">30 Days</option>
+                        <option value="90 days">90 Days</option>
+                        <option value="6 months">6 Months</option>
+                        <option value="1 year" selected>1 Year</option>
+                        <option value="ongoing">Ongoing</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Governing Law</label>
+                    <input type="text" id="govLaw" placeholder="State/Country" oninput="updateContract()">
+                </div>
+            </div>
+
+            <div id="paymentSection">
+                <div class="section-title">Payment</div>
+                <div class="row">
+                    <div>
+                        <label>Total Amount</label>
+                        <input type="text" id="payAmount" placeholder="$5,000" oninput="updateContract()">
+                    </div>
+                    <div>
+                        <label>Payment Schedule</label>
+                        <select id="paySchedule" onchange="updateContract()">
+                            <option value="upon completion">Upon Completion</option>
+                            <option value="50% upfront, 50% on completion">50/50</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="milestones">By Milestones</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">Scope of Work</div>
+            <textarea id="scope" rows="4" placeholder="Describe the work, deliverables, or services to be provided..." oninput="updateContract()"></textarea>
+
+            <div class="section-title">Optional Clauses</div>
+            <div class="clause-toggle"><label for="cl-ip">Intellectual Property</label><input type="checkbox" id="cl-ip" checked onchange="updateContract()"></div>
+            <div class="clause-toggle"><label for="cl-conf">Confidentiality</label><input type="checkbox" id="cl-conf" checked onchange="updateContract()"></div>
+            <div class="clause-toggle"><label for="cl-term">Termination</label><input type="checkbox" id="cl-term" checked onchange="updateContract()"></div>
+            <div class="clause-toggle"><label for="cl-liability">Limitation of Liability</label><input type="checkbox" id="cl-liability" onchange="updateContract()"></div>
+            <div class="clause-toggle"><label for="cl-noncompete">Non-Compete</label><input type="checkbox" id="cl-noncompete" onchange="updateContract()"></div>
+            <div class="clause-toggle"><label for="cl-dispute">Dispute Resolution</label><input type="checkbox" id="cl-dispute" onchange="updateContract()"></div>
+
+            <div class="actions">
+                <button class="btn btn-download" onclick="window.print()">⬇ Download PDF</button>
+                <button class="btn btn-copy" onclick="copyText()">📋 Copy Text</button>
+            </div>
+
+            <div class="upsell">
+                <h4>📝 Need bulletproof contracts?</h4>
+                <p>The Contract Builder's Blueprint includes 15+ advanced templates, negotiation scripts, and clause libraries used by top freelancers.</p>
+                <a href="https://jaechang112.gumroad.com/l/fbktdr" target="_blank">Get the Blueprint — $9 →</a>
+            </div>
+        </div>
+
+        <div class="preview-area">
+            <div class="contract-preview" id="contractPreview"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentTemplate = 'freelance';
+        document.getElementById('effectiveDate').value = new Date().toISOString().split('T')[0];
+
+        function selectTemplate(type) {
+            currentTemplate = type;
+            document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tmpl-' + type).classList.add('active');
+            document.getElementById('paymentSection').style.display = type === 'nda' ? 'none' : 'block';
+            updateContract();
+        }
+
+        function getVal(id) { return document.getElementById(id).value; }
+        function checked(id) { return document.getElementById(id).checked; }
+
+        function formatDate(d) {
+            if (!d) return '___________';
+            return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        const templates = {
+            freelance: {
+                title: 'FREELANCE SERVICE AGREEMENT',
+                intro: (a, b, date) => `This Freelance Service Agreement ("Agreement") is entered into as of <strong>${formatDate(date)}</strong> by and between <strong>${a || '[Party A]'}</strong> ("Service Provider") and <strong>${b || '[Party B]'}</strong> ("Client").`,
+                scope: (s) => `<h2>1. SCOPE OF WORK</h2><p>The Service Provider agrees to perform the following services for the Client:</p><p>${s || '[Describe the services, deliverables, and timelines here]'}</p>`,
+                payment: (amt, sched) => `<h2>2. COMPENSATION</h2><p>The Client agrees to pay the Service Provider <strong>${amt || '[Amount]'}</strong> for the services described above. Payment shall be made <strong>${sched}</strong>.</p><p>Late payments shall accrue interest at a rate of 1.5% per month. The Service Provider reserves the right to suspend work if payment is more than 15 days overdue.</p>`,
+            },
+            nda: {
+                title: 'NON-DISCLOSURE AGREEMENT',
+                intro: (a, b, date) => `This Non-Disclosure Agreement ("Agreement") is entered into as of <strong>${formatDate(date)}</strong> by and between <strong>${a || '[Disclosing Party]'}</strong> ("Disclosing Party") and <strong>${b || '[Receiving Party]'}</strong> ("Receiving Party").`,
+                scope: (s) => `<h2>1. PURPOSE</h2><p>The parties wish to explore a potential business relationship ("Purpose") regarding:</p><p>${s || '[Describe the purpose of disclosure]'}</p>`,
+                payment: () => '',
+            },
+            service: {
+                title: 'SERVICE CONTRACT',
+                intro: (a, b, date) => `This Service Contract ("Agreement") is entered into as of <strong>${formatDate(date)}</strong> by and between <strong>${a || '[Service Provider]'}</strong> ("Provider") and <strong>${b || '[Client]'}</strong> ("Client").`,
+                scope: (s) => `<h2>1. SERVICES</h2><p>The Provider agrees to provide the following services:</p><p>${s || '[Describe services to be provided]'}</p>`,
+                payment: (amt, sched) => `<h2>2. FEES AND PAYMENT</h2><p>The Client shall pay the Provider <strong>${amt || '[Amount]'}</strong>. Payment terms: <strong>${sched}</strong>.</p><p>All invoices are payable within 30 days of receipt. Late payments incur a 2% monthly fee.</p>`,
+            },
+            consulting: {
+                title: 'CONSULTING AGREEMENT',
+                intro: (a, b, date) => `This Consulting Agreement ("Agreement") is entered into as of <strong>${formatDate(date)}</strong> by and between <strong>${a || '[Consultant]'}</strong> ("Consultant") and <strong>${b || '[Client]'}</strong> ("Client").`,
+                scope: (s) => `<h2>1. CONSULTING SERVICES</h2><p>The Consultant shall provide the following advisory and consulting services:</p><p>${s || '[Describe consulting services and expected outcomes]'}</p>`,
+                payment: (amt, sched) => `<h2>2. CONSULTING FEES</h2><p>The Client agrees to compensate the Consultant <strong>${amt || '[Amount]'}</strong>. Payment schedule: <strong>${sched}</strong>.</p><p>Expenses incurred in the performance of services shall be reimbursed upon presentation of receipts.</p>`,
+            }
+        };
+
+        const clauses = {
+            ip: `<h2>INTELLECTUAL PROPERTY</h2><p>All intellectual property, work product, and deliverables created by the Service Provider in the course of this Agreement shall become the sole property of the Client upon full payment. The Service Provider retains the right to use general knowledge, skills, and experience gained during the engagement.</p>`,
+            conf: `<h2>CONFIDENTIALITY</h2><p>Both parties agree to keep confidential all proprietary information, trade secrets, and business data shared during the course of this Agreement. This obligation shall survive the termination of this Agreement for a period of two (2) years. Confidential information does not include information that is publicly available, independently developed, or rightfully received from a third party.</p>`,
+            term: `<h2>TERMINATION</h2><p>Either party may terminate this Agreement with 30 days' written notice. In the event of termination, the Client shall pay for all work completed up to the termination date. The Service Provider shall deliver all completed work upon receiving final payment.</p>`,
+            liability: `<h2>LIMITATION OF LIABILITY</h2><p>In no event shall either party be liable for any indirect, incidental, special, consequential, or punitive damages, regardless of the cause of action or theory of liability. The total liability of either party shall not exceed the total fees paid or payable under this Agreement.</p>`,
+            noncompete: `<h2>NON-COMPETE</h2><p>During the term of this Agreement and for a period of six (6) months following its termination, the Service Provider agrees not to provide substantially similar services to direct competitors of the Client, as mutually identified in writing by both parties.</p>`,
+            dispute: `<h2>DISPUTE RESOLUTION</h2><p>Any disputes arising from this Agreement shall first be attempted to be resolved through good-faith negotiation. If negotiation fails, the parties agree to submit to binding arbitration in accordance with the rules of the American Arbitration Association. The arbitration shall take place in the jurisdiction specified in this Agreement.</p>`,
+        };
+
+        function updateContract() {
+            const tmpl = templates[currentTemplate];
+            const a = getVal('partyA'), b = getVal('partyB');
+            const date = getVal('effectiveDate');
+            let sectionNum = currentTemplate === 'nda' ? 2 : 3;
+
+            let html = `<h1>${tmpl.title}</h1>`;
+            html += `<p>${tmpl.intro(a, b, date)}</p>`;
+            html += tmpl.scope(getVal('scope').replace(/\n/g, '<br>'));
+            html += tmpl.payment(getVal('payAmount'), getVal('paySchedule'));
+
+            html += `<h2>${sectionNum++}. TERM</h2><p>This Agreement shall commence on <strong>${formatDate(date)}</strong> and shall continue for a period of <strong>${getVal('duration')}</strong>, unless terminated earlier in accordance with the provisions of this Agreement.</p>`;
+
+            if (checked('cl-ip')) { html += clauses.ip.replace(/^<h2>/, `<h2>${sectionNum++}. `); }
+            if (checked('cl-conf')) { html += clauses.conf.replace(/^<h2>/, `<h2>${sectionNum++}. `); }
+            if (checked('cl-term')) { html += clauses.term.replace(/^<h2>/, `<h2>${sectionNum++}. `); }
+            if (checked('cl-liability')) { html += clauses.liability.replace(/^<h2>/, `<h2>${sectionNum++}. `); }
+            if (checked('cl-noncompete')) { html += clauses.noncompete.replace(/^<h2>/, `<h2>${sectionNum++}. `); }
+            if (checked('cl-dispute')) { html += clauses.dispute.replace(/^<h2>/, `<h2>${sectionNum++}. `); }
+
+            html += `<h2>${sectionNum++}. GOVERNING LAW</h2><p>This Agreement shall be governed by and construed in accordance with the laws of <strong>${getVal('govLaw') || '[State/Country]'}</strong>.</p>`;
+            html += `<h2>${sectionNum}. ENTIRE AGREEMENT</h2><p>This Agreement constitutes the entire agreement between the parties and supersedes all prior negotiations, representations, or agreements relating to this subject matter.</p>`;
+
+            html += `<div class="sig-block">
+                <div>
+                    <div class="sig-line"><strong>${a || '[Party A Name]'}</strong><br>Signature: ___________________<br>Date: ___________________</div>
+                </div>
+                <div>
+                    <div class="sig-line"><strong>${b || '[Party B Name]'}</strong><br>Signature: ___________________<br>Date: ___________________</div>
+                </div>
+            </div>`;
+
+            document.getElementById('contractPreview').innerHTML = html;
+        }
+
+        function copyText() {
+            const text = document.getElementById('contractPreview').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                btn.textContent = '✓ Copied!';
+                setTimeout(() => btn.textContent = '📋 Copy Text', 2000);
+            });
+        }
+
+        updateContract();
+    </script>
+<div style="text-align:center;padding:20px;background:#f0f4ff;margin:20px auto;max-width:900px;border-radius:12px"><strong>Related Tools:</strong> <a href="invoice.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Invoice Generator</a> | <a href="privacy.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Privacy Policy Generator</a> | <a href="signature.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Email Signature Generator</a></div>
+<script src="analytics.js"></script>
+</body>
+</html>

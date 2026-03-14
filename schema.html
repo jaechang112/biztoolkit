@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <title>Free Schema Markup Generator | JSON-LD Structured Data</title>
+    <meta name="description" content="Generate JSON-LD structured data markup for Google rich results. Support for Article, LocalBusiness, Product, FAQ, HowTo, Event, Person, Organization, Recipe, and BreadcrumbList schema types.">
+    <meta name="keywords" content="schema markup generator, JSON-LD generator, structured data generator, schema.org, rich snippets, google rich results, structured data markup">
+    <meta name="author" content="BizToolkit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/schema.html">
+    <meta property="og:title" content="Free Schema Markup Generator | JSON-LD Structured Data">
+    <meta property="og:description" content="Generate JSON-LD structured data markup for Google rich results. 10 schema types supported. Free, no signup required.">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/schema.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Schema Markup Generator | JSON-LD Structured Data">
+    <meta name="twitter:description" content="Generate JSON-LD structured data markup for Google rich results. 10 schema types supported.">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Free Schema Markup Generator",
+        "url": "https://biztoolkit-free.netlify.app/schema.html",
+        "description": "Generate JSON-LD structured data markup for Google rich results. Supports Article, LocalBusiness, Product, FAQ, HowTo, Event, and more.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "browserRequirements": "Requires a modern web browser"
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1a1a2e; line-height: 1.6; }
+        nav a:hover { opacity: 1 !important; }
+        .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 50px 20px; text-align: center; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 12px; }
+        .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 650px; margin: 0 auto; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+        .card { background: white; border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .card h2 { font-size: 1.2rem; margin-bottom: 20px; color: #1a1a2e; display: flex; align-items: center; gap: 8px; }
+        .card h2 .icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: white; }
+        .field { margin-bottom: 16px; }
+        .field label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #444; }
+        .field input, .field textarea, .field select { width: 100%; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 0.95rem; font-family: inherit; transition: border-color 0.2s; }
+        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: #6366f1; }
+        .field textarea { resize: vertical; min-height: 70px; }
+        .field .hint { font-size: 0.78rem; color: #888; margin-top: 3px; }
+        .preview-section { margin-top: 30px; }
+        .preview-card { background: white; border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .preview-card h2 { font-size: 1.2rem; margin-bottom: 16px; }
+        .code-block { background: #1e1e2e; color: #cdd6f4; border-radius: 10px; padding: 20px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85rem; line-height: 1.7; overflow-x: auto; white-space: pre-wrap; word-break: break-all; position: relative; min-height: 120px; }
+        .copy-btn { position: absolute; top: 12px; right: 12px; background: #6366f1; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
+        .copy-btn:hover { background: #4f46e5; }
+        .copy-btn.copied { background: #22c55e; }
+        .section-title { font-size: 1.4rem; font-weight: 700; margin: 36px 0 16px; color: #1a1a2e; }
+        .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+        .btn-primary { background: #6366f1; color: white; border: none; padding: 10px 22px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: background 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary:hover { background: #4f46e5; }
+        .btn-outline { background: white; color: #6366f1; border: 1.5px solid #6366f1; padding: 10px 22px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-outline:hover { background: #6366f1; color: white; }
+        .btn-danger { background: #ef4444; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 600; transition: background 0.2s; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-add { background: #22c55e; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
+        .btn-add:hover { background: #16a34a; }
+        .pair-item { background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 12px; position: relative; }
+        .pair-item .remove-pair { position: absolute; top: 10px; right: 10px; }
+        .pair-item .field:last-child { margin-bottom: 0; }
+        .step-item { background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 12px; position: relative; }
+        .step-item .remove-step { position: absolute; top: 10px; right: 10px; }
+        .breadcrumb-item { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+        .breadcrumb-item input { flex: 1; }
+        .validation-msg { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.88rem; font-weight: 500; }
+        .validation-ok { background: #f0fdf4; border: 1px solid #86efac; color: #16a34a; }
+        .validation-err { background: #fef2f2; border: 1px solid #fca5a5; color: #dc2626; }
+        .syntax-key { color: #89b4fa; }
+        .syntax-string { color: #a6e3a1; }
+        .syntax-number { color: #fab387; }
+        .syntax-bool { color: #f38ba8; }
+        .syntax-null { color: #f38ba8; }
+        .syntax-bracket { color: #cdd6f4; }
+        .upsell { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 12px; padding: 28px; color: white; text-align: center; margin-top: 30px; }
+        .upsell h3 { font-size: 1.3rem; margin-bottom: 8px; }
+        .upsell p { opacity: 0.9; margin-bottom: 16px; font-size: 0.95rem; }
+        .upsell a { display: inline-block; background: white; color: #6366f1; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: transform 0.2s; }
+        .upsell a:hover { transform: translateY(-2px); }
+        footer { text-align: center; padding: 30px 20px; color: #888; font-size: 0.85rem; }
+        .faq { max-width: 800px; margin: 40px auto 0; }
+        .faq h2 { font-size: 1.5rem; margin-bottom: 20px; text-align: center; }
+        .faq-item { background: white; border-radius: 10px; padding: 20px 24px; margin-bottom: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+        .faq-item h3 { font-size: 1rem; margin-bottom: 8px; color: #1a1a2e; }
+        .faq-item p { font-size: 0.9rem; color: #555; }
+        .edu-section { background: white; border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-top: 30px; }
+        .edu-section h2 { font-size: 1.3rem; margin-bottom: 16px; color: #1a1a2e; }
+        .edu-section p { font-size: 0.92rem; color: #555; margin-bottom: 12px; }
+        .edu-section ul { padding-left: 20px; margin-bottom: 12px; }
+        .edu-section li { font-size: 0.9rem; color: #555; margin-bottom: 6px; }
+        #dynamicFields .field:last-child { margin-bottom: 0; }
+    </style>
+</head>
+<body>
+
+<nav style="background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+    <a href="index.html" style="color:white;text-decoration:none;font-weight:700;font-size:1.1rem;">BizToolkit</a>
+    <a href="index.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Tools</a>
+    <a href="invoice.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Invoice</a>
+    <a href="contract.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Contract</a>
+    <a href="meta.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Meta Tags</a>
+    <a href="schema.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:1;border-bottom:2px solid #6366f1;padding-bottom:2px;">Schema</a>
+</nav>
+
+<div class="hero">
+    <h1>Free Schema Markup Generator</h1>
+    <p>Generate JSON-LD structured data for Google rich results. Choose from 10 schema types and get valid markup instantly.</p>
+</div>
+
+<div class="container">
+    <div class="grid">
+        <!-- Left Column: Inputs -->
+        <div>
+            <div class="card">
+                <h2><span class="icon" style="background:#6366f1;">{ }</span> Schema Type</h2>
+                <div class="field">
+                    <label for="schemaType">Select Schema Type</label>
+                    <select id="schemaType" onchange="onTypeChange()">
+                        <option value="Article">Article</option>
+                        <option value="LocalBusiness">Local Business</option>
+                        <option value="Product">Product</option>
+                        <option value="FAQPage">FAQ</option>
+                        <option value="HowTo">HowTo</option>
+                        <option value="Event">Event</option>
+                        <option value="Person">Person</option>
+                        <option value="Organization">Organization</option>
+                        <option value="Recipe">Recipe</option>
+                        <option value="BreadcrumbList">BreadcrumbList</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 24px;">
+                <h2><span class="icon" style="background:#22c55e;">&#9998;</span> Schema Fields</h2>
+                <div id="validationArea"></div>
+                <div id="dynamicFields"></div>
+            </div>
+        </div>
+
+        <!-- Right Column: Preview -->
+        <div>
+            <div class="card" style="position: sticky; top: 20px;">
+                <h2><span class="icon" style="background:#f59e0b;">&lt;/&gt;</span> JSON-LD Output</h2>
+                <div style="position: relative;">
+                    <div class="code-block" id="codeOutput">
+<span class="syntax-bracket">{</span>
+  <span class="syntax-key">"@context"</span>: <span class="syntax-string">"https://schema.org"</span>,
+  <span class="syntax-key">"@type"</span>: <span class="syntax-string">"Article"</span>
+<span class="syntax-bracket">}</span></div>
+                    <button class="copy-btn" onclick="copyCode()">Copy</button>
+                </div>
+                <div class="btn-row">
+                    <a id="testLink" class="btn-outline" href="https://search.google.com/test/rich-results" target="_blank" rel="noopener">Test with Google</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Educational Section -->
+    <div class="edu-section">
+        <h2>What is Schema Markup and Why Does It Matter?</h2>
+        <p>Schema markup (also called structured data) is a standardized vocabulary defined by <strong>Schema.org</strong> that helps search engines understand the content on your web pages. When you add JSON-LD structured data to your HTML, you give Google, Bing, and other search engines explicit signals about what your page is about.</p>
+        <p>This can unlock <strong>rich results</strong> in Google Search, including:</p>
+        <ul>
+            <li><strong>FAQ dropdowns</strong> directly in search results</li>
+            <li><strong>Star ratings and pricing</strong> for products</li>
+            <li><strong>Recipe cards</strong> with cook time and calories</li>
+            <li><strong>Event listings</strong> with dates and locations</li>
+            <li><strong>Business info panels</strong> with hours, phone, and address</li>
+        </ul>
+        <p>Pages with rich results typically see <strong>20-30% higher click-through rates</strong> compared to standard listings. JSON-LD is Google's recommended format for structured data because it is easy to implement (just paste a script tag in your HTML head) and does not interfere with your page's visible content.</p>
+    </div>
+
+    <!-- Upsell -->
+    <div class="upsell">
+        <h3>Content Creator's Playbook</h3>
+        <p>Master SEO, content strategy, and audience growth. Learn how to use structured data, meta tags, and content optimization to drive organic traffic.</p>
+        <a href="https://jaechang112.gumroad.com/l/nwdis" target="_blank" rel="noopener">Get the Playbook - $9</a>
+    </div>
+
+    <!-- FAQ / SEO Content -->
+    <div class="faq">
+        <h2>Schema Markup Generator FAQ</h2>
+        <div class="faq-item">
+            <h3>What is JSON-LD and how does it differ from Microdata?</h3>
+            <p>JSON-LD (JavaScript Object Notation for Linked Data) is a method of embedding structured data using a script tag in your HTML. Unlike Microdata, which requires adding attributes to your existing HTML elements, JSON-LD is a standalone block that does not affect your page layout. Google officially recommends JSON-LD as the preferred format for structured data markup.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Which schema types generate rich results in Google?</h3>
+            <p>Google supports rich results for dozens of schema types including Article, FAQ, HowTo, Product, Recipe, Event, LocalBusiness, and BreadcrumbList. Our schema markup generator supports all of these popular types. Each type can unlock different visual enhancements in search results, from star ratings to step-by-step instructions.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I add the generated schema markup to my website?</h3>
+            <p>Click the "Copy" button to copy the JSON-LD code, then paste it inside a <code>&lt;script type="application/ld+json"&gt;</code> tag in the <code>&lt;head&gt;</code> section of your HTML page. If you use WordPress, plugins like Yoast SEO or RankMath can help you add structured data through their interface.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I test my structured data?</h3>
+            <p>Use Google's Rich Results Test tool to validate your structured data. Our generator includes a direct link to the test tool. You can also use Google Search Console's "Enhancements" report to monitor how Google interprets your structured data over time and identify any errors.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Does schema markup directly improve rankings?</h3>
+            <p>Schema markup is not a direct ranking factor, but it can significantly improve your visibility in search results through rich snippets. Rich results often have higher click-through rates, which can indirectly benefit your SEO performance. At minimum, structured data helps search engines understand your content better, which supports overall search presence.</p>
+        </div>
+    </div>
+</div>
+
+<div style="text-align:center;padding:20px;background:#f0f4ff;margin-top:20px;border-radius:12px"><strong>Related Tools:</strong> <a href="meta.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Meta Tag Generator</a> | <a href="robots-generator.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Robots.txt Generator</a> | <a href="favicon.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Favicon Generator</a></div>
+
+<footer>
+    <p>&copy; 2026 BizToolkit. Free tools for small businesses and creators.</p>
+</footer>
+
+<script>
+// Schema type definitions with fields
+const SCHEMAS = {
+    Article: {
+        fields: [
+            { id: 'headline', label: 'Headline', type: 'text', required: true, placeholder: 'Your article title' },
+            { id: 'author', label: 'Author Name', type: 'text', required: true, placeholder: 'John Doe' },
+            { id: 'authorUrl', label: 'Author URL', type: 'url', required: false, placeholder: 'https://example.com/author' },
+            { id: 'datePublished', label: 'Date Published', type: 'date', required: true },
+            { id: 'dateModified', label: 'Date Modified', type: 'date', required: false },
+            { id: 'image', label: 'Image URL', type: 'url', required: true, placeholder: 'https://example.com/image.jpg' },
+            { id: 'publisher', label: 'Publisher Name', type: 'text', required: true, placeholder: 'My Website' },
+            { id: 'publisherLogo', label: 'Publisher Logo URL', type: 'url', required: false, placeholder: 'https://example.com/logo.png' },
+            { id: 'description', label: 'Description', type: 'textarea', required: false, placeholder: 'Brief description of the article' }
+        ],
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"Article"};
+            if(v.headline) o.headline = v.headline;
+            if(v.image) o.image = [v.image];
+            if(v.datePublished) o.datePublished = v.datePublished;
+            if(v.dateModified) o.dateModified = v.dateModified;
+            if(v.author) {
+                o.author = {"@type":"Person","name":v.author};
+                if(v.authorUrl) o.author.url = v.authorUrl;
+            }
+            if(v.description) o.description = v.description;
+            if(v.publisher) {
+                o.publisher = {"@type":"Organization","name":v.publisher};
+                if(v.publisherLogo) o.publisher.logo = {"@type":"ImageObject","url":v.publisherLogo};
+            }
+            return o;
+        }
+    },
+    LocalBusiness: {
+        fields: [
+            { id: 'name', label: 'Business Name', type: 'text', required: true, placeholder: 'My Business' },
+            { id: 'description', label: 'Description', type: 'textarea', required: false, placeholder: 'Brief description of the business' },
+            { id: 'image', label: 'Image URL', type: 'url', required: false, placeholder: 'https://example.com/photo.jpg' },
+            { id: 'telephone', label: 'Phone Number', type: 'text', required: false, placeholder: '+1-555-555-5555' },
+            { id: 'streetAddress', label: 'Street Address', type: 'text', required: true, placeholder: '123 Main St' },
+            { id: 'city', label: 'City', type: 'text', required: true, placeholder: 'New York' },
+            { id: 'state', label: 'State/Region', type: 'text', required: false, placeholder: 'NY' },
+            { id: 'postalCode', label: 'Postal Code', type: 'text', required: false, placeholder: '10001' },
+            { id: 'country', label: 'Country', type: 'text', required: false, placeholder: 'US' },
+            { id: 'latitude', label: 'Latitude', type: 'text', required: false, placeholder: '40.7128' },
+            { id: 'longitude', label: 'Longitude', type: 'text', required: false, placeholder: '-74.0060' },
+            { id: 'openingHours', label: 'Opening Hours', type: 'text', required: false, placeholder: 'Mo-Fr 09:00-17:00, Sa 10:00-14:00' },
+            { id: 'priceRange', label: 'Price Range', type: 'text', required: false, placeholder: '$$' }
+        ],
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"LocalBusiness"};
+            if(v.name) o.name = v.name;
+            if(v.description) o.description = v.description;
+            if(v.image) o.image = v.image;
+            if(v.telephone) o.telephone = v.telephone;
+            var addr = {};
+            addr["@type"] = "PostalAddress";
+            if(v.streetAddress) addr.streetAddress = v.streetAddress;
+            if(v.city) addr.addressLocality = v.city;
+            if(v.state) addr.addressRegion = v.state;
+            if(v.postalCode) addr.postalCode = v.postalCode;
+            if(v.country) addr.addressCountry = v.country;
+            if(Object.keys(addr).length > 1) o.address = addr;
+            if(v.latitude && v.longitude) {
+                o.geo = {"@type":"GeoCoordinates","latitude":parseFloat(v.latitude),"longitude":parseFloat(v.longitude)};
+            }
+            if(v.openingHours) o.openingHoursSpecification = v.openingHours;
+            if(v.priceRange) o.priceRange = v.priceRange;
+            return o;
+        }
+    },
+    Product: {
+        fields: [
+            { id: 'name', label: 'Product Name', type: 'text', required: true, placeholder: 'Product Name' },
+            { id: 'description', label: 'Description', type: 'textarea', required: true, placeholder: 'Product description' },
+            { id: 'image', label: 'Image URL', type: 'url', required: true, placeholder: 'https://example.com/product.jpg' },
+            { id: 'brand', label: 'Brand', type: 'text', required: false, placeholder: 'Brand Name' },
+            { id: 'sku', label: 'SKU', type: 'text', required: false, placeholder: 'SKU-12345' },
+            { id: 'price', label: 'Price', type: 'text', required: true, placeholder: '29.99' },
+            { id: 'currency', label: 'Currency', type: 'text', required: true, placeholder: 'USD' },
+            { id: 'availability', label: 'Availability', type: 'select', required: false, options: [
+                {v:'https://schema.org/InStock',l:'In Stock'},
+                {v:'https://schema.org/OutOfStock',l:'Out of Stock'},
+                {v:'https://schema.org/PreOrder',l:'Pre-Order'},
+                {v:'https://schema.org/BackOrder',l:'Back Order'}
+            ]},
+            { id: 'ratingValue', label: 'Review Rating (1-5)', type: 'text', required: false, placeholder: '4.5' },
+            { id: 'reviewCount', label: 'Review Count', type: 'text', required: false, placeholder: '89' }
+        ],
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"Product"};
+            if(v.name) o.name = v.name;
+            if(v.description) o.description = v.description;
+            if(v.image) o.image = [v.image];
+            if(v.brand) o.brand = {"@type":"Brand","name":v.brand};
+            if(v.sku) o.sku = v.sku;
+            if(v.price || v.currency || v.availability) {
+                var offer = {"@type":"Offer"};
+                if(v.price) offer.price = v.price;
+                if(v.currency) offer.priceCurrency = v.currency;
+                if(v.availability) offer.availability = v.availability;
+                offer.url = window.location.href;
+                o.offers = offer;
+            }
+            if(v.ratingValue && v.reviewCount) {
+                o.aggregateRating = {"@type":"AggregateRating","ratingValue":v.ratingValue,"reviewCount":v.reviewCount};
+            }
+            return o;
+        }
+    },
+    FAQPage: {
+        fields: [],
+        dynamic: 'faq',
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]};
+            var pairs = document.querySelectorAll('.faq-pair');
+            pairs.forEach(function(pair) {
+                var q = pair.querySelector('.faq-q').value.trim();
+                var a = pair.querySelector('.faq-a').value.trim();
+                if(q && a) {
+                    o.mainEntity.push({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}});
+                }
+            });
+            return o;
+        }
+    },
+    HowTo: {
+        fields: [
+            { id: 'name', label: 'Title', type: 'text', required: true, placeholder: 'How to Do Something' },
+            { id: 'description', label: 'Description', type: 'textarea', required: false, placeholder: 'Brief overview of this how-to guide' },
+            { id: 'totalTime', label: 'Total Time (ISO 8601)', type: 'text', required: false, placeholder: 'PT30M (30 minutes)' },
+            { id: 'estimatedCost', label: 'Estimated Cost', type: 'text', required: false, placeholder: '20' },
+            { id: 'costCurrency', label: 'Cost Currency', type: 'text', required: false, placeholder: 'USD' }
+        ],
+        dynamic: 'steps',
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"HowTo"};
+            if(v.name) o.name = v.name;
+            if(v.description) o.description = v.description;
+            if(v.totalTime) o.totalTime = v.totalTime;
+            if(v.estimatedCost && v.costCurrency) {
+                o.estimatedCost = {"@type":"MonetaryAmount","currency":v.costCurrency,"value":v.estimatedCost};
+            }
+            o.step = [];
+            var steps = document.querySelectorAll('.howto-step');
+            steps.forEach(function(step, i) {
+                var name = step.querySelector('.step-name').value.trim();
+                var text = step.querySelector('.step-text').value.trim();
+                if(name || text) {
+                    o.step.push({"@type":"HowToStep","name":name||("Step "+(i+1)),"text":text||name});
+                }
+            });
+            return o;
+        }
+    },
+    Event: {
+        fields: [
+            { id: 'name', label: 'Event Name', type: 'text', required: true, placeholder: 'Annual Conference 2026' },
+            { id: 'description', label: 'Description', type: 'textarea', required: false, placeholder: 'Event description' },
+            { id: 'startDate', label: 'Start Date & Time', type: 'datetime-local', required: true },
+            { id: 'endDate', label: 'End Date & Time', type: 'datetime-local', required: false },
+            { id: 'locationName', label: 'Venue Name', type: 'text', required: false, placeholder: 'Convention Center' },
+            { id: 'streetAddress', label: 'Street Address', type: 'text', required: false, placeholder: '123 Main St' },
+            { id: 'city', label: 'City', type: 'text', required: false, placeholder: 'New York' },
+            { id: 'country', label: 'Country', type: 'text', required: false, placeholder: 'US' },
+            { id: 'image', label: 'Image URL', type: 'url', required: false, placeholder: 'https://example.com/event.jpg' },
+            { id: 'organizer', label: 'Organizer Name', type: 'text', required: false, placeholder: 'Event Organizer' },
+            { id: 'eventStatus', label: 'Event Status', type: 'select', required: false, options: [
+                {v:'https://schema.org/EventScheduled',l:'Scheduled'},
+                {v:'https://schema.org/EventPostponed',l:'Postponed'},
+                {v:'https://schema.org/EventCancelled',l:'Cancelled'},
+                {v:'https://schema.org/EventMovedOnline',l:'Moved Online'}
+            ]},
+            { id: 'ticketPrice', label: 'Ticket Price', type: 'text', required: false, placeholder: '50' },
+            { id: 'ticketCurrency', label: 'Ticket Currency', type: 'text', required: false, placeholder: 'USD' },
+            { id: 'ticketUrl', label: 'Ticket URL', type: 'url', required: false, placeholder: 'https://example.com/tickets' }
+        ],
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"Event"};
+            if(v.name) o.name = v.name;
+            if(v.description) o.description = v.description;
+            if(v.startDate) o.startDate = v.startDate;
+            if(v.endDate) o.endDate = v.endDate;
+            if(v.image) o.image = [v.image];
+            if(v.eventStatus) o.eventStatus = v.eventStatus;
+            if(v.locationName || v.streetAddress || v.city) {
+                o.location = {"@type":"Place"};
+                if(v.locationName) o.location.name = v.locationName;
+                var addr = {"@type":"PostalAddress"};
+                if(v.streetAddress) addr.streetAddress = v.streetAddress;
+                if(v.city) addr.addressLocality = v.city;
+                if(v.country) addr.addressCountry = v.country;
+                if(Object.keys(addr).length > 1) o.location.address = addr;
+            }
+            if(v.organizer) o.organizer = {"@type":"Organization","name":v.organizer};
+            if(v.ticketPrice && v.ticketCurrency) {
+                o.offers = {"@type":"Offer","price":v.ticketPrice,"priceCurrency":v.ticketCurrency};
+                if(v.ticketUrl) o.offers.url = v.ticketUrl;
+                o.offers.availability = "https://schema.org/InStock";
+            }
+            return o;
+        }
+    },
+    Person: {
+        fields: [
+            { id: 'name', label: 'Full Name', type: 'text', required: true, placeholder: 'John Doe' },
+            { id: 'jobTitle', label: 'Job Title', type: 'text', required: false, placeholder: 'Software Engineer' },
+            { id: 'url', label: 'Website URL', type: 'url', required: false, placeholder: 'https://johndoe.com' },
+            { id: 'image', label: 'Photo URL', type: 'url', required: false, placeholder: 'https://example.com/photo.jpg' },
+            { id: 'email', label: 'Email', type: 'text', required: false, placeholder: 'john@example.com' },
+            { id: 'telephone', label: 'Phone', type: 'text', required: false, placeholder: '+1-555-555-5555' },
+            { id: 'worksFor', label: 'Works For (Organization)', type: 'text', required: false, placeholder: 'Acme Inc.' },
+            { id: 'sameAs', label: 'Social Profiles (one per line)', type: 'textarea', required: false, placeholder: 'https://twitter.com/johndoe\nhttps://linkedin.com/in/johndoe' }
+        ],
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"Person"};
+            if(v.name) o.name = v.name;
+            if(v.jobTitle) o.jobTitle = v.jobTitle;
+            if(v.url) o.url = v.url;
+            if(v.image) o.image = v.image;
+            if(v.email) o.email = "mailto:" + v.email;
+            if(v.telephone) o.telephone = v.telephone;
+            if(v.worksFor) o.worksFor = {"@type":"Organization","name":v.worksFor};
+            if(v.sameAs) {
+                var links = v.sameAs.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+                if(links.length) o.sameAs = links;
+            }
+            return o;
+        }
+    },
+    Organization: {
+        fields: [
+            { id: 'name', label: 'Organization Name', type: 'text', required: true, placeholder: 'Acme Inc.' },
+            { id: 'url', label: 'Website URL', type: 'url', required: true, placeholder: 'https://acme.com' },
+            { id: 'logo', label: 'Logo URL', type: 'url', required: false, placeholder: 'https://acme.com/logo.png' },
+            { id: 'description', label: 'Description', type: 'textarea', required: false, placeholder: 'Brief description of the organization' },
+            { id: 'email', label: 'Contact Email', type: 'text', required: false, placeholder: 'info@acme.com' },
+            { id: 'telephone', label: 'Phone', type: 'text', required: false, placeholder: '+1-555-555-5555' },
+            { id: 'streetAddress', label: 'Street Address', type: 'text', required: false, placeholder: '123 Main St' },
+            { id: 'city', label: 'City', type: 'text', required: false, placeholder: 'New York' },
+            { id: 'state', label: 'State/Region', type: 'text', required: false, placeholder: 'NY' },
+            { id: 'country', label: 'Country', type: 'text', required: false, placeholder: 'US' },
+            { id: 'sameAs', label: 'Social Profiles (one per line)', type: 'textarea', required: false, placeholder: 'https://facebook.com/acme\nhttps://twitter.com/acme' }
+        ],
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"Organization"};
+            if(v.name) o.name = v.name;
+            if(v.url) o.url = v.url;
+            if(v.logo) o.logo = v.logo;
+            if(v.description) o.description = v.description;
+            if(v.email) o.contactPoint = {"@type":"ContactPoint","email":v.email,"contactType":"customer service"};
+            if(v.telephone) { if(!o.contactPoint) o.contactPoint={"@type":"ContactPoint","contactType":"customer service"}; o.contactPoint.telephone=v.telephone; }
+            var addr = {"@type":"PostalAddress"};
+            if(v.streetAddress) addr.streetAddress = v.streetAddress;
+            if(v.city) addr.addressLocality = v.city;
+            if(v.state) addr.addressRegion = v.state;
+            if(v.country) addr.addressCountry = v.country;
+            if(Object.keys(addr).length > 1) o.address = addr;
+            if(v.sameAs) {
+                var links = v.sameAs.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+                if(links.length) o.sameAs = links;
+            }
+            return o;
+        }
+    },
+    Recipe: {
+        fields: [
+            { id: 'name', label: 'Recipe Name', type: 'text', required: true, placeholder: 'Chocolate Chip Cookies' },
+            { id: 'description', label: 'Description', type: 'textarea', required: true, placeholder: 'Delicious homemade cookies...' },
+            { id: 'image', label: 'Image URL', type: 'url', required: true, placeholder: 'https://example.com/cookies.jpg' },
+            { id: 'author', label: 'Author', type: 'text', required: false, placeholder: 'Chef John' },
+            { id: 'prepTime', label: 'Prep Time (ISO 8601)', type: 'text', required: false, placeholder: 'PT15M (15 minutes)' },
+            { id: 'cookTime', label: 'Cook Time (ISO 8601)', type: 'text', required: false, placeholder: 'PT25M (25 minutes)' },
+            { id: 'totalTime', label: 'Total Time (ISO 8601)', type: 'text', required: false, placeholder: 'PT40M (40 minutes)' },
+            { id: 'recipeYield', label: 'Yield (servings)', type: 'text', required: false, placeholder: '24 cookies' },
+            { id: 'recipeCategory', label: 'Category', type: 'text', required: false, placeholder: 'Dessert' },
+            { id: 'recipeCuisine', label: 'Cuisine', type: 'text', required: false, placeholder: 'American' },
+            { id: 'calories', label: 'Calories', type: 'text', required: false, placeholder: '250' },
+            { id: 'recipeIngredient', label: 'Ingredients (one per line)', type: 'textarea', required: false, placeholder: '2 cups flour\n1 cup sugar\n1 cup butter' },
+            { id: 'recipeInstructions', label: 'Instructions (one step per line)', type: 'textarea', required: false, placeholder: 'Preheat oven to 350F.\nMix dry ingredients.\nAdd wet ingredients.' },
+            { id: 'ratingValue', label: 'Rating (1-5)', type: 'text', required: false, placeholder: '4.8' },
+            { id: 'reviewCount', label: 'Review Count', type: 'text', required: false, placeholder: '156' }
+        ],
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"Recipe"};
+            if(v.name) o.name = v.name;
+            if(v.description) o.description = v.description;
+            if(v.image) o.image = [v.image];
+            if(v.author) o.author = {"@type":"Person","name":v.author};
+            if(v.prepTime) o.prepTime = v.prepTime;
+            if(v.cookTime) o.cookTime = v.cookTime;
+            if(v.totalTime) o.totalTime = v.totalTime;
+            if(v.recipeYield) o.recipeYield = v.recipeYield;
+            if(v.recipeCategory) o.recipeCategory = v.recipeCategory;
+            if(v.recipeCuisine) o.recipeCuisine = v.recipeCuisine;
+            if(v.calories) o.nutrition = {"@type":"NutritionInformation","calories":v.calories + " calories"};
+            if(v.recipeIngredient) {
+                o.recipeIngredient = v.recipeIngredient.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+            }
+            if(v.recipeInstructions) {
+                o.recipeInstructions = v.recipeInstructions.split('\n').map(function(s){return s.trim();}).filter(Boolean).map(function(t){
+                    return {"@type":"HowToStep","text":t};
+                });
+            }
+            if(v.ratingValue && v.reviewCount) {
+                o.aggregateRating = {"@type":"AggregateRating","ratingValue":v.ratingValue,"reviewCount":v.reviewCount};
+            }
+            return o;
+        }
+    },
+    BreadcrumbList: {
+        fields: [],
+        dynamic: 'breadcrumb',
+        build: function(v) {
+            var o = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[]};
+            var items = document.querySelectorAll('.breadcrumb-row');
+            items.forEach(function(row, i) {
+                var name = row.querySelector('.bc-name').value.trim();
+                var url = row.querySelector('.bc-url').value.trim();
+                if(name) {
+                    var item = {"@type":"ListItem","position":i+1,"name":name};
+                    if(url) item.item = url;
+                    o.itemListElement.push(item);
+                }
+            });
+            return o;
+        }
+    }
+};
+
+var currentType = 'Article';
+
+function onTypeChange() {
+    currentType = document.getElementById('schemaType').value;
+    renderFields();
+    updatePreview();
+}
+
+function renderFields() {
+    var schema = SCHEMAS[currentType];
+    var container = document.getElementById('dynamicFields');
+    var html = '';
+
+    // Static fields
+    if (schema.fields) {
+        schema.fields.forEach(function(f) {
+            html += '<div class="field">';
+            html += '<label for="f_' + f.id + '">' + f.label + (f.required ? ' *' : '') + '</label>';
+            if (f.type === 'textarea') {
+                html += '<textarea id="f_' + f.id + '" placeholder="' + (f.placeholder||'') + '" oninput="updatePreview()"></textarea>';
+            } else if (f.type === 'select') {
+                html += '<select id="f_' + f.id + '" onchange="updatePreview()">';
+                f.options.forEach(function(opt) {
+                    html += '<option value="' + opt.v + '">' + opt.l + '</option>';
+                });
+                html += '</select>';
+            } else {
+                html += '<input type="' + f.type + '" id="f_' + f.id + '" placeholder="' + (f.placeholder||'') + '" oninput="updatePreview()">';
+            }
+            html += '</div>';
+        });
+    }
+
+    // Dynamic sections
+    if (schema.dynamic === 'faq') {
+        html += '<div id="faqPairs">';
+        html += buildFaqPair(1);
+        html += '</div>';
+        html += '<button class="btn-add" onclick="addFaqPair()">+ Add Question</button>';
+    } else if (schema.dynamic === 'steps') {
+        html += '<div id="howtoSteps">';
+        html += buildStep(1);
+        html += '</div>';
+        html += '<button class="btn-add" onclick="addStep()">+ Add Step</button>';
+    } else if (schema.dynamic === 'breadcrumb') {
+        html += '<div id="breadcrumbItems">';
+        html += buildBreadcrumb(1);
+        html += buildBreadcrumb(2);
+        html += '</div>';
+        html += '<button class="btn-add" onclick="addBreadcrumb()">+ Add Item</button>';
+    }
+
+    container.innerHTML = html;
+}
+
+function buildFaqPair(n) {
+    return '<div class="pair-item faq-pair">' +
+        '<button class="btn-danger remove-pair" onclick="this.parentElement.remove();updatePreview();">Remove</button>' +
+        '<div class="field"><label>Question ' + n + ' *</label><input class="faq-q" type="text" placeholder="What is your question?" oninput="updatePreview()"></div>' +
+        '<div class="field"><label>Answer ' + n + ' *</label><textarea class="faq-a" placeholder="Provide a detailed answer..." oninput="updatePreview()"></textarea></div>' +
+        '</div>';
+}
+
+function addFaqPair() {
+    var count = document.querySelectorAll('.faq-pair').length + 1;
+    document.getElementById('faqPairs').insertAdjacentHTML('beforeend', buildFaqPair(count));
+    updatePreview();
+}
+
+function buildStep(n) {
+    return '<div class="step-item howto-step">' +
+        '<button class="btn-danger remove-step" onclick="this.parentElement.remove();updatePreview();">Remove</button>' +
+        '<div class="field"><label>Step ' + n + ' Name *</label><input class="step-name" type="text" placeholder="Step title" oninput="updatePreview()"></div>' +
+        '<div class="field"><label>Step ' + n + ' Instructions</label><textarea class="step-text" placeholder="Detailed instructions for this step..." oninput="updatePreview()"></textarea></div>' +
+        '</div>';
+}
+
+function addStep() {
+    var count = document.querySelectorAll('.howto-step').length + 1;
+    document.getElementById('howtoSteps').insertAdjacentHTML('beforeend', buildStep(count));
+    updatePreview();
+}
+
+function buildBreadcrumb(n) {
+    return '<div class="breadcrumb-item breadcrumb-row">' +
+        '<input class="bc-name" type="text" placeholder="Name (e.g. Home)" oninput="updatePreview()" style="flex:1;">' +
+        '<input class="bc-url" type="text" placeholder="URL (e.g. https://example.com)" oninput="updatePreview()" style="flex:1;">' +
+        '<button class="btn-danger" onclick="this.parentElement.remove();updatePreview();">X</button>' +
+        '</div>';
+}
+
+function addBreadcrumb() {
+    var count = document.querySelectorAll('.breadcrumb-row').length + 1;
+    document.getElementById('breadcrumbItems').insertAdjacentHTML('beforeend', buildBreadcrumb(count));
+    updatePreview();
+}
+
+function getFieldValues() {
+    var schema = SCHEMAS[currentType];
+    var vals = {};
+    if (schema.fields) {
+        schema.fields.forEach(function(f) {
+            var el = document.getElementById('f_' + f.id);
+            if (el) vals[f.id] = el.value.trim();
+        });
+    }
+    return vals;
+}
+
+function validateFields() {
+    var schema = SCHEMAS[currentType];
+    var missing = [];
+    if (schema.fields) {
+        schema.fields.forEach(function(f) {
+            if (f.required) {
+                var el = document.getElementById('f_' + f.id);
+                if (el && !el.value.trim()) missing.push(f.label);
+            }
+        });
+    }
+    if (schema.dynamic === 'faq') {
+        var pairs = document.querySelectorAll('.faq-pair');
+        if (pairs.length === 0) { missing.push('At least one Q&A pair'); }
+        else {
+            var hasValid = false;
+            pairs.forEach(function(p) {
+                if (p.querySelector('.faq-q').value.trim() && p.querySelector('.faq-a').value.trim()) hasValid = true;
+            });
+            if (!hasValid) missing.push('At least one complete Q&A pair');
+        }
+    }
+    if (schema.dynamic === 'steps') {
+        var steps = document.querySelectorAll('.howto-step');
+        if (steps.length === 0) { missing.push('At least one step'); }
+    }
+    if (schema.dynamic === 'breadcrumb') {
+        var items = document.querySelectorAll('.breadcrumb-row');
+        if (items.length === 0) { missing.push('At least one breadcrumb item'); }
+    }
+    return missing;
+}
+
+function syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-fA-F0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+        var cls = 'syntax-number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'syntax-key';
+            } else {
+                cls = 'syntax-string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'syntax-bool';
+        } else if (/null/.test(match)) {
+            cls = 'syntax-null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
+
+function updatePreview() {
+    var vals = getFieldValues();
+    var schema = SCHEMAS[currentType];
+    var obj = schema.build(vals);
+    var jsonStr = JSON.stringify(obj, null, 2);
+    var highlighted = syntaxHighlight(jsonStr);
+    document.getElementById('codeOutput').innerHTML = highlighted;
+
+    // Validation
+    var missing = validateFields();
+    var area = document.getElementById('validationArea');
+    if (missing.length === 0) {
+        var hasAnyValue = false;
+        for (var k in vals) { if (vals[k]) { hasAnyValue = true; break; } }
+        if (schema.dynamic === 'faq' || schema.dynamic === 'steps' || schema.dynamic === 'breadcrumb') hasAnyValue = true;
+        if (hasAnyValue) {
+            area.innerHTML = '<div class="validation-msg validation-ok">All required fields are filled. Your schema markup is valid.</div>';
+        } else {
+            area.innerHTML = '';
+        }
+    } else {
+        area.innerHTML = '<div class="validation-msg validation-err">Missing required fields: ' + missing.join(', ') + '</div>';
+    }
+
+    // Update test link
+    var encoded = encodeURIComponent('<script type="application/ld+json">\n' + jsonStr + '\n<\/script>');
+    document.getElementById('testLink').href = 'https://search.google.com/test/rich-results?code=' + encoded;
+}
+
+function copyCode() {
+    var obj = SCHEMAS[currentType].build(getFieldValues());
+    var jsonStr = JSON.stringify(obj, null, 2);
+    var fullCode = '<script type="application/ld+json">\n' + jsonStr + '\n<\/script>';
+
+    navigator.clipboard.writeText(fullCode).then(function() {
+        var btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+// Initialize
+renderFields();
+updatePreview();
+</script>
+<script src="analytics.js"></script>
+</body>
+</html>

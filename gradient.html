@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <title>CSS Gradient Generator - Free Online Gradient Maker Tool</title>
+    <meta name="description" content="Free CSS gradient generator. Create beautiful linear and radial gradients with multiple color stops, live preview, and one-click CSS copy. No signup required.">
+    <meta name="keywords" content="css gradient generator, gradient maker, css gradient tool, linear gradient, radial gradient, css background gradient, gradient creator">
+    <meta property="og:title" content="CSS Gradient Generator - Free Online Gradient Maker">
+    <meta property="og:description" content="Create stunning CSS gradients with live preview. Linear, radial, multiple color stops, preset gallery. Copy CSS instantly.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/gradient.html">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/gradient.html">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Free CSS Gradient Generator","url":"https://biztoolkit-free.netlify.app/gradient.html","description":"Create beautiful CSS gradients with live preview and copy code.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"BizToolkit"}}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #fafbfc; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Preview */
+        #preview {
+            width: 100%;
+            height: 280px;
+            transition: background 0.15s;
+            position: relative;
+        }
+        #preview-label {
+            position: absolute;
+            bottom: 12px;
+            right: 20px;
+            background: rgba(0,0,0,0.45);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        /* Controls area */
+        .controls-wrap {
+            padding: 32px 0 60px;
+        }
+
+        /* Type & angle */
+        .type-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .type-btn {
+            padding: 8px 22px;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+        .type-btn.active {
+            border-color: #6366f1;
+            background: #eef2ff;
+            color: #6366f1;
+        }
+        .angle-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto;
+        }
+        .angle-control label { font-size: 0.85rem; font-weight: 600; color: #555; }
+        .angle-control input[type=range] { width: 160px; accent-color: #6366f1; }
+        .angle-control input[type=number] {
+            width: 64px;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* Radial shape */
+        .radial-options {
+            display: none;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .radial-options.show { display: flex; }
+        .radial-options label { font-size: 0.85rem; font-weight: 600; color: #555; }
+        .radial-options select {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            background: #fff;
+        }
+
+        /* Repeating & vendor */
+        .options-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .options-row label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #555;
+            cursor: pointer;
+        }
+        .options-row input[type=checkbox] { accent-color: #6366f1; }
+        .bg-size-control {
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+        .bg-size-control.show { display: flex; }
+        .bg-size-control input {
+            width: 60px;
+            padding: 4px 6px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* Color stops */
+        .stops-section h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        .stop-track {
+            position: relative;
+            height: 32px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+        }
+        .stop-handle {
+            position: absolute;
+            top: -4px;
+            width: 20px;
+            height: 40px;
+            border-radius: 4px;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            cursor: grab;
+            transform: translateX(-10px);
+            transition: box-shadow 0.1s;
+        }
+        .stop-handle:hover, .stop-handle.active {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .stops-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .stop-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #e8ecf1;
+        }
+        .stop-row input[type=color] {
+            width: 36px;
+            height: 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: none;
+        }
+        .stop-row input[type=number] {
+            width: 60px;
+            padding: 4px 6px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        .stop-row .stop-label { font-size: 0.8rem; color: #888; min-width: 20px; }
+        .stop-row .remove-stop {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            line-height: 1;
+        }
+        .stop-row .remove-stop:hover { background: #fdeaea; }
+        .add-stop-btn {
+            padding: 8px 18px;
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.15s;
+        }
+        .add-stop-btn:hover { background: #4f46e5; }
+
+        /* Code output */
+        .code-section {
+            margin-top: 32px;
+        }
+        .code-section h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        .code-box {
+            position: relative;
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        .code-box pre {
+            font-family: 'SFMono-Regular', 'Consolas', 'Menlo', monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: #cdd6f4;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .code-box .kw { color: #cba6f7; }
+        .code-box .fn { color: #89b4fa; }
+        .code-box .num { color: #fab387; }
+        .code-box .str { color: #a6e3a1; }
+        .code-box .punc { color: #9399b2; }
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 16px;
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background 0.15s;
+        }
+        .copy-btn:hover { background: #4f46e5; }
+        .copy-btn.copied { background: #22c55e; }
+
+        /* Presets */
+        .presets-section {
+            margin-top: 40px;
+        }
+        .presets-section h3 {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        .presets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+        .preset-card {
+            height: 80px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 0.15s, border-color 0.15s;
+            position: relative;
+        }
+        .preset-card:hover {
+            transform: scale(1.04);
+            border-color: #6366f1;
+        }
+        .preset-card .preset-name {
+            position: absolute;
+            bottom: 6px;
+            left: 8px;
+            font-size: 0.7rem;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 32px 20px;
+            color: #888;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8ecf1;
+        }
+        footer a { color: #6366f1; text-decoration: none; }
+
+        /* SEO content */
+        .seo-content {
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+        }
+        .seo-content h2 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #1a1a2e;
+        }
+        .seo-content p, .seo-content li {
+            font-size: 0.92rem;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        .seo-content ul { padding-left: 20px; margin-bottom: 16px; }
+
+        @media (max-width: 640px) {
+            #preview { height: 180px; }
+            .angle-control { margin-left: 0; width: 100%; }
+            .type-row { gap: 8px; }
+            .presets-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+<nav style="background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+    <a href="index.html" style="color:white;text-decoration:none;font-weight:700;font-size:1.1rem;">BizToolkit</a>
+    <a href="index.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Tools</a>
+    <a href="invoice.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Invoice</a>
+    <a href="gradient.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:1;border-bottom:2px solid #6366f1;padding-bottom:2px;">Gradient</a>
+</nav>
+
+<div id="preview">
+    <span id="preview-label">Live Preview</span>
+</div>
+
+<div class="container controls-wrap">
+    <h1 style="font-size:1.8rem;margin-bottom:6px;">CSS Gradient Generator</h1>
+    <p style="color:#666;font-size:0.92rem;margin-bottom:24px;">Create beautiful gradients and copy the CSS. Free, no signup.</p>
+
+    <!-- Type & Angle -->
+    <div class="type-row">
+        <button class="type-btn active" data-type="linear" onclick="setType('linear')">Linear</button>
+        <button class="type-btn" data-type="radial" onclick="setType('radial')">Radial</button>
+        <div class="angle-control" id="angleControl">
+            <label>Angle</label>
+            <input type="range" id="angleSlider" min="0" max="360" value="135" oninput="setAngle(this.value)">
+            <input type="number" id="angleInput" min="0" max="360" value="135" oninput="setAngle(this.value)">
+            <span style="font-size:0.8rem;color:#888;">deg</span>
+        </div>
+    </div>
+
+    <!-- Radial options -->
+    <div class="radial-options" id="radialOptions">
+        <label>Shape</label>
+        <select id="radialShape" onchange="updateGradient()">
+            <option value="circle">Circle</option>
+            <option value="ellipse" selected>Ellipse</option>
+        </select>
+        <label style="margin-left:12px;">Position</label>
+        <select id="radialPos" onchange="updateGradient()">
+            <option value="center" selected>Center</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="top left">Top Left</option>
+            <option value="top right">Top Right</option>
+            <option value="bottom left">Bottom Left</option>
+            <option value="bottom right">Bottom Right</option>
+        </select>
+    </div>
+
+    <!-- Options -->
+    <div class="options-row">
+        <label><input type="checkbox" id="repeatCheck" onchange="toggleRepeat()"> Repeating gradient</label>
+        <div class="bg-size-control" id="bgSizeControl">
+            <label style="font-size:0.8rem;color:#888;">Size:</label>
+            <input type="number" id="bgW" value="100" min="10" max="500" oninput="updateGradient()">
+            <span style="font-size:0.8rem;color:#888;">x</span>
+            <input type="number" id="bgH" value="100" min="10" max="500" oninput="updateGradient()">
+            <span style="font-size:0.8rem;color:#888;">px</span>
+        </div>
+        <label style="margin-left:auto;"><input type="checkbox" id="vendorCheck" onchange="updateCode()"> Vendor prefixes</label>
+    </div>
+
+    <!-- Color Stops -->
+    <div class="stops-section">
+        <h3>Color Stops</h3>
+        <div class="stop-track" id="stopTrack"></div>
+        <div class="stops-list" id="stopsList"></div>
+        <button class="add-stop-btn" onclick="addStop()">+ Add Color Stop</button>
+    </div>
+
+    <!-- Generated CSS -->
+    <div class="code-section">
+        <h3>Generated CSS</h3>
+        <div class="code-box">
+            <button class="copy-btn" id="copyBtn" onclick="copyCSS()">Copy CSS</button>
+            <pre id="codeOutput"></pre>
+        </div>
+    </div>
+
+    <!-- Presets -->
+    <div class="presets-section">
+        <h3>Preset Gradients</h3>
+        <div class="presets-grid" id="presetsGrid"></div>
+    </div>
+
+    <!-- SEO Content -->
+    <div class="seo-content">
+        <h2>How to Use This CSS Gradient Generator</h2>
+        <p>This free CSS gradient maker lets you create stunning background gradients for your website in seconds. Choose between linear and radial gradient types, add multiple color stops, adjust angles, and instantly copy production-ready CSS code.</p>
+        <ul>
+            <li>Select <strong>Linear</strong> or <strong>Radial</strong> gradient type</li>
+            <li>Adjust the angle slider for linear gradients, or choose shape and position for radial</li>
+            <li>Click color swatches to change colors, drag stops on the track to reposition</li>
+            <li>Add or remove color stops for complex gradients</li>
+            <li>Enable repeating gradients with custom background size</li>
+            <li>Copy the generated CSS with one click, including optional vendor prefixes</li>
+        </ul>
+        <h2>Why Use CSS Gradients?</h2>
+        <p>CSS gradients render natively in the browser without image requests, improving page load speed and Core Web Vitals. They scale perfectly to any screen size, making them ideal for responsive designs. This gradient tool supports all modern CSS gradient syntax including linear-gradient, radial-gradient, and their repeating variants.</p>
+    </div>
+</div>
+
+<div style="text-align:center;padding:20px;background:#f0f4ff;margin-top:20px;border-radius:12px"><strong>Related Tools:</strong> <a href="favicon.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Favicon Generator</a> | <a href="meta.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Meta Tag Generator</a> | <a href="qr.html" style="color:#4f46e5;text-decoration:none;font-weight:600">QR Code Generator</a></div>
+
+<footer>
+    <p>&copy; 2025 BizToolkit &mdash; <a href="index.html">Free Business Tools</a> | <a href="privacy.html">Privacy</a></p>
+</footer>
+
+<script>
+// State
+let gradType = 'linear';
+let angle = 135;
+let repeating = false;
+let stops = [
+    { color: '#6366f1', pos: 0 },
+    { color: '#ec4899', pos: 50 },
+    { color: '#f59e0b', pos: 100 }
+];
+
+const presets = [
+    { name: 'Sunset', stops: [{color:'#f12711',pos:0},{color:'#f5af19',pos:100}], type:'linear', angle:135 },
+    { name: 'Ocean', stops: [{color:'#2193b0',pos:0},{color:'#6dd5ed',pos:100}], type:'linear', angle:135 },
+    { name: 'Purple Haze', stops: [{color:'#7303c0',pos:0},{color:'#ec38bc',pos:50},{color:'#fdeff9',pos:100}], type:'linear', angle:135 },
+    { name: 'Emerald', stops: [{color:'#348f50',pos:0},{color:'#56b4d3',pos:100}], type:'linear', angle:135 },
+    { name: 'Midnight', stops: [{color:'#0f0c29',pos:0},{color:'#302b63',pos:50},{color:'#24243e',pos:100}], type:'linear', angle:135 },
+    { name: 'Flamingo', stops: [{color:'#ee9ca7',pos:0},{color:'#ffdde1',pos:100}], type:'linear', angle:135 },
+    { name: 'Northern Lights', stops: [{color:'#43cea2',pos:0},{color:'#185a9d',pos:100}], type:'linear', angle:135 },
+    { name: 'Peach', stops: [{color:'#ed6ea0',pos:0},{color:'#ec8c69',pos:100}], type:'linear', angle:45 },
+    { name: 'Deep Space', stops: [{color:'#000000',pos:0},{color:'#434343',pos:100}], type:'linear', angle:135 },
+    { name: 'Coral Reef', stops: [{color:'#ff9966',pos:0},{color:'#ff5e62',pos:100}], type:'linear', angle:90 },
+    { name: 'Aurora', stops: [{color:'#a8edea',pos:0},{color:'#fed6e3',pos:100}], type:'radial', angle:0 },
+    { name: 'Neon Glow', stops: [{color:'#00f260',pos:0},{color:'#0575e6',pos:100}], type:'linear', angle:120 },
+    { name: 'Royal', stops: [{color:'#141e30',pos:0},{color:'#243b55',pos:100}], type:'linear', angle:135 },
+    { name: 'Cotton Candy', stops: [{color:'#f3e7e9',pos:0},{color:'#e3eeff',pos:50},{color:'#e8d0e8',pos:100}], type:'linear', angle:60 },
+    { name: 'Fire', stops: [{color:'#f12711',pos:0},{color:'#f5af19',pos:30},{color:'#f12711',pos:60},{color:'#f5af19',pos:100}], type:'linear', angle:90 }
+];
+
+function setType(t) {
+    gradType = t;
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === t));
+    document.getElementById('angleControl').style.display = t === 'linear' ? 'flex' : 'none';
+    document.getElementById('radialOptions').classList.toggle('show', t === 'radial');
+    updateGradient();
+}
+
+function setAngle(v) {
+    angle = Math.max(0, Math.min(360, parseInt(v) || 0));
+    document.getElementById('angleSlider').value = angle;
+    document.getElementById('angleInput').value = angle;
+    updateGradient();
+}
+
+function toggleRepeat() {
+    repeating = document.getElementById('repeatCheck').checked;
+    document.getElementById('bgSizeControl').classList.toggle('show', repeating);
+    updateGradient();
+}
+
+function buildGradientCSS(prefix) {
+    const sortedStops = [...stops].sort((a, b) => a.pos - b.pos);
+    const stopsStr = sortedStops.map(s => `${s.color} ${s.pos}%`).join(', ');
+    const rep = repeating ? 'repeating-' : '';
+
+    if (gradType === 'linear') {
+        const fn = `${prefix}${rep}linear-gradient`;
+        return `${fn}(${angle}deg, ${stopsStr})`;
+    } else {
+        const shape = document.getElementById('radialShape').value;
+        const pos = document.getElementById('radialPos').value;
+        const fn = `${prefix}${rep}radial-gradient`;
+        return `${fn}(${shape} at ${pos}, ${stopsStr})`;
+    }
+}
+
+function updateGradient() {
+    const css = buildGradientCSS('');
+    const preview = document.getElementById('preview');
+    preview.style.background = css;
+
+    if (repeating) {
+        const w = document.getElementById('bgW').value || 100;
+        const h = document.getElementById('bgH').value || 100;
+        preview.style.backgroundSize = `${w}px ${h}px`;
+    } else {
+        preview.style.backgroundSize = '';
+    }
+
+    renderStopTrack();
+    renderStopsList();
+    updateCode();
+}
+
+function updateCode() {
+    const vendor = document.getElementById('vendorCheck').checked;
+    const rep = repeating;
+    const w = document.getElementById('bgW').value || 100;
+    const h = document.getElementById('bgH').value || 100;
+    let lines = [];
+
+    if (vendor) {
+        lines.push(highlight('background', buildGradientCSS('-webkit-')));
+        lines.push(highlight('background', buildGradientCSS('-moz-')));
+        lines.push(highlight('background', buildGradientCSS('-o-')));
+    }
+    lines.push(highlight('background', buildGradientCSS('')));
+
+    if (rep) {
+        lines.push(highlight('background-size', `${w}px ${h}px`));
+    }
+
+    document.getElementById('codeOutput').innerHTML = lines.join('\n');
+}
+
+function highlight(prop, val) {
+    // Syntax highlight
+    const eProp = `<span class="kw">${prop}</span>`;
+    // Highlight function names
+    let eVal = val
+        .replace(/(repeating-)?(linear|radial)-gradient/g, '<span class="fn">$&</span>')
+        .replace(/(-webkit-|-moz-|-o-)/g, '<span class="punc">$1</span>')
+        .replace(/(\d+)(deg|%|px)/g, '<span class="num">$1</span>$2')
+        .replace(/(#[0-9a-fA-F]{3,8})/g, '<span class="str">$1</span>');
+    return `${eProp}<span class="punc">:</span> ${eVal}<span class="punc">;</span>`;
+}
+
+function getRawCSS() {
+    const vendor = document.getElementById('vendorCheck').checked;
+    const rep = repeating;
+    const w = document.getElementById('bgW').value || 100;
+    const h = document.getElementById('bgH').value || 100;
+    let lines = [];
+    if (vendor) {
+        lines.push(`background: ${buildGradientCSS('-webkit-')};`);
+        lines.push(`background: ${buildGradientCSS('-moz-')};`);
+        lines.push(`background: ${buildGradientCSS('-o-')};`);
+    }
+    lines.push(`background: ${buildGradientCSS('')};`);
+    if (rep) lines.push(`background-size: ${w}px ${h}px;`);
+    return lines.join('\n');
+}
+
+function copyCSS() {
+    const text = getRawCSS();
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy CSS'; btn.classList.remove('copied'); }, 1500);
+    });
+}
+
+// Stop track rendering & dragging
+function renderStopTrack() {
+    const track = document.getElementById('stopTrack');
+    const sortedStops = [...stops].sort((a, b) => a.pos - b.pos);
+    const stopsStr = sortedStops.map(s => `${s.color} ${s.pos}%`).join(', ');
+    track.style.background = `linear-gradient(90deg, ${stopsStr})`;
+
+    // Render handles
+    track.innerHTML = '';
+    stops.forEach((s, i) => {
+        const handle = document.createElement('div');
+        handle.className = 'stop-handle';
+        handle.style.left = s.pos + '%';
+        handle.style.background = s.color;
+        handle.dataset.index = i;
+
+        // Drag
+        handle.addEventListener('mousedown', startDrag);
+        handle.addEventListener('touchstart', startDragTouch, { passive: false });
+        track.appendChild(handle);
+    });
+}
+
+function startDrag(e) {
+    e.preventDefault();
+    const idx = parseInt(e.target.dataset.index);
+    const track = document.getElementById('stopTrack');
+    const rect = track.getBoundingClientRect();
+
+    function onMove(ev) {
+        const x = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+        stops[idx].pos = Math.round(x * 100);
+        updateGradient();
+    }
+    function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+    }
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+}
+
+function startDragTouch(e) {
+    e.preventDefault();
+    const idx = parseInt(e.target.dataset.index);
+    const track = document.getElementById('stopTrack');
+    const rect = track.getBoundingClientRect();
+
+    function onMove(ev) {
+        const touch = ev.touches[0];
+        const x = Math.max(0, Math.min(1, (touch.clientX - rect.left) / rect.width));
+        stops[idx].pos = Math.round(x * 100);
+        updateGradient();
+    }
+    function onUp() {
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onUp);
+    }
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onUp);
+}
+
+// Stops list
+function renderStopsList() {
+    const list = document.getElementById('stopsList');
+    list.innerHTML = '';
+    stops.forEach((s, i) => {
+        const row = document.createElement('div');
+        row.className = 'stop-row';
+        row.innerHTML = `
+            <span class="stop-label">${i + 1}</span>
+            <input type="color" value="${s.color}" onchange="stops[${i}].color=this.value;updateGradient()">
+            <span style="font-size:0.8rem;color:#888;font-family:monospace;">${s.color}</span>
+            <input type="number" value="${s.pos}" min="0" max="100" onchange="stops[${i}].pos=parseInt(this.value)||0;updateGradient()">
+            <span style="font-size:0.8rem;color:#888;">%</span>
+            ${stops.length > 2 ? `<button class="remove-stop" onclick="removeStop(${i})" title="Remove">&times;</button>` : ''}
+        `;
+        list.appendChild(row);
+    });
+}
+
+function addStop() {
+    // Insert midpoint color
+    const sorted = [...stops].sort((a, b) => a.pos - b.pos);
+    let newPos = 50;
+    // Find largest gap
+    let maxGap = 0, gapStart = 0;
+    for (let i = 0; i < sorted.length - 1; i++) {
+        const gap = sorted[i + 1].pos - sorted[i].pos;
+        if (gap > maxGap) { maxGap = gap; gapStart = i; }
+    }
+    newPos = Math.round((sorted[gapStart].pos + sorted[gapStart + 1].pos) / 2);
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+    stops.push({ color: randomColor, pos: newPos });
+    updateGradient();
+}
+
+function removeStop(i) {
+    if (stops.length <= 2) return;
+    stops.splice(i, 1);
+    updateGradient();
+}
+
+// Presets
+function renderPresets() {
+    const grid = document.getElementById('presetsGrid');
+    presets.forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'preset-card';
+        const stopsStr = p.stops.map(s => `${s.color} ${s.pos}%`).join(', ');
+        if (p.type === 'radial') {
+            card.style.background = `radial-gradient(ellipse at center, ${stopsStr})`;
+        } else {
+            card.style.background = `linear-gradient(${p.angle}deg, ${stopsStr})`;
+        }
+        card.innerHTML = `<span class="preset-name">${p.name}</span>`;
+        card.onclick = () => applyPreset(i);
+        grid.appendChild(card);
+    });
+}
+
+function applyPreset(i) {
+    const p = presets[i];
+    stops = p.stops.map(s => ({ ...s }));
+    gradType = p.type;
+    angle = p.angle;
+    repeating = false;
+    document.getElementById('repeatCheck').checked = false;
+    document.getElementById('bgSizeControl').classList.remove('show');
+    document.getElementById('angleSlider').value = angle;
+    document.getElementById('angleInput').value = angle;
+    document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === gradType));
+    document.getElementById('angleControl').style.display = gradType === 'linear' ? 'flex' : 'none';
+    document.getElementById('radialOptions').classList.toggle('show', gradType === 'radial');
+    updateGradient();
+}
+
+// Init
+renderPresets();
+updateGradient();
+</script>
+<script src="analytics.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Robots.txt Generator - Create Robots.txt File Online</title>
+    <meta name="description" content="Generate a robots.txt file for your website in seconds. Visual editor with common bot presets, path rules, crawl-delay, sitemap support, and ready-made templates.">
+    <meta name="keywords" content="robots.txt generator, robots txt file generator, create robots.txt, robots.txt maker, robots.txt creator, robots.txt tool">
+    <meta name="author" content="BizToolkit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/robots-generator.html">
+    <meta property="og:title" content="Free Robots.txt Generator - Create Robots.txt File Online">
+    <meta property="og:description" content="Generate a robots.txt file for your website in seconds. Visual editor with bot presets, templates, and live preview.">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/robots-generator.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Robots.txt Generator - Create Robots.txt File Online">
+    <meta name="twitter:description" content="Generate a robots.txt file for your website in seconds. Visual editor with bot presets, templates, and live preview.">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Free Robots.txt Generator",
+        "url": "https://biztoolkit-free.netlify.app/robots-generator.html",
+        "description": "Generate a robots.txt file for your website with a visual editor, common bot presets, and ready-made templates.",
+        "applicationCategory": "WebApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1a1a2e; line-height: 1.6; }
+        nav a:hover { opacity: 1 !important; }
+        .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 50px 20px; text-align: center; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 12px; }
+        .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 650px; margin: 0 auto; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+        .card { background: white; border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 20px; }
+        .card h2 { font-size: 1.2rem; margin-bottom: 20px; color: #1a1a2e; display: flex; align-items: center; gap: 8px; }
+        .card h2 .icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: white; }
+        .field { margin-bottom: 16px; }
+        .field label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #444; }
+        .field input, .field select { width: 100%; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 0.95rem; font-family: inherit; transition: border-color 0.2s; }
+        .field input:focus, .field select:focus { outline: none; border-color: #6366f1; }
+        .btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+        .btn-primary { background: #6366f1; color: white; }
+        .btn-primary:hover { background: #4f46e5; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-sm { padding: 5px 12px; font-size: 0.8rem; }
+        .btn-outline { background: white; color: #6366f1; border: 1.5px solid #6366f1; }
+        .btn-outline:hover { background: #6366f1; color: white; }
+        .template-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .template-btns .btn { font-size: 0.82rem; }
+        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; }
+        .checkbox-row { display: flex; align-items: center; gap: 8px; }
+        .checkbox-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: #6366f1; }
+        .checkbox-row label { font-size: 0.88rem; margin-bottom: 0; cursor: pointer; }
+        .ua-block { background: #f8f9fc; border: 1.5px solid #e2e4ea; border-radius: 10px; padding: 18px; margin-bottom: 14px; position: relative; }
+        .ua-block .ua-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .ua-block .ua-header input { flex: 1; margin-right: 10px; }
+        .rule-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .rule-row select { width: 120px; flex-shrink: 0; }
+        .rule-row input { flex: 1; }
+        .rule-row .btn { flex-shrink: 0; }
+        .code-block { background: #1e1e2e; color: #cdd6f4; border-radius: 10px; padding: 20px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85rem; line-height: 1.7; overflow-x: auto; white-space: pre-wrap; word-break: break-all; position: relative; min-height: 120px; }
+        .copy-btn { position: absolute; top: 12px; right: 12px; background: #6366f1; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: background 0.2s; }
+        .copy-btn:hover { background: #4f46e5; }
+        .copy-btn.copied { background: #22c55e; }
+        .warnings { margin-top: 14px; }
+        .warning-item { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 10px 14px; border-radius: 0 8px 8px 0; margin-bottom: 8px; font-size: 0.85rem; color: #92400e; }
+        .warning-item.error { background: #fee2e2; border-left-color: #ef4444; color: #991b1b; }
+        .upsell { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 12px; padding: 28px; color: white; text-align: center; margin-top: 30px; }
+        .upsell h3 { font-size: 1.3rem; margin-bottom: 8px; }
+        .upsell p { opacity: 0.9; margin-bottom: 16px; font-size: 0.95rem; }
+        .upsell a { display: inline-block; background: white; color: #6366f1; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: transform 0.2s; }
+        .upsell a:hover { transform: translateY(-2px); }
+        footer { text-align: center; padding: 30px 20px; color: #888; font-size: 0.85rem; }
+        .faq { max-width: 800px; margin: 40px auto 0; }
+        .faq h2 { font-size: 1.5rem; margin-bottom: 20px; text-align: center; }
+        .faq-item { background: white; border-radius: 10px; padding: 20px 24px; margin-bottom: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+        .faq-item h3 { font-size: 1rem; margin-bottom: 8px; color: #1a1a2e; }
+        .faq-item p { font-size: 0.9rem; color: #555; }
+        .section-label { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.5px; color: #888; font-weight: 700; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<nav style="background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+    <a href="index.html" style="color:white;text-decoration:none;font-weight:700;font-size:1.1rem;">BizToolkit</a>
+    <a href="index.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Tools</a>
+    <a href="invoice.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Invoice</a>
+    <a href="contract.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Contract</a>
+    <a href="meta.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Meta Tags</a>
+    <a href="robots-generator.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:1;border-bottom:2px solid #6366f1;padding-bottom:2px;">Robots.txt</a>
+</nav>
+
+<div class="hero">
+    <h1>Free Robots.txt Generator</h1>
+    <p>Create a perfect robots.txt file for your website. Visual editor with bot presets, path rules, and live preview.</p>
+</div>
+
+<div class="container">
+    <!-- Templates -->
+    <div class="card">
+        <h2><span class="icon" style="background:#8b5cf6;">&#9733;</span> Quick Templates</h2>
+        <div class="template-btns">
+            <button class="btn btn-outline" onclick="loadTemplate('allowAll')">Allow All</button>
+            <button class="btn btn-outline" onclick="loadTemplate('blockAll')">Block All</button>
+            <button class="btn btn-outline" onclick="loadTemplate('blockAI')">Block AI Crawlers</button>
+            <button class="btn btn-outline" onclick="loadTemplate('standard')">Standard Website</button>
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- Left Column: Editor -->
+        <div>
+            <!-- User-Agent Blocks -->
+            <div class="card">
+                <h2><span class="icon" style="background:#6366f1;">&#9881;</span> User-Agent Rules</h2>
+                <div id="uaBlocks"></div>
+                <button class="btn btn-primary" onclick="addUABlock()">+ Add User-Agent Block</button>
+            </div>
+
+            <!-- Common Bots Presets -->
+            <div class="card">
+                <h2><span class="icon" style="background:#0ea5e9;">&#9783;</span> Quick Add Bots</h2>
+                <p style="font-size:0.83rem;color:#666;margin-bottom:14px;">Click to add a block for this bot with default Disallow rules.</p>
+                <div class="checkbox-grid">
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('Googlebot')">Googlebot</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('Bingbot')">Bingbot</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('Googlebot-Image')">Googlebot-Image</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('Slurp')">Yahoo Slurp</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('DuckDuckBot')">DuckDuckBot</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('Baiduspider')">Baiduspider</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('YandexBot')">YandexBot</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('facebot')">Facebook Bot</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('GPTBot')">GPTBot (OpenAI)</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('ChatGPT-User')">ChatGPT-User</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('Claude-Web')">Claude-Web</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('CCBot')">CCBot (Common Crawl)</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('Google-Extended')">Google-Extended</button></div>
+                    <div class="checkbox-row"><button class="btn btn-sm btn-outline" onclick="addBotBlock('Bytespider')">Bytespider (TikTok)</button></div>
+                </div>
+            </div>
+
+            <!-- Sitemap & Crawl-delay -->
+            <div class="card">
+                <h2><span class="icon" style="background:#22c55e;">&#9776;</span> Global Settings</h2>
+                <div class="field">
+                    <label for="sitemapUrl">Sitemap URL</label>
+                    <input type="text" id="sitemapUrl" placeholder="https://example.com/sitemap.xml" oninput="updatePreview()">
+                </div>
+                <div class="field">
+                    <label for="crawlDelay">Default Crawl-delay (seconds, optional)</label>
+                    <input type="number" id="crawlDelay" placeholder="e.g. 10" min="0" max="120" oninput="updatePreview()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Preview -->
+        <div>
+            <div class="card" style="position:sticky;top:20px;">
+                <h2><span class="icon" style="background:#f59e0b;">&#128196;</span> Live Preview</h2>
+                <div class="code-block" id="codeOutput">User-agent: *
+Allow: /</div>
+                <button class="copy-btn" onclick="copyCode()">Copy</button>
+                <div class="warnings" id="warnings"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upsell -->
+    <div class="upsell">
+        <h3>Privacy Policy Playbook</h3>
+        <p>Need a privacy policy for your website? Get our step-by-step playbook to create a legally-compliant privacy policy that protects your business.</p>
+        <a href="https://jaechang112.gumroad.com/l/ahaks" target="_blank" rel="noopener">Get the Playbook - $9</a>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <h3>What is a robots.txt file?</h3>
+            <p>A robots.txt file tells search engine crawlers which pages or sections of your website they can or cannot access. It is placed in the root directory of your website (e.g., https://example.com/robots.txt) and is one of the first files crawlers check before indexing your site.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I use the generated robots.txt file?</h3>
+            <p>Copy the generated content and save it as a file named "robots.txt" in the root directory of your website. Make sure it is accessible at yourdomain.com/robots.txt. Most web hosting platforms and CMS systems have a dedicated place to upload or edit this file.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What does "User-agent: *" mean?</h3>
+            <p>The asterisk (*) is a wildcard that matches all web crawlers. Rules under "User-agent: *" apply to every bot that visits your site. You can also create rules for specific bots like Googlebot or Bingbot by using their exact names.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Should I block AI crawlers like GPTBot?</h3>
+            <p>It depends on your preference. If you do not want your content used to train AI models, you can block bots like GPTBot (OpenAI), CCBot (Common Crawl), Google-Extended, and Claude-Web. Use our "Block AI Crawlers" template to set this up quickly.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Does robots.txt affect my SEO?</h3>
+            <p>Yes. A misconfigured robots.txt can accidentally block search engines from indexing important pages. Always make sure you are not disallowing pages you want to appear in search results. Use the "Allow" directive or leave paths unblocked for pages you want indexed.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is the Crawl-delay directive?</h3>
+            <p>Crawl-delay tells bots how many seconds to wait between requests. This can reduce server load from aggressive crawlers. Note that Google does not honor Crawl-delay (use Google Search Console instead), but Bing, Yandex, and others do respect it.</p>
+        </div>
+    </div>
+</div>
+
+<div style="text-align:center;padding:20px;background:#f0f4ff;margin-top:20px;border-radius:12px"><strong>Related Tools:</strong> <a href="meta.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Meta Tag Generator</a> | <a href="schema.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Schema Markup Generator</a> | <a href="favicon.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Favicon Generator</a></div>
+
+<footer>
+    &copy; 2025 BizToolkit. Free tools for smart businesses.
+</footer>
+
+<script>
+let blockIdCounter = 0;
+
+function createRuleHTML(blockId, directive, path) {
+    const ruleId = blockId + '-rule-' + Date.now() + Math.random().toString(36).substr(2,4);
+    return '<div class="rule-row" id="' + ruleId + '">' +
+        '<select onchange="updatePreview()">' +
+            '<option value="Disallow"' + (directive === 'Disallow' ? ' selected' : '') + '>Disallow</option>' +
+            '<option value="Allow"' + (directive === 'Allow' ? ' selected' : '') + '>Allow</option>' +
+        '</select>' +
+        '<input type="text" value="' + (path || '/') + '" placeholder="/path/" oninput="updatePreview()">' +
+        '<button class="btn btn-danger btn-sm" onclick="removeRule(\'' + ruleId + '\')">&times;</button>' +
+    '</div>';
+}
+
+function addUABlock(ua, rules) {
+    const blockId = 'ua-block-' + (blockIdCounter++);
+    const rulesHTML = (rules || [{d:'Disallow', p:'/'}]).map(function(r) {
+        return createRuleHTML(blockId, r.d, r.p);
+    }).join('');
+
+    const html = '<div class="ua-block" id="' + blockId + '">' +
+        '<div class="ua-header">' +
+            '<input type="text" value="' + (ua || '*') + '" placeholder="e.g. Googlebot, *, etc." oninput="updatePreview()">' +
+            '<button class="btn btn-danger btn-sm" onclick="removeBlock(\'' + blockId + '\')" style="margin-left:8px;">Remove</button>' +
+        '</div>' +
+        '<div class="rules" id="' + blockId + '-rules">' + rulesHTML + '</div>' +
+        '<button class="btn btn-sm btn-outline" onclick="addRule(\'' + blockId + '\')" style="margin-top:6px;">+ Add Rule</button>' +
+    '</div>';
+    document.getElementById('uaBlocks').insertAdjacentHTML('beforeend', html);
+    updatePreview();
+}
+
+function addRule(blockId) {
+    const rulesContainer = document.getElementById(blockId + '-rules');
+    rulesContainer.insertAdjacentHTML('beforeend', createRuleHTML(blockId, 'Disallow', ''));
+    updatePreview();
+}
+
+function removeRule(ruleId) {
+    const el = document.getElementById(ruleId);
+    if (el) el.remove();
+    updatePreview();
+}
+
+function removeBlock(blockId) {
+    const el = document.getElementById(blockId);
+    if (el) el.remove();
+    updatePreview();
+}
+
+function addBotBlock(botName) {
+    addUABlock(botName, [{d:'Disallow', p:'/'}]);
+}
+
+function loadTemplate(name) {
+    document.getElementById('uaBlocks').innerHTML = '';
+    document.getElementById('sitemapUrl').value = '';
+    document.getElementById('crawlDelay').value = '';
+    blockIdCounter = 0;
+
+    if (name === 'allowAll') {
+        addUABlock('*', [{d:'Allow', p:'/'}]);
+    } else if (name === 'blockAll') {
+        addUABlock('*', [{d:'Disallow', p:'/'}]);
+    } else if (name === 'blockAI') {
+        addUABlock('*', [{d:'Allow', p:'/'}]);
+        addUABlock('GPTBot', [{d:'Disallow', p:'/'}]);
+        addUABlock('ChatGPT-User', [{d:'Disallow', p:'/'}]);
+        addUABlock('CCBot', [{d:'Disallow', p:'/'}]);
+        addUABlock('Google-Extended', [{d:'Disallow', p:'/'}]);
+        addUABlock('Claude-Web', [{d:'Disallow', p:'/'}]);
+        addUABlock('Bytespider', [{d:'Disallow', p:'/'}]);
+    } else if (name === 'standard') {
+        addUABlock('*', [
+            {d:'Allow', p:'/'},
+            {d:'Disallow', p:'/admin/'},
+            {d:'Disallow', p:'/private/'},
+            {d:'Disallow', p:'/cgi-bin/'},
+            {d:'Disallow', p:'/tmp/'},
+            {d:'Disallow', p:'/*.json$'},
+        ]);
+        document.getElementById('sitemapUrl').value = 'https://example.com/sitemap.xml';
+    }
+    updatePreview();
+}
+
+function updatePreview() {
+    const blocks = document.querySelectorAll('.ua-block');
+    let lines = [];
+
+    blocks.forEach(function(block, idx) {
+        if (idx > 0) lines.push('');
+        const ua = block.querySelector('.ua-header input').value.trim() || '*';
+        lines.push('User-agent: ' + ua);
+
+        const rules = block.querySelectorAll('.rule-row');
+        rules.forEach(function(rule) {
+            const directive = rule.querySelector('select').value;
+            const path = rule.querySelector('input').value.trim();
+            lines.push(directive + ': ' + path);
+        });
+
+        const crawlDelay = document.getElementById('crawlDelay').value.trim();
+        if (crawlDelay && parseInt(crawlDelay) > 0) {
+            lines.push('Crawl-delay: ' + crawlDelay);
+        }
+    });
+
+    const sitemap = document.getElementById('sitemapUrl').value.trim();
+    if (sitemap) {
+        lines.push('');
+        lines.push('Sitemap: ' + sitemap);
+    }
+
+    if (lines.length === 0) {
+        lines.push('User-agent: *');
+        lines.push('Allow: /');
+    }
+
+    document.getElementById('codeOutput').textContent = lines.join('\n');
+    validate(lines, blocks);
+}
+
+function validate(lines, blocks) {
+    const warnings = [];
+    const fullText = lines.join('\n');
+
+    // Check for empty user-agent
+    blocks.forEach(function(block) {
+        const ua = block.querySelector('.ua-header input').value.trim();
+        if (!ua) {
+            warnings.push({type:'warn', msg:'A User-agent field is empty. It will default to "*" (all bots).'});
+        }
+    });
+
+    // Check for Disallow: / on * (blocking everything)
+    let blockingAll = false;
+    blocks.forEach(function(block) {
+        const ua = block.querySelector('.ua-header input').value.trim() || '*';
+        if (ua === '*') {
+            const rules = block.querySelectorAll('.rule-row');
+            rules.forEach(function(rule) {
+                const d = rule.querySelector('select').value;
+                const p = rule.querySelector('input').value.trim();
+                if (d === 'Disallow' && p === '/') {
+                    blockingAll = true;
+                }
+            });
+        }
+    });
+    if (blockingAll) {
+        warnings.push({type:'error', msg:'Warning: "Disallow: /" on User-agent * will block ALL crawlers from your entire site. This will remove your site from search results.'});
+    }
+
+    // Check for missing sitemap
+    const sitemap = document.getElementById('sitemapUrl').value.trim();
+    if (!sitemap) {
+        warnings.push({type:'warn', msg:'Consider adding a Sitemap URL to help search engines discover your pages faster.'});
+    } else if (sitemap && !sitemap.match(/^https?:\/\/.+/)) {
+        warnings.push({type:'error', msg:'Sitemap URL should start with https:// or http://'});
+    }
+
+    // Check for Disallow with no path
+    blocks.forEach(function(block) {
+        const rules = block.querySelectorAll('.rule-row');
+        rules.forEach(function(rule) {
+            const d = rule.querySelector('select').value;
+            const p = rule.querySelector('input').value.trim();
+            if (d === 'Disallow' && p === '') {
+                warnings.push({type:'warn', msg:'An empty "Disallow:" line means allow everything. Use "Disallow: /" to block all, or add a specific path.'});
+            }
+        });
+    });
+
+    // Check crawl-delay
+    const crawlDelay = document.getElementById('crawlDelay').value.trim();
+    if (crawlDelay && parseInt(crawlDelay) > 60) {
+        warnings.push({type:'warn', msg:'Crawl-delay of ' + crawlDelay + 's is very high. Most sites use 1-10 seconds. A high value may slow indexing.'});
+    }
+    if (crawlDelay) {
+        warnings.push({type:'warn', msg:'Note: Google ignores Crawl-delay. Use Google Search Console to control Googlebot crawl rate.'});
+    }
+
+    const container = document.getElementById('warnings');
+    if (warnings.length === 0) {
+        container.innerHTML = '';
+        return;
+    }
+    container.innerHTML = warnings.map(function(w) {
+        return '<div class="warning-item ' + (w.type === 'error' ? 'error' : '') + '">' + w.msg + '</div>';
+    }).join('');
+}
+
+function copyCode() {
+    const text = document.getElementById('codeOutput').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+            btn.textContent = 'Copy';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+// Initialize with a default block
+addUABlock('*', [{d:'Allow', p:'/'}]);
+</script>
+<script src="analytics.js"></script>
+</body>
+</html>

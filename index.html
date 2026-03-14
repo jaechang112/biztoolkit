@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Business Tools | Invoice Generator, Contract Builder, QR Code & More</title>
+    <meta name="description" content="Free online business tools for freelancers and small businesses. Invoice generator, contract builder, QR codes, password generator, and more. No signup required.">
+    <meta name="keywords" content="free business tools, invoice generator, contract builder, qr code generator, password generator, word counter, email signature">
+    <meta property="og:title" content="Free Business Tools for Freelancers & Small Businesses">
+    <meta property="og:description" content="Generate professional invoices, contracts, QR codes and more. 100% free, no signup.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebSite","name":"BizToolkit","url":"https://biztoolkit-free.netlify.app/","description":"Free online business tools for freelancers and small businesses. No signup required.","author":{"@type":"Organization","name":"BizToolkit"}}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #fafbfc; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        nav { background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        nav a:hover { opacity: 1; }
+        nav .brand { font-weight: 700; font-size: 1.1rem; opacity: 1; }
+        header { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: white; padding: 60px 0 80px; text-align: center; }
+        header h1 { font-size: 2.8rem; margin-bottom: 16px; font-weight: 800; }
+        header p { font-size: 1.2rem; opacity: 0.85; max-width: 600px; margin: 0 auto 30px; line-height: 1.6; }
+        .badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); padding: 8px 20px; border-radius: 50px; font-size: 0.9rem; }
+        .tools-section { margin-top: -40px; padding-bottom: 60px; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .tool-card { background: white; border-radius: 16px; padding: 30px 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #e8ecf1; transition: transform 0.2s, box-shadow 0.2s; }
+        .tool-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+        .tool-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .tool-card h3 { font-size: 1.2rem; margin-bottom: 8px; color: #1a1a2e; }
+        .tool-card p { color: #555; line-height: 1.5; margin-bottom: 16px; font-size: 0.9rem; }
+        .tag-free { display: inline-block; background: #dcfce7; color: #166534; padding: 3px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; margin-bottom: 10px; }
+        .btn { display: inline-block; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+        .btn-primary { background: #4f46e5; color: white; }
+        .btn-primary:hover { background: #4338ca; }
+        .value-section { background: #f0f4ff; padding: 60px 0; text-align: center; }
+        .value-section h2 { font-size: 2rem; margin-bottom: 40px; }
+        .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .value-item h4 { font-size: 1.1rem; margin-bottom: 8px; }
+        .value-item p { color: #555; font-size: 0.95rem; }
+        .value-icon { font-size: 2rem; margin-bottom: 12px; }
+        .pro-section { padding: 80px 0; text-align: center; }
+        .pro-section h2 { font-size: 2rem; margin-bottom: 16px; }
+        .pro-section .subtitle { color: #555; font-size: 1.1rem; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .pro-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 30px; }
+        .pro-card { background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; border-radius: 16px; padding: 30px; text-align: left; }
+        .pro-card h4 { font-size: 1.1rem; margin-bottom: 8px; }
+        .pro-card p { opacity: 0.8; font-size: 0.85rem; line-height: 1.6; margin-bottom: 16px; }
+        .pro-card .price { font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; }
+        .pro-card .price .original { text-decoration: line-through; opacity: 0.5; font-size: 1rem; font-weight: 400; }
+        .btn-pro { background: white; color: #312e81; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; font-size: 0.9rem; }
+        footer { background: #1a1a2e; color: rgba(255,255,255,0.7); padding: 40px 0; text-align: center; font-size: 0.9rem; }
+        footer a { color: #a5b4fc; text-decoration: none; }
+        .stats { display: flex; gap: 40px; justify-content: center; margin-top: 20px; }
+        .stat { text-align: center; }
+        .stat-num { font-size: 2rem; font-weight: 800; }
+        .stat-label { font-size: 0.85rem; opacity: 0.7; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="brand">BizToolkit</a>
+        <a href="index.html">All Tools</a>
+        <a href="invoice.html">Invoice</a>
+        <a href="contract.html">Contract</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="qr.html">QR</a>
+        <a href="password.html">Password</a>
+        <a href="blog/">Blog</a>
+    </nav>
+
+    <header>
+        <div class="container">
+            <h1>Free Business Tools</h1>
+            <p>Professional-grade tools for freelancers and small businesses. No signup, no credit card, no catch.</p>
+            <span class="badge">21 Free Tools &bull; No Signup Required &bull; Works Offline</span>
+            <div class="stats">
+                <div class="stat"><div class="stat-num">21</div><div class="stat-label">Free Tools</div></div>
+                <div class="stat"><div class="stat-num">0</div><div class="stat-label">Cost</div></div>
+                <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Private</div></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="tools-section">
+        <div class="container">
+            <div class="tools-grid">
+                
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🧾</div>
+                    <h3>Invoice Generator</h3>
+                    <p>Create professional invoices in seconds. Download as PDF.</p>
+                    <a href="invoice.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">📋</div>
+                    <h3>Contract Builder</h3>
+                    <p>Generate freelance contracts, NDAs, and service agreements.</p>
+                    <a href="contract.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🔒</div>
+                    <h3>Privacy Policy Generator</h3>
+                    <p>GDPR/CCPA compliant privacy policies in 2 minutes.</p>
+                    <a href="privacy.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">📱</div>
+                    <h3>QR Code Generator</h3>
+                    <p>Generate QR codes for URLs, text, WiFi, and more.</p>
+                    <a href="qr.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🔑</div>
+                    <h3>Password Generator</h3>
+                    <p>Create strong, secure passwords instantly.</p>
+                    <a href="password.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">📝</div>
+                    <h3>Word Counter</h3>
+                    <p>Count words, characters, sentences. Reading time calculator.</p>
+                    <a href="wordcount.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">✉️</div>
+                    <h3>Email Signature Generator</h3>
+                    <p>Create professional email signatures with live preview.</p>
+                    <a href="signature.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">📄</div>
+                    <h3>Resume Builder</h3>
+                    <p>Build a professional resume with customizable templates.</p>
+                    <a href="resume.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🎨</div>
+                    <h3>Color Palette Generator</h3>
+                    <p>Generate beautiful color palettes for your projects.</p>
+                    <a href="color.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">📰</div>
+                    <h3>Lorem Ipsum Generator</h3>
+                    <p>Generate placeholder text for designs and mockups.</p>
+                    <a href="lorem.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🧮</div>
+                    <h3>Business Calculator</h3>
+                    <p>ROI, markup, margin, and break-even calculators.</p>
+                    <a href="calc.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🏷️</div>
+                    <h3>Meta Tag Generator</h3>
+                    <p>Generate SEO meta tags for better search rankings.</p>
+                    <a href="meta.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">⭐</div>
+                    <h3>Favicon Generator</h3>
+                    <p>Create favicons from text. Download ICO, PNG, Apple Touch Icon.</p>
+                    <a href="favicon.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🤖</div>
+                    <h3>Robots.txt Generator</h3>
+                    <p>Generate robots.txt files for your website in seconds.</p>
+                    <a href="robots-generator.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🎨</div>
+                    <h3>CSS Gradient Generator</h3>
+                    <p>Create beautiful CSS gradients with live preview.</p>
+                    <a href="gradient.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">{ }</div>
+                    <h3>JSON Formatter</h3>
+                    <p>Format, validate, and beautify JSON data instantly.</p>
+                    <a href="json.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">📑</div>
+                    <h3>Markdown Editor</h3>
+                    <p>Write Markdown with live preview. Export to HTML.</p>
+                    <a href="markdown.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🔗</div>
+                    <h3>UTM Link Builder</h3>
+                    <p>Build campaign URLs with UTM parameters. Track marketing ROI.</p>
+                    <a href="utm.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">📊</div>
+                    <h3>Schema Markup Generator</h3>
+                    <p>Generate JSON-LD structured data for better search results.</p>
+                    <a href="schema.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">🔄</div>
+                    <h3>Base64 Encoder/Decoder</h3>
+                    <p>Encode and decode Base64 strings and files instantly.</p>
+                    <a href="base64.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+                <div class="tool-card">
+                    <span class="tag-free">FREE</span>
+                    <div class="tool-icon">📃</div>
+                    <h3>Text Diff Checker</h3>
+                    <p>Compare two texts and highlight the differences.</p>
+                    <a href="diff.html" class="btn btn-primary">Use Tool →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="value-section">
+        <div class="container">
+            <h2>Why Professionals Choose BizToolkit</h2>
+            <div class="value-grid">
+                <div class="value-item">
+                    <div class="value-icon">⚡</div>
+                    <h4>Instant Results</h4>
+                    <p>No loading, no waiting. Everything runs in your browser for instant output.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🔒</div>
+                    <h4>100% Private</h4>
+                    <p>Your data never leaves your browser. No server processing, no tracking, no storage.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">💰</div>
+                    <h4>Always Free</h4>
+                    <p>No hidden fees, no premium tiers for basic features. Every tool is completely free.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🌐</div>
+                    <h4>Works Everywhere</h4>
+                    <p>Desktop, tablet, phone. Any browser, any device. Even works offline.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pro-section">
+        <div class="container">
+            <h2>Go Pro with Our Business Playbooks</h2>
+            <p class="subtitle">Our free tools get you started. Our premium playbooks give you the complete system to level up your business.</p>
+            <div class="pro-cards">
+                <div class="pro-card">
+                    <h4>📊 The $10K Invoice System</h4>
+                    <p>30 psychological billing workflows that get invoices paid 3x faster. Templates + automation.</p>
+                    <div class="price">$9 <span class="original">$47</span></div>
+                    <a href="https://jaechang112.gumroad.com/l/nlkjqo" class="btn-pro" target="_blank">Get Playbook →</a>
+                </div>
+                <div class="pro-card">
+                    <h4>📝 Contract Builder's Blueprint</h4>
+                    <p>15+ advanced contract templates, negotiation scripts, and clause libraries.</p>
+                    <div class="price">$9 <span class="original">$47</span></div>
+                    <a href="https://jaechang112.gumroad.com/l/fbktdr" class="btn-pro" target="_blank">Get Blueprint →</a>
+                </div>
+                <div class="pro-card">
+                    <h4>🔐 Privacy Policy Playbook</h4>
+                    <p>Complete legal compliance kit. GDPR, CCPA, terms of service, cookie policies.</p>
+                    <div class="price">$9 <span class="original">$47</span></div>
+                    <a href="https://jaechang112.gumroad.com/l/ahaks" class="btn-pro" target="_blank">Get Kit →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 BizToolkit. Free tools for freelancers and small businesses.</p>
+            <p style="margin-top: 8px;"><a href="privacy.html">Privacy Policy</a></p>
+        </div>
+    </footer>
+</body>
+</html>

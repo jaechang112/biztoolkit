@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robots.txt: Complete Guide with Examples (2026) | BizToolkit</title>
+    <meta name="description" content="Learn everything about robots.txt: syntax, examples, common mistakes, and how to control search engine crawlers. Includes a free robots.txt generator and ready-to-use templates for WordPress, Shopify, and React SPAs.">
+    <meta name="keywords" content="robots.txt, robots.txt generator, robots.txt example, what is robots.txt, robots.txt disallow, robots.txt allow, robots.txt sitemap, robots.txt crawl-delay, robots.txt wordpress, robots.txt shopify">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/blog/robots-txt-complete-guide.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Robots.txt: Complete Guide with Examples (2026)">
+    <meta property="og:description" content="Master robots.txt with practical examples, syntax reference, and common mistakes to avoid. Free generator included.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/blog/robots-txt-complete-guide.html">
+    <meta property="og:site_name" content="BizToolkit">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Robots.txt: Complete Guide with Examples (2026)">
+    <meta name="twitter:description" content="Master robots.txt with practical examples, syntax reference, and common mistakes to avoid. Free generator included.">
+
+    <!-- Article meta -->
+    <meta property="article:published_time" content="2026-03-14">
+    <meta property="article:author" content="BizToolkit">
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is a robots.txt file?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A robots.txt file is a plain text file placed at the root of your website that tells search engine crawlers which pages or sections of your site they can and cannot access. It follows the Robots Exclusion Protocol and is the first file crawlers check before indexing your site."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does robots.txt block pages from appearing in Google?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not exactly. Robots.txt prevents crawlers from accessing a page, but if other sites link to that page, Google may still index the URL (showing it in search results without a description). To fully block a page from search results, use a meta robots noindex tag or HTTP X-Robots-Tag header instead."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Where should I place my robots.txt file?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Your robots.txt file must be placed in the root directory of your domain. For example, https://example.com/robots.txt. It will not work if placed in a subdirectory like /pages/robots.txt. Each subdomain needs its own robots.txt file."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference between robots.txt and meta robots tags?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Robots.txt controls whether crawlers can access a page at all, while meta robots tags (placed in the HTML head) control whether a page should be indexed or whether links should be followed. Robots.txt works at the crawl level; meta robots works at the indexing level. For best results, use them together."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I use robots.txt to hide sensitive information?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Robots.txt is publicly accessible and only serves as a suggestion to well-behaved crawlers. Malicious bots can ignore it entirely. Never use robots.txt to protect sensitive data like admin panels, user data, or private documents. Use proper authentication, access controls, and server-side security instead."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I test my robots.txt file?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use Google Search Console's robots.txt Tester tool to check your file for errors and test whether specific URLs are blocked or allowed. You can also visit yourdomain.com/robots.txt directly in your browser to verify the file is accessible and correctly formatted."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://biztoolkit-free.netlify.app/" },
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://biztoolkit-free.netlify.app/blog/" },
+            { "@type": "ListItem", "position": 3, "name": "Robots.txt: Complete Guide with Examples" }
+        ]
+    }
+    </script>
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Robots.txt: Complete Guide with Examples (2026)",
+        "description": "Learn everything about robots.txt: syntax, examples, common mistakes, and how to control search engine crawlers. Includes a free robots.txt generator.",
+        "datePublished": "2026-03-14",
+        "dateModified": "2026-03-14",
+        "author": { "@type": "Organization", "name": "BizToolkit" },
+        "publisher": { "@type": "Organization", "name": "BizToolkit" }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1a1a2e;
+            background: #ffffff;
+            line-height: 1.7;
+        }
+
+        /* Nav */
+        nav { background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; transition: opacity 0.2s; }
+        nav a:hover { opacity: 1; }
+        nav .brand { font-weight: 700; font-size: 1.1rem; opacity: 1; }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 720px;
+            margin: 20px auto 0;
+            padding: 0 20px;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        /* Article */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 20px 60px;
+        }
+
+        .article-meta {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.15rem;
+            color: #4b5563;
+            margin-bottom: 32px;
+            line-height: 1.8;
+            border-left: 3px solid #6366f1;
+            padding-left: 16px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 40px 0 16px;
+            color: #111827;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            margin: 28px 0 10px;
+            color: #1f2937;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: #374151;
+        }
+
+        ol, ul {
+            margin: 0 0 16px 24px;
+            color: #374151;
+        }
+        li { margin-bottom: 8px; }
+
+        strong { color: #111827; }
+
+        /* Code blocks */
+        pre {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            border-radius: 8px;
+            padding: 20px 24px;
+            overflow-x: auto;
+            margin: 16px 0 20px;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        code {
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 0.88em;
+        }
+        p code, li code {
+            background: #f3f4f6;
+            color: #e11d48;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        pre .comment { color: #6c7086; }
+        pre .directive { color: #89b4fa; }
+        pre .value { color: #a6e3a1; }
+
+        /* CTA Box */
+        .cta-box {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin: 36px 0;
+            text-align: center;
+        }
+        .cta-box h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin: 0 0 8px;
+        }
+        .cta-box p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: white;
+            color: #6366f1;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Tip/Warning boxes */
+        .tip-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .tip-box strong { color: #166534; }
+        .tip-box p { color: #166534; margin: 0; }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .warning-box strong { color: #92400e; }
+        .warning-box p { color: #92400e; margin: 0; }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px 0 8px 32px;
+            position: relative;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .checklist li::before {
+            content: "\2713";
+            position: absolute;
+            left: 4px;
+            color: #22c55e;
+            font-weight: 700;
+        }
+
+        /* FAQ */
+        .faq-section { margin-top: 40px; }
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 20px 0;
+        }
+        .faq-item h3 {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            color: #111827;
+        }
+        .faq-item p {
+            margin: 0;
+            color: #4b5563;
+            font-size: 0.95rem;
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 24px;
+            font-size: 0.95rem;
+        }
+        .comparison-table th {
+            background: #f9fafb;
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 2px solid #e5e7eb;
+            color: #111827;
+            font-weight: 600;
+        }
+        .comparison-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            color: #374151;
+        }
+
+        /* Playbook mention */
+        .playbook-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 24px;
+            margin: 36px 0;
+        }
+        .playbook-box h3 { margin: 0 0 8px; color: #111827; }
+        .playbook-box p { font-size: 0.95rem; color: #4b5563; margin-bottom: 12px; }
+        .playbook-link {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .playbook-link:hover { text-decoration: underline; }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            text-align: center;
+        }
+        .article-footer a { color: #6366f1; text-decoration: none; }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            h1 { font-size: 1.7rem; }
+            h2 { font-size: 1.3rem; }
+            .cta-box { padding: 20px; }
+            pre { padding: 14px 16px; font-size: 0.82rem; }
+            .comparison-table { font-size: 0.85rem; }
+            .comparison-table th, .comparison-table td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="../index.html" class="brand">BizToolkit</a>
+    <a href="../index.html">Tools</a>
+    <a href="../invoice.html">Invoice</a>
+    <a href="../contract.html">Contract</a>
+</nav>
+
+<div class="breadcrumb">
+    <a href="../index.html">Home</a> <span>&rsaquo;</span>
+    <a href="./">Blog</a> <span>&rsaquo;</span>
+    Robots.txt: Complete Guide with Examples
+</div>
+
+<article class="article-container">
+    <p class="article-meta">Updated March 14, 2026 &middot; 12 min read</p>
+
+    <h1>Robots.txt: Complete Guide with Examples (2026)</h1>
+
+    <div class="article-intro">
+        Your robots.txt file is the first thing every search engine reads when it visits your website. A single misplaced line can block Google from indexing your entire site, costing you thousands of visitors overnight. Yet most website owners either ignore this file completely or copy-paste a template without understanding what it does.
+    </div>
+
+    <p>This guide covers everything you need to know about robots.txt: what it is, how search engine crawlers use it, the complete syntax reference, real-world examples for every common scenario, and the mistakes that silently destroy your SEO. Whether you are running a WordPress blog, a Shopify store, or a custom React single-page application, you will find a ready-to-use robots.txt example tailored to your platform.</p>
+
+    <p>If you just need to generate a robots.txt file quickly, our <a href="../robots-generator.html">free robots.txt generator</a> will create one for you in seconds. But understanding what each directive does will save you from costly mistakes down the road.</p>
+
+    <!-- ====== Section 1 ====== -->
+    <h2>What Is Robots.txt and Why It Matters</h2>
+
+    <p>A robots.txt file is a simple plain text file that lives at the root of your website (for example, <code>https://example.com/robots.txt</code>). It follows the <strong>Robots Exclusion Protocol</strong>, a standard created in 1994 that tells web crawlers which parts of your site they are allowed to access and which parts they should stay away from.</p>
+
+    <p>When a search engine crawler like Googlebot arrives at your website, the very first thing it does is look for a robots.txt file. Before crawling a single page, it reads your robots.txt to understand the rules you have set. If the file says a certain directory is off-limits, well-behaved crawlers will respect that instruction and skip it entirely.</p>
+
+    <p>This matters for three critical reasons:</p>
+
+    <ul>
+        <li><strong>Crawl budget management:</strong> Search engines allocate a limited number of pages they will crawl on your site during each visit. If crawlers waste time on low-value pages (admin panels, search results pages, duplicate content), your important pages may not get crawled at all.</li>
+        <li><strong>Preventing indexation of private content:</strong> Staging environments, internal search results, user account pages, and other content you do not want appearing in Google can be blocked at the crawl level.</li>
+        <li><strong>Server resource protection:</strong> Aggressive crawlers can overload your server. Robots.txt lets you throttle how frequently bots can make requests, keeping your site responsive for real visitors.</li>
+    </ul>
+
+    <div class="warning-box">
+        <p><strong>Important:</strong> Robots.txt is not a security tool. It is a publicly readable file that politely asks crawlers to stay away. Malicious bots will ignore it. Never use robots.txt to protect sensitive information like passwords, customer data, or private documents.</p>
+    </div>
+
+    <!-- ====== Section 2 ====== -->
+    <h2>How Search Engine Crawlers Use Robots.txt</h2>
+
+    <p>Understanding the crawl process helps you write better robots.txt rules. Here is what happens step by step when a search engine discovers your website:</p>
+
+    <ol>
+        <li><strong>Discovery:</strong> The search engine learns about your site through links from other websites, your sitemap submission, or direct URL submission in tools like Google Search Console.</li>
+        <li><strong>Robots.txt check:</strong> Before crawling any page, the crawler fetches <code>yourdomain.com/robots.txt</code>. If the file exists, the crawler reads and caches the rules. If the file does not exist (404 response), the crawler assumes everything is allowed.</li>
+        <li><strong>Rule matching:</strong> For each URL the crawler wants to visit, it checks whether any Disallow rule matches that URL path. If a matching Disallow exists and no more specific Allow rule overrides it, the crawler skips that page.</li>
+        <li><strong>Crawling:</strong> For allowed pages, the crawler downloads the HTML, follows links to discover new pages, and repeats the process.</li>
+        <li><strong>Re-checking:</strong> Crawlers periodically re-fetch your robots.txt to check for changes. Google typically caches it for up to 24 hours.</li>
+    </ol>
+
+    <p>Each major search engine has its own crawler with a specific user-agent name. Google uses <code>Googlebot</code>, Bing uses <code>Bingbot</code>, and so on. Your robots.txt can set different rules for different crawlers, giving you granular control over which search engines can access which parts of your site.</p>
+
+    <!-- ====== Section 3 ====== -->
+    <h2>Robots.txt Syntax: The Complete Reference</h2>
+
+    <p>The robots.txt syntax is straightforward, but the details matter. Every directive must follow a specific format, and even small errors can cause crawlers to misinterpret your rules. Here is every directive you need to know:</p>
+
+    <h3>User-agent</h3>
+
+    <p>The <code>User-agent</code> directive specifies which crawler the following rules apply to. Use <code>*</code> as a wildcard to target all crawlers, or specify a particular bot by name.</p>
+
+<pre><span class="comment"># Rules for all crawlers</span>
+<span class="directive">User-agent:</span> <span class="value">*</span>
+
+<span class="comment"># Rules specifically for Google</span>
+<span class="directive">User-agent:</span> <span class="value">Googlebot</span>
+
+<span class="comment"># Rules specifically for Bing</span>
+<span class="directive">User-agent:</span> <span class="value">Bingbot</span></pre>
+
+    <p>You can have multiple User-agent blocks in a single robots.txt file. Each block starts with a User-agent line and includes the Disallow and Allow rules that apply to that crawler.</p>
+
+    <h3>Disallow</h3>
+
+    <p>The <code>Disallow</code> directive tells crawlers not to access a specific URL path. The path is case-sensitive and matches from the beginning of the URL path.</p>
+
+<pre><span class="comment"># Block a specific page</span>
+<span class="directive">Disallow:</span> <span class="value">/private-page.html</span>
+
+<span class="comment"># Block an entire directory</span>
+<span class="directive">Disallow:</span> <span class="value">/admin/</span>
+
+<span class="comment"># Block all URLs containing a query parameter</span>
+<span class="directive">Disallow:</span> <span class="value">/*?</span>
+
+<span class="comment"># Block everything (disallow all pages)</span>
+<span class="directive">Disallow:</span> <span class="value">/</span>
+
+<span class="comment"># An empty Disallow means allow everything</span>
+<span class="directive">Disallow:</span></pre>
+
+    <p>An empty <code>Disallow:</code> directive (with nothing after the colon) means "allow everything." This is the standard way to explicitly state that no restrictions apply to the specified user-agent.</p>
+
+    <h3>Allow</h3>
+
+    <p>The <code>Allow</code> directive overrides a Disallow rule for a specific path. This is particularly useful when you want to block a directory but allow access to certain files within it.</p>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span> <span class="value">/private/</span>
+<span class="directive">Allow:</span> <span class="value">/private/public-page.html</span></pre>
+
+    <p>In this example, crawlers are blocked from the entire <code>/private/</code> directory except for <code>/private/public-page.html</code>, which they are allowed to access. When both Allow and Disallow match a URL, the more specific (longer) rule takes precedence.</p>
+
+    <h3>Sitemap</h3>
+
+    <p>The <code>Sitemap</code> directive tells crawlers where to find your XML sitemap. Unlike other directives, the Sitemap line is not tied to a User-agent block. It applies globally and can appear anywhere in the file.</p>
+
+<pre><span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap.xml</span>
+<span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap-posts.xml</span></pre>
+
+    <p>You can include multiple Sitemap directives if your site uses multiple sitemaps. Always use the full absolute URL (including <code>https://</code>), not a relative path.</p>
+
+    <h3>Crawl-delay</h3>
+
+    <p>The <code>Crawl-delay</code> directive asks crawlers to wait a specified number of seconds between requests. This protects your server from being overwhelmed by aggressive crawling.</p>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Crawl-delay:</span> <span class="value">10</span></pre>
+
+    <p>This tells crawlers to wait at least 10 seconds between each page request. Note that <strong>Google does not support Crawl-delay</strong>. To control Googlebot's crawl rate, use the Crawl Rate settings in Google Search Console instead. Bing, Yandex, and several other crawlers do respect Crawl-delay.</p>
+
+    <div class="tip-box">
+        <p><strong>Pro tip:</strong> Use Crawl-delay sparingly. Setting it too high means search engines will crawl fewer pages per visit, which can slow down how quickly new or updated content appears in search results.</p>
+    </div>
+
+    <h3>Wildcard Patterns</h3>
+
+    <p>Most modern crawlers support two wildcard characters in robots.txt paths:</p>
+
+    <ul>
+        <li><code>*</code> matches any sequence of characters. For example, <code>Disallow: /*.pdf$</code> blocks all PDF files.</li>
+        <li><code>$</code> marks the end of a URL. Without it, <code>/page</code> would match <code>/page</code>, <code>/page2</code>, and <code>/pages/about</code>. Adding <code>$</code> ensures only exact matches.</li>
+    </ul>
+
+<pre><span class="comment"># Block all PDF files</span>
+<span class="directive">Disallow:</span> <span class="value">/*.pdf$</span>
+
+<span class="comment"># Block all URLs with query strings</span>
+<span class="directive">Disallow:</span> <span class="value">/*?*</span>
+
+<span class="comment"># Block URLs ending in .json</span>
+<span class="directive">Disallow:</span> <span class="value">/*.json$</span></pre>
+
+    <div class="cta-box">
+        <h3>Generate Your Robots.txt in Seconds</h3>
+        <p>Select your platform, choose your rules, and download a properly formatted robots.txt file. No syntax errors, no guesswork.</p>
+        <a href="../robots-generator.html" class="cta-btn">Open the Free Robots.txt Generator &rarr;</a>
+    </div>
+
+    <!-- ====== Section 4 ====== -->
+    <h2>Robots.txt Examples for Every Common Scenario</h2>
+
+    <p>Here are ready-to-use robots.txt examples you can adapt for your site. Each one solves a specific, common problem.</p>
+
+    <h3>Allow All Crawlers (Default Open Access)</h3>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span>
+
+<span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap.xml</span></pre>
+
+    <p>This is the simplest robots.txt possible. The empty Disallow directive means "disallow nothing," so all crawlers can access every page. This is appropriate for most public websites that want maximum search engine visibility.</p>
+
+    <h3>Block All Crawlers (Staging or Development Sites)</h3>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span> <span class="value">/</span></pre>
+
+    <p>The forward slash after Disallow matches every URL on your site, effectively blocking all crawlers from all pages. Use this for staging environments, development servers, and sites that are not ready for public access. This is the most critical robots.txt rule to know: one line that keeps your entire site out of search engines.</p>
+
+    <div class="warning-box">
+        <p><strong>Watch out:</strong> If you launch your production site with this rule still in place, Google will de-index your entire site. Always check your robots.txt before going live.</p>
+    </div>
+
+    <h3>Block Specific Directories</h3>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span> <span class="value">/admin/</span>
+<span class="directive">Disallow:</span> <span class="value">/wp-admin/</span>
+<span class="directive">Disallow:</span> <span class="value">/cart/</span>
+<span class="directive">Disallow:</span> <span class="value">/checkout/</span>
+<span class="directive">Disallow:</span> <span class="value">/my-account/</span>
+<span class="directive">Disallow:</span> <span class="value">/search/</span>
+<span class="directive">Disallow:</span> <span class="value">/tmp/</span>
+
+<span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap.xml</span></pre>
+
+    <p>This is a common pattern for ecommerce and content sites. It blocks admin panels, user account areas, cart and checkout flows (which create duplicate URLs), internal search results, and temporary directories while allowing crawlers to access all public content.</p>
+
+    <h3>Block Specific Bots Only</h3>
+
+<pre><span class="comment"># Allow all crawlers by default</span>
+<span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span>
+
+<span class="comment"># Block specific AI training crawlers</span>
+<span class="directive">User-agent:</span> <span class="value">GPTBot</span>
+<span class="directive">Disallow:</span> <span class="value">/</span>
+
+<span class="directive">User-agent:</span> <span class="value">ChatGPT-User</span>
+<span class="directive">Disallow:</span> <span class="value">/</span>
+
+<span class="directive">User-agent:</span> <span class="value">CCBot</span>
+<span class="directive">Disallow:</span> <span class="value">/</span>
+
+<span class="directive">User-agent:</span> <span class="value">Google-Extended</span>
+<span class="directive">Disallow:</span> <span class="value">/</span>
+
+<span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap.xml</span></pre>
+
+    <p>This configuration allows all standard search engine crawlers while blocking specific AI training bots. As of 2026, many publishers use this pattern to allow Google and Bing indexing while preventing their content from being used to train large language models. <code>Google-Extended</code> blocks Google's AI training crawler specifically, without affecting Googlebot's regular search indexing.</p>
+
+    <h3>Block URL Parameters (Prevent Duplicate Content)</h3>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span> <span class="value">/*?sort=</span>
+<span class="directive">Disallow:</span> <span class="value">/*?filter=</span>
+<span class="directive">Disallow:</span> <span class="value">/*&amp;page=</span>
+<span class="directive">Disallow:</span> <span class="value">/*?ref=</span>
+<span class="directive">Disallow:</span> <span class="value">/*?utm_</span>
+
+<span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap.xml</span></pre>
+
+    <p>Sorting, filtering, pagination, referral tracking, and UTM parameters create thousands of duplicate URLs that waste your crawl budget. Blocking them in robots.txt keeps crawlers focused on your canonical pages.</p>
+
+    <!-- ====== Section 5 ====== -->
+    <h2>Robots.txt vs Meta Robots Tag: When to Use Which</h2>
+
+    <p>This is one of the most common points of confusion in SEO. Robots.txt and meta robots tags serve different purposes and operate at different levels. Here is how they compare:</p>
+
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Robots.txt</th>
+                <th>Meta Robots Tag</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Where it lives</td>
+                <td>Root of your domain (/robots.txt)</td>
+                <td>In the HTML &lt;head&gt; of each page</td>
+            </tr>
+            <tr>
+                <td>What it controls</td>
+                <td>Whether crawlers can access a page</td>
+                <td>Whether a page is indexed or links are followed</td>
+            </tr>
+            <tr>
+                <td>Scope</td>
+                <td>Entire directories or URL patterns</td>
+                <td>Individual pages</td>
+            </tr>
+            <tr>
+                <td>Can prevent indexing?</td>
+                <td>No (URL can still appear in results)</td>
+                <td>Yes (noindex removes from results)</td>
+            </tr>
+            <tr>
+                <td>Can prevent crawling?</td>
+                <td>Yes</td>
+                <td>No (page must be crawled to read the tag)</td>
+            </tr>
+            <tr>
+                <td>Affects link equity?</td>
+                <td>Yes (blocked pages cannot pass link value)</td>
+                <td>Yes (nofollow stops link equity flow)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><strong>The key insight:</strong> If you block a page in robots.txt, Google cannot see a noindex tag on that page because it never crawls the HTML. This means if other sites link to a page you have blocked in robots.txt, Google may still show the URL in search results with no description. To truly remove a page from search results, you need to <em>allow</em> crawling but add a <code>&lt;meta name="robots" content="noindex"&gt;</code> tag in the page's HTML.</p>
+
+    <p>Use robots.txt for broad crawl management (blocking directories, managing crawl budget). Use meta robots for page-level indexing control (keeping specific pages out of search results).</p>
+
+    <!-- ====== Section 6 ====== -->
+    <h2>Common Robots.txt Mistakes That Hurt Your SEO</h2>
+
+    <p>These mistakes are surprisingly common and can silently damage your search rankings for weeks or months before you notice. Review your robots.txt against this list to make sure you are not making any of them.</p>
+
+    <h3>1. Blocking CSS and JavaScript Files</h3>
+
+    <p>Years ago, it was common practice to block <code>/css/</code> and <code>/js/</code> directories in robots.txt. This is now actively harmful. Google renders pages using their CSS and JavaScript to understand layout, content, and user experience. If you block these resources, Googlebot sees a broken, unstyled page and may rank it lower.</p>
+
+<pre><span class="comment"># DO NOT do this</span>
+<span class="directive">Disallow:</span> <span class="value">/css/</span>
+<span class="directive">Disallow:</span> <span class="value">/js/</span>
+<span class="directive">Disallow:</span> <span class="value">/images/</span></pre>
+
+    <p>Google has explicitly stated that blocking CSS and JS can negatively affect indexing. Use the URL Inspection tool in Google Search Console to see how Googlebot renders your page and whether any resources are blocked.</p>
+
+    <h3>2. Leaving the Staging Robots.txt on Production</h3>
+
+    <p>This happens more often than anyone admits. A developer sets <code>Disallow: /</code> on a staging server to keep it out of search engines. When the site goes live, the robots.txt is copied along with everything else, and suddenly Google cannot crawl any pages. Traffic drops to zero within days.</p>
+
+    <div class="tip-box">
+        <p><strong>Pro tip:</strong> Add a robots.txt check to your deployment checklist. Verify the production robots.txt immediately after every deployment.</p>
+    </div>
+
+    <h3>3. Blocking Important Pages by Accident</h3>
+
+    <p>A rule like <code>Disallow: /blog</code> blocks not just <code>/blog</code> but also <code>/blog/</code>, <code>/blog/my-best-post</code>, and <code>/blog-archive</code> because robots.txt uses prefix matching. If you meant to block only the blog index page, you need <code>Disallow: /blog$</code> (if the crawler supports the <code>$</code> wildcard).</p>
+
+    <h3>4. Using Robots.txt Instead of Noindex</h3>
+
+    <p>As discussed above, blocking a page in robots.txt does not remove it from search results. If Google has already indexed a page or if other sites link to it, the URL can still appear in search results. The only way to reliably remove a page is to allow crawling and use a <code>noindex</code> meta tag.</p>
+
+    <h3>5. Forgetting the Trailing Slash</h3>
+
+    <p><code>Disallow: /private</code> matches <code>/private</code>, <code>/private-page</code>, <code>/private/admin</code>, and <code>/privately</code>. If you only want to block the <code>/private/</code> directory, use <code>Disallow: /private/</code> with a trailing slash. The slash makes the rule match only that directory and its contents.</p>
+
+    <h3>6. Having Multiple Robots.txt Files</h3>
+
+    <p>Some sites accidentally serve different robots.txt content based on whether the URL uses <code>www</code> or not, or <code>http</code> vs <code>https</code>. Each protocol-subdomain combination is treated as a separate site by search engines. Make sure your canonical domain serves the correct robots.txt and that all other versions redirect to it.</p>
+
+    <h3>7. Not Including a Sitemap Reference</h3>
+
+    <p>While not strictly an error, omitting the <code>Sitemap:</code> directive is a missed opportunity. Adding your sitemap URL to robots.txt gives crawlers an immediate path to discover all your important pages, even if you have also submitted the sitemap through Google Search Console.</p>
+
+    <!-- ====== Section 7 ====== -->
+    <h2>How to Test Your Robots.txt</h2>
+
+    <p>Never publish a robots.txt file without testing it first. A single typo can block your entire site. Here are the tools and methods to verify your file works correctly:</p>
+
+    <h3>Google Search Console Robots.txt Tester</h3>
+
+    <p>Google Search Console offers a built-in robots.txt testing tool. Enter any URL from your site and it will tell you whether that URL is blocked or allowed by your current robots.txt. It also highlights syntax errors and warnings. This is the most authoritative testing tool because it shows you exactly how Googlebot interprets your rules.</p>
+
+    <h3>Manual Browser Check</h3>
+
+    <p>Simply navigate to <code>yourdomain.com/robots.txt</code> in your browser. Verify that the file loads as plain text, the syntax is correct, and there are no unexpected rules. This is the fastest sanity check you can do.</p>
+
+    <h3>URL Inspection Tool</h3>
+
+    <p>After deploying your robots.txt, use the URL Inspection tool in Google Search Console to check specific pages. It will show you whether Googlebot can access the page and whether any robots.txt rules are blocking it. It also shows a rendered screenshot of what Googlebot sees, which helps catch blocked CSS or JavaScript issues.</p>
+
+    <h3>Third-Party Validators</h3>
+
+    <p>Several online tools validate robots.txt syntax and test URL matching against your rules. These are useful for checking syntax before uploading the file to your server. Our <a href="../robots-generator.html">robots.txt generator</a> produces properly formatted files, eliminating syntax errors entirely.</p>
+
+    <ul class="checklist">
+        <li>Verify the file is accessible at yourdomain.com/robots.txt</li>
+        <li>Check that the file returns a 200 status code (not 404 or 500)</li>
+        <li>Test your most important pages to confirm they are not blocked</li>
+        <li>Test pages you intend to block to confirm they are blocked</li>
+        <li>Verify CSS, JS, and image files are not blocked</li>
+        <li>Confirm the Sitemap URL is correct and accessible</li>
+        <li>Check both www and non-www versions of your domain</li>
+        <li>Test with Google Search Console after deployment</li>
+    </ul>
+
+    <div class="cta-box">
+        <h3>Build a Perfect Robots.txt File</h3>
+        <p>Choose your rules visually, preview the output, and copy it to your server. Zero syntax errors guaranteed.</p>
+        <a href="../robots-generator.html" class="cta-btn">Generate Your Robots.txt Free &rarr;</a>
+    </div>
+
+    <!-- ====== Section 8 ====== -->
+    <h2>Robots.txt for Different Platforms</h2>
+
+    <p>Different platforms have different crawling needs. Here are optimized robots.txt configurations for the most popular website platforms in 2026.</p>
+
+    <h3>Robots.txt for WordPress</h3>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span> <span class="value">/wp-admin/</span>
+<span class="directive">Allow:</span> <span class="value">/wp-admin/admin-ajax.php</span>
+<span class="directive">Disallow:</span> <span class="value">/wp-includes/</span>
+<span class="directive">Disallow:</span> <span class="value">/wp-content/plugins/</span>
+<span class="directive">Disallow:</span> <span class="value">/wp-content/cache/</span>
+<span class="directive">Disallow:</span> <span class="value">/wp-json/</span>
+<span class="directive">Disallow:</span> <span class="value">/author/</span>
+<span class="directive">Disallow:</span> <span class="value">/trackback/</span>
+<span class="directive">Disallow:</span> <span class="value">/feed/</span>
+<span class="directive">Disallow:</span> <span class="value">/?s=</span>
+<span class="directive">Disallow:</span> <span class="value">/search/</span>
+
+<span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap.xml</span></pre>
+
+    <p>This WordPress robots.txt blocks the admin area (while allowing <code>admin-ajax.php</code>, which many themes and plugins need), internal search results, feeds, author archives (which often duplicate content), and trackbacks. The <code>wp-content/plugins/</code> and <code>wp-content/cache/</code> directories contain files that do not need to be indexed.</p>
+
+    <p>Do not block <code>/wp-content/uploads/</code> unless you specifically want to hide your media files from search engines. Images in your uploads folder can drive significant traffic through Google Images.</p>
+
+    <h3>Robots.txt for Shopify</h3>
+
+    <p>Shopify generates its own robots.txt automatically, but since 2021 you can customize it by editing the <code>robots.txt.liquid</code> template. Here is a solid configuration:</p>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span> <span class="value">/admin</span>
+<span class="directive">Disallow:</span> <span class="value">/cart</span>
+<span class="directive">Disallow:</span> <span class="value">/orders</span>
+<span class="directive">Disallow:</span> <span class="value">/checkouts/</span>
+<span class="directive">Disallow:</span> <span class="value">/checkout</span>
+<span class="directive">Disallow:</span> <span class="value">/account</span>
+<span class="directive">Disallow:</span> <span class="value">/collections/*sort_by*</span>
+<span class="directive">Disallow:</span> <span class="value">/collections/*+*</span>
+<span class="directive">Disallow:</span> <span class="value">/*/collections/*sort_by*</span>
+<span class="directive">Disallow:</span> <span class="value">/search</span>
+<span class="directive">Disallow:</span> <span class="value">/*?variant=*</span>
+<span class="directive">Disallow:</span> <span class="value">/*?q=*</span>
+
+<span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap.xml</span></pre>
+
+    <p>The key Shopify-specific rules here are blocking collection sort parameters (which create massive duplicate content), variant parameters (each product variant generates a separate URL), and the search page. Shopify's cart, checkout, and account pages should always be blocked since they contain user-specific content that wastes crawl budget.</p>
+
+    <h3>Robots.txt for React SPAs (Single-Page Applications)</h3>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span>
+
+<span class="directive">Sitemap:</span> <span class="value">https://example.com/sitemap.xml</span></pre>
+
+    <p>For React, Next.js, Vue, and other JavaScript-based single-page applications, keep your robots.txt as open as possible. SPAs already face crawling challenges because their content is rendered by JavaScript. Blocking any resources (especially JS bundles) will prevent search engines from rendering your pages entirely.</p>
+
+    <p>The real SEO work for SPAs happens at the rendering level: use server-side rendering (SSR) or static site generation (SSG) to ensure crawlers can see your content. Your robots.txt should not add any additional obstacles. Focus on providing a comprehensive sitemap, as JavaScript-rendered navigation can be difficult for crawlers to follow.</p>
+
+    <h3>Robots.txt for API-Only Backends</h3>
+
+<pre><span class="directive">User-agent:</span> <span class="value">*</span>
+<span class="directive">Disallow:</span> <span class="value">/</span></pre>
+
+    <p>If your domain serves only an API with no public-facing pages, block everything. There is no content for search engines to index, and API endpoints should not appear in search results.</p>
+
+    <!-- ====== Section 9 ====== -->
+    <h2>Advanced Robots.txt Strategies</h2>
+
+    <h3>Managing Crawl Budget for Large Sites</h3>
+
+    <p>Sites with more than 10,000 pages need to think carefully about crawl budget. Search engines will not crawl every page on every visit. By blocking low-value pages in robots.txt, you direct crawlers to spend their limited budget on your most important content.</p>
+
+    <p>Common low-value pages to block: paginated archive pages beyond page 2, tag pages with only one or two posts, internal search results (which create infinite URL combinations), and print-friendly versions of pages.</p>
+
+    <h3>Handling Multiple Subdomains</h3>
+
+    <p>Each subdomain needs its own robots.txt file. The rules at <code>example.com/robots.txt</code> do not apply to <code>blog.example.com</code> or <code>shop.example.com</code>. If you use subdomains, create and maintain separate robots.txt files for each one.</p>
+
+    <h3>Dealing with Aggressive Bots</h3>
+
+    <p>Some bots ignore robots.txt entirely and crawl your site aggressively, consuming server resources. For these, robots.txt is not enough. Use server-level blocking through <code>.htaccess</code> rules, firewall rules, or your CDN's bot management features to deny access at the network level.</p>
+
+    <!-- ====== FAQ Section ====== -->
+    <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <h3>What is a robots.txt file?</h3>
+            <p>A robots.txt file is a plain text file placed at the root of your website that tells search engine crawlers which pages or sections of your site they can and cannot access. It follows the Robots Exclusion Protocol and is the first file crawlers check before indexing your site.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Does robots.txt block pages from appearing in Google?</h3>
+            <p>Not exactly. Robots.txt prevents crawlers from accessing a page, but if other sites link to that page, Google may still index the URL and show it in search results without a description. To fully block a page from search results, use a meta robots noindex tag instead.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Where should I place my robots.txt file?</h3>
+            <p>Your robots.txt file must be placed in the root directory of your domain. For example, https://example.com/robots.txt. It will not work if placed in a subdirectory. Each subdomain needs its own separate robots.txt file.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What is the difference between robots.txt and meta robots tags?</h3>
+            <p>Robots.txt controls whether crawlers can access a page at all, while meta robots tags control whether a page should be indexed or whether links should be followed. Robots.txt works at the crawl level; meta robots works at the indexing level. For best results, use them together.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Can I use robots.txt to hide sensitive information?</h3>
+            <p>No. Robots.txt is publicly accessible and only serves as a polite request to well-behaved crawlers. Malicious bots can ignore it entirely. Never use robots.txt to protect sensitive data. Use proper authentication and server-side security instead.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do I test my robots.txt file?</h3>
+            <p>Use Google Search Console's robots.txt Tester tool to check your file for errors and test whether specific URLs are blocked or allowed. You can also visit yourdomain.com/robots.txt directly in your browser to verify the file is accessible and correctly formatted.</p>
+        </div>
+    </div>
+
+    <!-- ====== Playbook mention ====== -->
+    <div class="playbook-box">
+        <h3>Need a Robots.txt File Right Now?</h3>
+        <p>Skip the manual editing. Our free robots.txt generator lets you select your platform, toggle common rules on and off, and download a properly formatted file in seconds. It includes presets for WordPress, Shopify, and static sites, with built-in validation to catch syntax errors before they reach your server.</p>
+        <a href="../robots-generator.html" class="playbook-link">Open the Free Robots.txt Generator &rarr;</a>
+    </div>
+
+    <div class="article-footer">
+        <p>&copy; 2026 <a href="../index.html">BizToolkit</a>. Free tools for freelancers and small businesses.</p>
+    </div>
+</article>
+
+</body>
+</html>

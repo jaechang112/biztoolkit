@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <title>Free UTM Link Builder | Campaign URL Generator</title>
+    <meta name="description" content="Free UTM link builder and campaign URL generator. Create UTM-tagged URLs for Google Analytics tracking. Bulk generate, save history, and export as CSV. No signup required.">
+    <meta name="keywords" content="UTM builder, UTM link generator, campaign URL builder, UTM parameters, Google Analytics UTM, UTM code generator, campaign tracking URL">
+    <meta name="author" content="BizToolkit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/utm.html">
+    <meta property="og:title" content="Free UTM Link Builder | Campaign URL Generator">
+    <meta property="og:description" content="Create UTM-tagged campaign URLs for Google Analytics. Bulk generate, save history, export CSV. 100% free.">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/utm.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free UTM Link Builder | Campaign URL Generator">
+    <meta name="twitter:description" content="Create UTM-tagged campaign URLs for Google Analytics. Bulk generate, save history, export CSV. 100% free.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1a1a2e; line-height: 1.6; }
+        nav a:hover { opacity: 1 !important; }
+        .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 50px 20px; text-align: center; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 12px; }
+        .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 650px; margin: 0 auto; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+        .card { background: white; border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .card h2 { font-size: 1.2rem; margin-bottom: 20px; color: #1a1a2e; display: flex; align-items: center; gap: 8px; }
+        .card h2 .icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: white; }
+        .field { margin-bottom: 16px; }
+        .field label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #444; }
+        .field input, .field textarea, .field select { width: 100%; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 0.95rem; font-family: inherit; transition: border-color 0.2s; }
+        .field input:focus, .field textarea:focus, .field select:focus { outline: none; border-color: #6366f1; }
+        .field textarea { resize: vertical; min-height: 70px; }
+        .field .hint { font-size: 0.78rem; color: #888; margin-top: 4px; }
+        .field input.error { border-color: #ef4444; }
+        .field .error-msg { font-size: 0.78rem; color: #ef4444; margin-top: 4px; display: none; }
+        .field input.error + .error-msg { display: block; }
+        .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+        .presets button { background: #f0f0ff; border: 1px solid #ddd; border-radius: 6px; padding: 4px 12px; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; color: #555; }
+        .presets button:hover { background: #6366f1; color: white; border-color: #6366f1; }
+        .preview-url { background: #1e1e2e; color: #cdd6f4; border-radius: 10px; padding: 20px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85rem; line-height: 1.7; overflow-x: auto; word-break: break-all; position: relative; min-height: 60px; }
+        .copy-btn { background: #6366f1; color: white; border: none; padding: 10px 22px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: background 0.2s; }
+        .copy-btn:hover { background: #4f46e5; }
+        .copy-btn.copied { background: #22c55e; }
+        .btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        .btn-secondary { background: #f0f0ff; color: #6366f1; border: 1.5px solid #6366f1; padding: 10px 22px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+        .btn-secondary:hover { background: #6366f1; color: white; }
+        .btn-danger { background: #fff0f0; color: #ef4444; border: 1.5px solid #ef4444; padding: 10px 22px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
+        .btn-danger:hover { background: #ef4444; color: white; }
+        .utm-part { color: #f59e0b; }
+        .utm-key { color: #22c55e; }
+        .utm-val { color: #60a5fa; }
+        .url-base { color: #cdd6f4; }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 0; margin-bottom: 0; }
+        .tab-btn { background: #e5e7eb; border: none; padding: 10px 24px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border-radius: 8px 8px 0 0; color: #666; transition: all 0.2s; }
+        .tab-btn.active { background: white; color: #1a1a2e; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-card { background: white; border-radius: 0 12px 12px 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+        /* History */
+        .history-item { background: #f8f9fa; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; font-size: 0.85rem; position: relative; word-break: break-all; border-left: 3px solid #6366f1; }
+        .history-item .hi-url { font-family: 'Consolas', monospace; color: #333; }
+        .history-item .hi-meta { color: #888; font-size: 0.78rem; margin-top: 4px; }
+        .history-item .hi-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 6px; }
+        .history-item .hi-btn { background: none; border: none; cursor: pointer; font-size: 0.85rem; color: #888; padding: 4px; }
+        .history-item .hi-btn:hover { color: #6366f1; }
+
+        /* Bulk */
+        .bulk-output { background: #f8f9fa; border-radius: 8px; padding: 16px; font-family: 'Consolas', monospace; font-size: 0.82rem; line-height: 1.8; word-break: break-all; max-height: 300px; overflow-y: auto; }
+
+        .section-title { font-size: 1.4rem; font-weight: 700; margin: 36px 0 16px; color: #1a1a2e; }
+        .upsell { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 12px; padding: 28px; color: white; text-align: center; margin-top: 30px; }
+        .upsell h3 { font-size: 1.3rem; margin-bottom: 8px; }
+        .upsell p { opacity: 0.9; margin-bottom: 16px; font-size: 0.95rem; }
+        .upsell a { display: inline-block; background: white; color: #6366f1; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: transform 0.2s; }
+        .upsell a:hover { transform: translateY(-2px); }
+        footer { text-align: center; padding: 30px 20px; color: #888; font-size: 0.85rem; }
+        .faq { max-width: 800px; margin: 40px auto 0; }
+        .faq h2 { font-size: 1.5rem; margin-bottom: 20px; text-align: center; }
+        .faq-item { background: white; border-radius: 10px; padding: 20px 24px; margin-bottom: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+        .faq-item h3 { font-size: 1rem; margin-bottom: 8px; color: #1a1a2e; }
+        .faq-item p { font-size: 0.9rem; color: #555; }
+        .empty-state { text-align: center; color: #aaa; padding: 30px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<nav style="background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+    <a href="index.html" style="color:white;text-decoration:none;font-weight:700;font-size:1.1rem;">BizToolkit</a>
+    <a href="index.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Tools</a>
+    <a href="invoice.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Invoice</a>
+    <a href="meta.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Meta Tags</a>
+    <a href="utm.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:1;border-bottom:2px solid #6366f1;padding-bottom:2px;">UTM Builder</a>
+</nav>
+
+<div class="hero">
+    <h1>Free UTM Link Builder</h1>
+    <p>Generate campaign-tagged URLs for Google Analytics tracking. Build, preview, and manage UTM links in seconds.</p>
+</div>
+
+<div class="container">
+    <div class="grid">
+        <!-- Left Column: Inputs -->
+        <div>
+            <!-- Single URL Builder -->
+            <div class="card">
+                <h2><span class="icon" style="background:#6366f1;">&#x1F517;</span> Campaign URL Builder</h2>
+
+                <div class="field">
+                    <label for="websiteUrl">Website URL <span style="color:#ef4444;">*</span></label>
+                    <input type="url" id="websiteUrl" placeholder="https://example.com/landing-page" oninput="buildUrl()">
+                    <div class="error-msg">Please enter a valid URL (include https://)</div>
+                </div>
+
+                <div class="field">
+                    <label for="utmSource">Campaign Source (utm_source) <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="utmSource" placeholder="e.g. google, facebook, newsletter" oninput="buildUrl()">
+                    <div class="hint">Where the traffic is coming from</div>
+                    <div class="presets">
+                        <button onclick="setField('utmSource','google')">google</button>
+                        <button onclick="setField('utmSource','facebook')">facebook</button>
+                        <button onclick="setField('utmSource','twitter')">twitter</button>
+                        <button onclick="setField('utmSource','linkedin')">linkedin</button>
+                        <button onclick="setField('utmSource','email')">email</button>
+                        <button onclick="setField('utmSource','newsletter')">newsletter</button>
+                    </div>
+                    <div class="error-msg">Campaign source is required</div>
+                </div>
+
+                <div class="field">
+                    <label for="utmMedium">Campaign Medium (utm_medium) <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="utmMedium" placeholder="e.g. cpc, email, social, banner" oninput="buildUrl()">
+                    <div class="hint">The marketing medium or channel type</div>
+                    <div class="presets">
+                        <button onclick="setField('utmMedium','cpc')">cpc</button>
+                        <button onclick="setField('utmMedium','email')">email</button>
+                        <button onclick="setField('utmMedium','social')">social</button>
+                        <button onclick="setField('utmMedium','banner')">banner</button>
+                        <button onclick="setField('utmMedium','referral')">referral</button>
+                    </div>
+                    <div class="error-msg">Campaign medium is required</div>
+                </div>
+
+                <div class="field">
+                    <label for="utmCampaign">Campaign Name (utm_campaign) <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="utmCampaign" placeholder="e.g. spring_sale, product_launch" oninput="buildUrl()">
+                    <div class="hint">The specific campaign name or promotion</div>
+                    <div class="error-msg">Campaign name is required</div>
+                </div>
+
+                <div class="field">
+                    <label for="utmTerm">Campaign Term (utm_term) <span style="color:#888; font-weight:400;">optional</span></label>
+                    <input type="text" id="utmTerm" placeholder="e.g. running+shoes, best+crm" oninput="buildUrl()">
+                    <div class="hint">Paid search keywords</div>
+                </div>
+
+                <div class="field">
+                    <label for="utmContent">Campaign Content (utm_content) <span style="color:#888; font-weight:400;">optional</span></label>
+                    <input type="text" id="utmContent" placeholder="e.g. hero_banner, sidebar_link" oninput="buildUrl()">
+                    <div class="hint">Differentiate ads or links pointing to the same URL</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Preview & Output -->
+        <div>
+            <!-- Live Preview -->
+            <div class="card">
+                <h2><span class="icon" style="background:#22c55e;">&#x2192;</span> Generated URL</h2>
+                <div class="preview-url" id="urlPreview">
+                    <span class="url-base">Enter a URL and campaign parameters to generate your UTM link</span>
+                </div>
+                <div class="btn-row">
+                    <button class="copy-btn" id="copyBtn" onclick="copyUrl()">Copy URL</button>
+                    <button class="btn-secondary" onclick="saveToHistory()">Save to History</button>
+                    <button class="btn-secondary" onclick="resetForm()">Reset</button>
+                </div>
+            </div>
+
+            <!-- Tabs: Bulk / History -->
+            <div style="margin-top: 24px;">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('bulk')">Bulk Generator</button>
+                    <button class="tab-btn" onclick="switchTab('history')">History</button>
+                </div>
+
+                <!-- Bulk Generator Tab -->
+                <div class="tab-card">
+                    <div id="tab-bulk" class="tab-content active">
+                        <div class="field">
+                            <label for="bulkUrls">Enter multiple URLs (one per line)</label>
+                            <textarea id="bulkUrls" style="min-height:100px;" placeholder="https://example.com/page-1&#10;https://example.com/page-2&#10;https://example.com/page-3"></textarea>
+                            <div class="hint">UTM parameters from the form above will be applied to all URLs</div>
+                        </div>
+                        <button class="copy-btn" onclick="generateBulk()" style="margin-bottom:16px;">Generate Bulk URLs</button>
+                        <div class="bulk-output" id="bulkOutput" style="display:none;"></div>
+                        <div class="btn-row" id="bulkActions" style="display:none;">
+                            <button class="btn-secondary" onclick="copyBulk()">Copy All</button>
+                        </div>
+                    </div>
+
+                    <!-- History Tab -->
+                    <div id="tab-history" class="tab-content">
+                        <div id="historyList"></div>
+                        <div class="btn-row" id="historyActions" style="display:none;">
+                            <button class="btn-secondary" onclick="exportCsv()">Export as CSV</button>
+                            <button class="btn-danger" onclick="clearHistory()">Clear History</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Educational Section -->
+    <div class="faq" style="margin-top: 40px;">
+        <h2>What Are UTM Parameters?</h2>
+        <div class="faq-item">
+            <h3>Understanding UTM tracking codes</h3>
+            <p>UTM (Urchin Tracking Module) parameters are tags added to the end of a URL that help Google Analytics and other analytics tools track where your website traffic comes from. When someone clicks a UTM-tagged link, the parameters are sent to your analytics platform, giving you detailed data about which campaigns, channels, and content are driving results. A UTM builder simplifies the process of creating these tagged URLs correctly.</p>
+        </div>
+        <div class="faq-item">
+            <h3>The 5 UTM parameters explained</h3>
+            <p><strong>utm_source</strong> identifies the platform sending traffic (e.g., google, facebook, newsletter). <strong>utm_medium</strong> describes the marketing channel type (e.g., cpc, email, social). <strong>utm_campaign</strong> names the specific campaign (e.g., spring_sale). <strong>utm_term</strong> (optional) tracks paid search keywords. <strong>utm_content</strong> (optional) differentiates similar links in the same campaign, such as two different banner ads pointing to the same page.</p>
+        </div>
+        <div class="faq-item">
+            <h3>UTM best practices</h3>
+            <p>Use lowercase for all UTM values to avoid duplicate entries in analytics. Be consistent with naming conventions across campaigns. Use underscores instead of spaces. Never add UTM parameters to internal links on your own website, as this will overwrite the original source data. Always tag links in emails, social media posts, and paid ads for accurate campaign attribution.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Where do UTM parameters appear in analytics?</h3>
+            <p>In Google Analytics 4 (GA4), UTM data appears under Acquisition reports. utm_source maps to "Session source," utm_medium to "Session medium," and utm_campaign to "Session campaign." You can create custom reports combining these dimensions with metrics like conversions and revenue to measure campaign ROI. Our free UTM link generator ensures your URLs are correctly formatted for accurate tracking.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How is this UTM builder different?</h3>
+            <p>This campaign URL builder works entirely in your browser with no server-side processing. Your URLs and campaign data stay private. Features like bulk generation, persistent history with localStorage, and CSV export make it ideal for marketers managing multiple campaigns. No signup or login required.</p>
+        </div>
+    </div>
+
+    <!-- Upsell -->
+    <div class="upsell">
+        <h3>Content Creator's Playbook</h3>
+        <p>Master campaign tracking, SEO, content strategy, and audience growth. Learn how to turn data-driven marketing into measurable revenue.</p>
+        <a href="https://jaechang112.gumroad.com/l/nwdis" target="_blank" rel="noopener">Get the Playbook - $9</a>
+    </div>
+</div>
+
+<div style="text-align:center;padding:20px;background:#f0f4ff;margin-top:20px;border-radius:12px"><strong>Related Tools:</strong> <a href="qr.html" style="color:#4f46e5;text-decoration:none;font-weight:600">QR Code Generator</a> | <a href="meta.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Meta Tag Generator</a> | <a href="schema.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Schema Markup Generator</a></div>
+
+<footer>
+    <p>&copy; 2026 BizToolkit. Free tools for small businesses and creators.</p>
+</footer>
+
+<script>
+var currentUrl = '';
+
+function setField(id, value) {
+    document.getElementById(id).value = value;
+    buildUrl();
+}
+
+function buildUrl() {
+    var base = document.getElementById('websiteUrl').value.trim();
+    var source = document.getElementById('utmSource').value.trim();
+    var medium = document.getElementById('utmMedium').value.trim();
+    var campaign = document.getElementById('utmCampaign').value.trim();
+    var term = document.getElementById('utmTerm').value.trim();
+    var content = document.getElementById('utmContent').value.trim();
+
+    // Validation
+    var valid = true;
+    toggleError('websiteUrl', !base);
+    toggleError('utmSource', !source && (base || medium || campaign));
+    toggleError('utmMedium', !medium && (base || source || campaign));
+    toggleError('utmCampaign', !campaign && (base || source || medium));
+
+    if (!base || !source || !medium || !campaign) {
+        if (!base && !source && !medium && !campaign) {
+            document.getElementById('urlPreview').innerHTML = '<span class="url-base">Enter a URL and campaign parameters to generate your UTM link</span>';
+        }
+        currentUrl = '';
+        return;
+    }
+
+    // Build URL
+    var separator = base.indexOf('?') !== -1 ? '&' : '?';
+    var params = [];
+    params.push('utm_source=' + encodeURIComponent(source));
+    params.push('utm_medium=' + encodeURIComponent(medium));
+    params.push('utm_campaign=' + encodeURIComponent(campaign));
+    if (term) params.push('utm_term=' + encodeURIComponent(term));
+    if (content) params.push('utm_content=' + encodeURIComponent(content));
+
+    currentUrl = base + separator + params.join('&');
+
+    // Render with syntax highlighting
+    var html = '<span class="url-base">' + escapeHtml(base) + '</span>';
+    html += '<span class="utm-part">' + escapeHtml(separator) + '</span>';
+    for (var i = 0; i < params.length; i++) {
+        if (i > 0) html += '<span class="utm-part">&amp;</span>';
+        var parts = params[i].split('=');
+        html += '<span class="utm-key">' + escapeHtml(parts[0]) + '</span>';
+        html += '<span class="utm-part">=</span>';
+        html += '<span class="utm-val">' + escapeHtml(parts[1]) + '</span>';
+    }
+    document.getElementById('urlPreview').innerHTML = html;
+}
+
+function toggleError(id, show) {
+    var el = document.getElementById(id);
+    if (show) {
+        el.classList.add('error');
+    } else {
+        el.classList.remove('error');
+    }
+}
+
+function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function copyUrl() {
+    if (!currentUrl) return;
+    navigator.clipboard.writeText(currentUrl).then(function() {
+        var btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(function() {
+            btn.textContent = 'Copy URL';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
+function resetForm() {
+    document.getElementById('websiteUrl').value = '';
+    document.getElementById('utmSource').value = '';
+    document.getElementById('utmMedium').value = '';
+    document.getElementById('utmCampaign').value = '';
+    document.getElementById('utmTerm').value = '';
+    document.getElementById('utmContent').value = '';
+    ['websiteUrl','utmSource','utmMedium','utmCampaign'].forEach(function(id) {
+        document.getElementById(id).classList.remove('error');
+    });
+    currentUrl = '';
+    document.getElementById('urlPreview').innerHTML = '<span class="url-base">Enter a URL and campaign parameters to generate your UTM link</span>';
+}
+
+// Tabs
+function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+    document.getElementById('tab-' + tab).classList.add('active');
+    // Activate the correct button
+    var btns = document.querySelectorAll('.tab-btn');
+    for (var i = 0; i < btns.length; i++) {
+        if ((tab === 'bulk' && i === 0) || (tab === 'history' && i === 1)) {
+            btns[i].classList.add('active');
+        }
+    }
+    if (tab === 'history') renderHistory();
+}
+
+// Bulk Generator
+function generateBulk() {
+    var lines = document.getElementById('bulkUrls').value.trim().split('\n').filter(function(l) { return l.trim(); });
+    if (!lines.length) return;
+
+    var source = document.getElementById('utmSource').value.trim();
+    var medium = document.getElementById('utmMedium').value.trim();
+    var campaign = document.getElementById('utmCampaign').value.trim();
+    var term = document.getElementById('utmTerm').value.trim();
+    var content = document.getElementById('utmContent').value.trim();
+
+    if (!source || !medium || !campaign) {
+        alert('Please fill in Source, Medium, and Campaign before generating bulk URLs.');
+        return;
+    }
+
+    var params = [];
+    params.push('utm_source=' + encodeURIComponent(source));
+    params.push('utm_medium=' + encodeURIComponent(medium));
+    params.push('utm_campaign=' + encodeURIComponent(campaign));
+    if (term) params.push('utm_term=' + encodeURIComponent(term));
+    if (content) params.push('utm_content=' + encodeURIComponent(content));
+    var paramStr = params.join('&');
+
+    var results = [];
+    for (var i = 0; i < lines.length; i++) {
+        var base = lines[i].trim();
+        if (!base) continue;
+        var sep = base.indexOf('?') !== -1 ? '&' : '?';
+        results.push(base + sep + paramStr);
+    }
+
+    var output = document.getElementById('bulkOutput');
+    output.style.display = 'block';
+    output.textContent = results.join('\n');
+    document.getElementById('bulkActions').style.display = 'flex';
+}
+
+function copyBulk() {
+    var text = document.getElementById('bulkOutput').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+        var btns = document.querySelectorAll('#bulkActions .btn-secondary');
+        btns[0].textContent = 'Copied!';
+        setTimeout(function() { btns[0].textContent = 'Copy All'; }, 2000);
+    });
+}
+
+// History (localStorage)
+function getHistory() {
+    try {
+        return JSON.parse(localStorage.getItem('utm_history') || '[]');
+    } catch(e) {
+        return [];
+    }
+}
+
+function saveToHistory() {
+    if (!currentUrl) return;
+    var history = getHistory();
+    var entry = {
+        url: currentUrl,
+        source: document.getElementById('utmSource').value.trim(),
+        medium: document.getElementById('utmMedium').value.trim(),
+        campaign: document.getElementById('utmCampaign').value.trim(),
+        date: new Date().toISOString().slice(0, 16).replace('T', ' ')
+    };
+    // Avoid duplicates at top
+    if (history.length && history[0].url === entry.url) return;
+    history.unshift(entry);
+    if (history.length > 50) history = history.slice(0, 50);
+    localStorage.setItem('utm_history', JSON.stringify(history));
+    switchTab('history');
+}
+
+function renderHistory() {
+    var history = getHistory();
+    var container = document.getElementById('historyList');
+    var actions = document.getElementById('historyActions');
+
+    if (!history.length) {
+        container.innerHTML = '<div class="empty-state">No saved URLs yet. Build a UTM link and click "Save to History."</div>';
+        actions.style.display = 'none';
+        return;
+    }
+
+    actions.style.display = 'flex';
+    var html = '';
+    for (var i = 0; i < history.length; i++) {
+        var h = history[i];
+        html += '<div class="history-item">';
+        html += '<div class="hi-actions">';
+        html += '<button class="hi-btn" title="Copy" onclick="copyHistoryItem(' + i + ')">&#x1F4CB;</button>';
+        html += '<button class="hi-btn" title="Delete" onclick="deleteHistoryItem(' + i + ')">&#x2715;</button>';
+        html += '</div>';
+        html += '<div class="hi-url">' + escapeHtml(h.url) + '</div>';
+        html += '<div class="hi-meta">' + escapeHtml(h.source + ' / ' + h.medium + ' / ' + h.campaign + '  |  ' + h.date) + '</div>';
+        html += '</div>';
+    }
+    container.innerHTML = html;
+}
+
+function copyHistoryItem(index) {
+    var history = getHistory();
+    if (history[index]) {
+        navigator.clipboard.writeText(history[index].url);
+    }
+}
+
+function deleteHistoryItem(index) {
+    var history = getHistory();
+    history.splice(index, 1);
+    localStorage.setItem('utm_history', JSON.stringify(history));
+    renderHistory();
+}
+
+function clearHistory() {
+    if (!confirm('Clear all saved UTM links?')) return;
+    localStorage.removeItem('utm_history');
+    renderHistory();
+}
+
+function exportCsv() {
+    var history = getHistory();
+    if (!history.length) return;
+
+    var csv = 'URL,Source,Medium,Campaign,Date\n';
+    for (var i = 0; i < history.length; i++) {
+        var h = history[i];
+        csv += '"' + h.url.replace(/"/g, '""') + '","' + h.source + '","' + h.medium + '","' + h.campaign + '","' + h.date + '"\n';
+    }
+
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'utm_history.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+</script>
+<script src="analytics.js"></script>
+</body>
+</html>

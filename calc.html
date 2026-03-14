@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <title>Free Business Calculator | ROI, Markup, Margin & Break-Even</title>
+    <meta name="description" content="Free online business calculator for ROI, markup, profit margin, break-even analysis, discounts, sales tax, and hourly rate. Real-time results with formulas. No signup required.">
+    <meta name="keywords" content="business calculator, ROI calculator, markup calculator, profit margin calculator, break-even calculator, discount calculator, sales tax calculator, hourly rate calculator">
+    <meta name="author" content="BizToolkit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/calc.html">
+    <meta property="og:title" content="Free Business Calculator | ROI, Markup, Margin & Break-Even">
+    <meta property="og:description" content="Calculate ROI, markup, profit margin, break-even point, discounts, sales tax, and hourly rates instantly. 100% free, no signup.">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/calc.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Business Calculator | ROI, Markup, Margin & Break-Even">
+    <meta name="twitter:description" content="Calculate ROI, markup, profit margin, break-even point, discounts, sales tax, and hourly rates instantly. 100% free.">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Free Business Calculator",
+        "url": "https://biztoolkit-free.netlify.app/calc.html",
+        "description": "Calculate ROI, markup, profit margin, break-even analysis, discounts, sales tax, and hourly rates for your business. Free online calculator with real-time results.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "browserRequirements": "Requires a modern web browser"
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1a1a2e; line-height: 1.6; }
+        nav a:hover { opacity: 1 !important; }
+        .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 50px 20px; text-align: center; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 12px; }
+        .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 650px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+
+        /* Tabs */
+        .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
+        .tab-btn { padding: 10px 18px; border: 1.5px solid #ddd; background: white; border-radius: 8px; cursor: pointer; font-size: 0.88rem; font-weight: 600; color: #555; transition: all 0.2s; }
+        .tab-btn:hover { border-color: #6366f1; color: #6366f1; }
+        .tab-btn.active { background: #6366f1; color: white; border-color: #6366f1; }
+
+        .calc-panel { display: none; }
+        .calc-panel.active { display: block; }
+
+        .card { background: white; border-radius: 12px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+        .card h2 { font-size: 1.2rem; margin-bottom: 20px; color: #1a1a2e; display: flex; align-items: center; gap: 8px; }
+        .card h2 .icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: white; flex-shrink: 0; }
+
+        .field { margin-bottom: 16px; }
+        .field label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; color: #444; }
+        .field input, .field select { width: 100%; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 0.95rem; font-family: inherit; transition: border-color 0.2s; }
+        .field input:focus, .field select:focus { outline: none; border-color: #6366f1; }
+
+        .result-box { background: #f0f2f5; border-radius: 10px; padding: 20px; margin-top: 20px; }
+        .result-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e0e0e0; }
+        .result-row:last-child { border-bottom: none; }
+        .result-label { font-size: 0.9rem; color: #555; }
+        .result-value { font-size: 1.15rem; font-weight: 700; color: #1a1a2e; }
+        .result-value.positive { color: #16a34a; }
+        .result-value.negative { color: #dc2626; }
+
+        .formula-box { background: #1e1e2e; color: #cdd6f4; border-radius: 10px; padding: 16px 20px; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85rem; line-height: 1.7; margin-top: 16px; white-space: pre-wrap; }
+        .formula-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: #888; margin-bottom: 6px; font-weight: 600; }
+
+        .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media (max-width: 600px) { .input-row { grid-template-columns: 1fr; } .tabs { gap: 4px; } .tab-btn { padding: 8px 12px; font-size: 0.82rem; } }
+
+        .upsell { background: linear-gradient(135deg, #6366f1, #8b5cf6); border-radius: 12px; padding: 28px; color: white; text-align: center; margin-top: 30px; }
+        .upsell h3 { font-size: 1.3rem; margin-bottom: 8px; }
+        .upsell p { opacity: 0.9; margin-bottom: 16px; font-size: 0.95rem; }
+        .upsell a { display: inline-block; background: white; color: #6366f1; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: transform 0.2s; }
+        .upsell a:hover { transform: translateY(-2px); }
+
+        footer { text-align: center; padding: 30px 20px; color: #888; font-size: 0.85rem; }
+        .faq { max-width: 800px; margin: 40px auto 0; }
+        .faq h2 { font-size: 1.5rem; margin-bottom: 20px; text-align: center; }
+        .faq-item { background: white; border-radius: 10px; padding: 20px 24px; margin-bottom: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+        .faq-item h3 { font-size: 1rem; margin-bottom: 8px; color: #1a1a2e; }
+        .faq-item p { font-size: 0.9rem; color: #555; }
+    </style>
+</head>
+<body>
+
+<nav style="background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+    <a href="index.html" style="color:white;text-decoration:none;font-weight:700;font-size:1.1rem;">BizToolkit</a>
+    <a href="index.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Tools</a>
+    <a href="invoice.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Invoice</a>
+    <a href="json.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">JSON</a>
+    <a href="calc.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:1;border-bottom:2px solid #6366f1;padding-bottom:2px;">Calculator</a>
+</nav>
+
+<div class="hero">
+    <h1>Free Business Calculator</h1>
+    <p>Instantly calculate ROI, markup, profit margin, break-even point, discounts, sales tax, and hourly rates. No signup required.</p>
+</div>
+
+<div class="container">
+    <!-- Tab Buttons -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('markup')">Markup</button>
+        <button class="tab-btn" onclick="switchTab('margin')">Profit Margin</button>
+        <button class="tab-btn" onclick="switchTab('roi')">ROI</button>
+        <button class="tab-btn" onclick="switchTab('breakeven')">Break-Even</button>
+        <button class="tab-btn" onclick="switchTab('discount')">Discount</button>
+        <button class="tab-btn" onclick="switchTab('tax')">Sales Tax</button>
+        <button class="tab-btn" onclick="switchTab('hourly')">Hourly Rate</button>
+    </div>
+
+    <!-- 1. Markup Calculator -->
+    <div class="calc-panel active" id="panel-markup">
+        <div class="card">
+            <h2><span class="icon" style="background:#6366f1;">%</span> Markup Calculator</h2>
+            <div class="input-row">
+                <div class="field">
+                    <label for="mu-cost">Cost Price ($)</label>
+                    <input type="number" id="mu-cost" placeholder="e.g. 50" step="any" oninput="calcMarkup()">
+                </div>
+                <div class="field">
+                    <label for="mu-markup">Markup (%)</label>
+                    <input type="number" id="mu-markup" placeholder="e.g. 40" step="any" oninput="calcMarkup()">
+                </div>
+            </div>
+            <div class="field">
+                <label for="mu-sell">Selling Price ($) <span style="font-weight:400;color:#888;">(or enter to reverse-calculate)</span></label>
+                <input type="number" id="mu-sell" placeholder="e.g. 70" step="any" oninput="calcMarkupReverse()">
+            </div>
+            <div class="result-box" id="mu-results">
+                <div class="result-row"><span class="result-label">Selling Price</span><span class="result-value" id="mu-r-sell">--</span></div>
+                <div class="result-row"><span class="result-label">Profit</span><span class="result-value" id="mu-r-profit">--</span></div>
+                <div class="result-row"><span class="result-label">Markup %</span><span class="result-value" id="mu-r-markup">--</span></div>
+                <div class="result-row"><span class="result-label">Margin %</span><span class="result-value" id="mu-r-margin">--</span></div>
+            </div>
+            <div class="formula-label" style="margin-top:16px;">Formula</div>
+            <div class="formula-box">Selling Price = Cost x (1 + Markup% / 100)
+Profit = Selling Price - Cost
+Margin% = (Profit / Selling Price) x 100</div>
+        </div>
+    </div>
+
+    <!-- 2. Profit Margin Calculator -->
+    <div class="calc-panel" id="panel-margin">
+        <div class="card">
+            <h2><span class="icon" style="background:#16a34a;">$</span> Profit Margin Calculator</h2>
+            <div class="input-row">
+                <div class="field">
+                    <label for="pm-revenue">Revenue ($)</label>
+                    <input type="number" id="pm-revenue" placeholder="e.g. 10000" step="any" oninput="calcMargin()">
+                </div>
+                <div class="field">
+                    <label for="pm-cost">Cost of Goods Sold ($)</label>
+                    <input type="number" id="pm-cost" placeholder="e.g. 6000" step="any" oninput="calcMargin()">
+                </div>
+            </div>
+            <div class="field">
+                <label for="pm-expenses">Operating Expenses ($) <span style="font-weight:400;color:#888;">(optional, for net margin)</span></label>
+                <input type="number" id="pm-expenses" placeholder="e.g. 2000" step="any" oninput="calcMargin()">
+            </div>
+            <div class="result-box">
+                <div class="result-row"><span class="result-label">Gross Profit</span><span class="result-value" id="pm-r-gp">--</span></div>
+                <div class="result-row"><span class="result-label">Gross Margin %</span><span class="result-value" id="pm-r-gm">--</span></div>
+                <div class="result-row"><span class="result-label">Net Profit</span><span class="result-value" id="pm-r-np">--</span></div>
+                <div class="result-row"><span class="result-label">Net Margin %</span><span class="result-value" id="pm-r-nm">--</span></div>
+            </div>
+            <div class="formula-label" style="margin-top:16px;">Formula</div>
+            <div class="formula-box">Gross Profit = Revenue - COGS
+Gross Margin% = (Gross Profit / Revenue) x 100
+Net Profit = Revenue - COGS - Expenses
+Net Margin% = (Net Profit / Revenue) x 100</div>
+        </div>
+    </div>
+
+    <!-- 3. ROI Calculator -->
+    <div class="calc-panel" id="panel-roi">
+        <div class="card">
+            <h2><span class="icon" style="background:#ea580c;">&#x2191;</span> ROI Calculator</h2>
+            <div class="input-row">
+                <div class="field">
+                    <label for="roi-invest">Investment Amount ($)</label>
+                    <input type="number" id="roi-invest" placeholder="e.g. 5000" step="any" oninput="calcROI()">
+                </div>
+                <div class="field">
+                    <label for="roi-return">Return Amount ($)</label>
+                    <input type="number" id="roi-return" placeholder="e.g. 7500" step="any" oninput="calcROI()">
+                </div>
+            </div>
+            <div class="field">
+                <label for="roi-years">Investment Period (years) <span style="font-weight:400;color:#888;">(for annualized ROI)</span></label>
+                <input type="number" id="roi-years" placeholder="e.g. 2" step="any" min="0.1" oninput="calcROI()">
+            </div>
+            <div class="result-box">
+                <div class="result-row"><span class="result-label">Net Gain / Loss</span><span class="result-value" id="roi-r-gain">--</span></div>
+                <div class="result-row"><span class="result-label">ROI %</span><span class="result-value" id="roi-r-roi">--</span></div>
+                <div class="result-row"><span class="result-label">Annualized ROI %</span><span class="result-value" id="roi-r-annual">--</span></div>
+            </div>
+            <div class="formula-label" style="margin-top:16px;">Formula</div>
+            <div class="formula-box">ROI% = ((Return - Investment) / Investment) x 100
+Annualized ROI% = ((Return / Investment)^(1/Years) - 1) x 100</div>
+        </div>
+    </div>
+
+    <!-- 4. Break-Even Calculator -->
+    <div class="calc-panel" id="panel-breakeven">
+        <div class="card">
+            <h2><span class="icon" style="background:#0ea5e9;">&#x2696;</span> Break-Even Calculator</h2>
+            <div class="field">
+                <label for="be-fixed">Fixed Costs ($)</label>
+                <input type="number" id="be-fixed" placeholder="e.g. 10000" step="any" oninput="calcBreakEven()">
+            </div>
+            <div class="input-row">
+                <div class="field">
+                    <label for="be-varcost">Variable Cost per Unit ($)</label>
+                    <input type="number" id="be-varcost" placeholder="e.g. 15" step="any" oninput="calcBreakEven()">
+                </div>
+                <div class="field">
+                    <label for="be-price">Selling Price per Unit ($)</label>
+                    <input type="number" id="be-price" placeholder="e.g. 40" step="any" oninput="calcBreakEven()">
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-row"><span class="result-label">Break-Even Units</span><span class="result-value" id="be-r-units">--</span></div>
+                <div class="result-row"><span class="result-label">Break-Even Revenue</span><span class="result-value" id="be-r-rev">--</span></div>
+                <div class="result-row"><span class="result-label">Contribution Margin / Unit</span><span class="result-value" id="be-r-cm">--</span></div>
+                <div class="result-row"><span class="result-label">Contribution Margin %</span><span class="result-value" id="be-r-cmp">--</span></div>
+            </div>
+            <div class="formula-label" style="margin-top:16px;">Formula</div>
+            <div class="formula-box">Contribution Margin = Price - Variable Cost
+Break-Even Units = Fixed Costs / Contribution Margin
+Break-Even Revenue = Break-Even Units x Price</div>
+        </div>
+    </div>
+
+    <!-- 5. Discount Calculator -->
+    <div class="calc-panel" id="panel-discount">
+        <div class="card">
+            <h2><span class="icon" style="background:#e11d48;">&#x2702;</span> Discount Calculator</h2>
+            <div class="input-row">
+                <div class="field">
+                    <label for="dc-original">Original Price ($)</label>
+                    <input type="number" id="dc-original" placeholder="e.g. 120" step="any" oninput="calcDiscount()">
+                </div>
+                <div class="field">
+                    <label for="dc-percent">Discount (%)</label>
+                    <input type="number" id="dc-percent" placeholder="e.g. 25" step="any" oninput="calcDiscount()">
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-row"><span class="result-label">Amount Saved</span><span class="result-value positive" id="dc-r-saved">--</span></div>
+                <div class="result-row"><span class="result-label">Final Price</span><span class="result-value" id="dc-r-final">--</span></div>
+            </div>
+            <div class="formula-label" style="margin-top:16px;">Formula</div>
+            <div class="formula-box">Amount Saved = Original Price x (Discount% / 100)
+Final Price = Original Price - Amount Saved</div>
+        </div>
+    </div>
+
+    <!-- 6. Sales Tax Calculator -->
+    <div class="calc-panel" id="panel-tax">
+        <div class="card">
+            <h2><span class="icon" style="background:#7c3aed;">&#x2608;</span> Sales Tax Calculator</h2>
+            <div class="input-row">
+                <div class="field">
+                    <label for="tx-amount">Pre-Tax Amount ($)</label>
+                    <input type="number" id="tx-amount" placeholder="e.g. 85" step="any" oninput="calcTax()">
+                </div>
+                <div class="field">
+                    <label for="tx-rate">Tax Rate (%)</label>
+                    <input type="number" id="tx-rate" placeholder="e.g. 8.25" step="any" oninput="calcTax()">
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-row"><span class="result-label">Tax Amount</span><span class="result-value" id="tx-r-tax">--</span></div>
+                <div class="result-row"><span class="result-label">Total (incl. Tax)</span><span class="result-value" id="tx-r-total">--</span></div>
+            </div>
+            <div class="formula-label" style="margin-top:16px;">Formula</div>
+            <div class="formula-box">Tax Amount = Pre-Tax Amount x (Tax Rate% / 100)
+Total = Pre-Tax Amount + Tax Amount</div>
+        </div>
+    </div>
+
+    <!-- 7. Hourly Rate Calculator -->
+    <div class="calc-panel" id="panel-hourly">
+        <div class="card">
+            <h2><span class="icon" style="background:#0d9488;">&#x23F0;</span> Hourly Rate Calculator</h2>
+            <div class="field">
+                <label for="hr-salary">Desired Annual Income ($)</label>
+                <input type="number" id="hr-salary" placeholder="e.g. 80000" step="any" oninput="calcHourly()">
+            </div>
+            <div class="input-row">
+                <div class="field">
+                    <label for="hr-hours">Billable Hours per Week</label>
+                    <input type="number" id="hr-hours" placeholder="e.g. 30" step="any" value="30" oninput="calcHourly()">
+                </div>
+                <div class="field">
+                    <label for="hr-weeks">Working Weeks per Year</label>
+                    <input type="number" id="hr-weeks" placeholder="e.g. 48" step="any" value="48" oninput="calcHourly()">
+                </div>
+            </div>
+            <div class="input-row">
+                <div class="field">
+                    <label for="hr-expenses">Annual Business Expenses ($)</label>
+                    <input type="number" id="hr-expenses" placeholder="e.g. 5000" step="any" value="0" oninput="calcHourly()">
+                </div>
+                <div class="field">
+                    <label for="hr-tax">Estimated Tax Rate (%)</label>
+                    <input type="number" id="hr-tax" placeholder="e.g. 25" step="any" value="25" oninput="calcHourly()">
+                </div>
+            </div>
+            <div class="result-box">
+                <div class="result-row"><span class="result-label">Pre-Tax Income Needed</span><span class="result-value" id="hr-r-pretax">--</span></div>
+                <div class="result-row"><span class="result-label">Total Billable Hours / Year</span><span class="result-value" id="hr-r-totalhrs">--</span></div>
+                <div class="result-row"><span class="result-label">Required Hourly Rate</span><span class="result-value" id="hr-r-rate" style="font-size:1.4rem;color:#6366f1;">--</span></div>
+            </div>
+            <div class="formula-label" style="margin-top:16px;">Formula</div>
+            <div class="formula-box">Pre-Tax Income = (Desired Income + Expenses) / (1 - Tax% / 100)
+Total Billable Hours = Hours/Week x Weeks/Year
+Hourly Rate = Pre-Tax Income / Total Billable Hours</div>
+        </div>
+    </div>
+
+    <!-- Upsell -->
+    <div class="upsell">
+        <h3>Content Creator's Playbook</h3>
+        <p>Master pricing strategy, financial planning, and business growth. Learn how to set the right prices and maximize your profit margins.</p>
+        <a href="https://jaechang112.gumroad.com/l/nwdis" target="_blank" rel="noopener">Get the Playbook - $9</a>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+        <h2>Business Calculator FAQ</h2>
+        <div class="faq-item">
+            <h3>What is the difference between markup and profit margin?</h3>
+            <p>Markup is the percentage added to the cost price to determine the selling price (based on cost). Profit margin is the percentage of the selling price that is profit (based on revenue). For example, a product costing $50 sold for $75 has a 50% markup but a 33.3% profit margin. Both are important business metrics, but margin gives a clearer picture of profitability relative to revenue.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How do I calculate ROI on a business investment?</h3>
+            <p>ROI (Return on Investment) measures the profitability of an investment. Use our ROI calculator by entering your initial investment amount and the total return. The formula is: ROI = ((Return - Investment) / Investment) x 100. For investments spanning multiple years, the annualized ROI gives a better comparison by accounting for the time period.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What is a break-even analysis?</h3>
+            <p>A break-even analysis determines the number of units you need to sell to cover all your costs (both fixed and variable). The break-even point is where total revenue equals total costs, meaning zero profit or loss. This is essential for pricing decisions, business planning, and understanding the minimum sales volume required for profitability.</p>
+        </div>
+        <div class="faq-item">
+            <h3>How should I calculate my freelance hourly rate?</h3>
+            <p>Your hourly rate should account for your desired take-home income, business expenses (software, equipment, insurance), self-employment taxes, and non-billable time (admin, marketing, time off). Our hourly rate calculator factors in all of these to give you a realistic rate. Most freelancers can bill 25-30 hours per week, not 40, since the rest goes to running the business.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Are these business calculators accurate?</h3>
+            <p>Yes, all calculations use standard financial formulas and run entirely in your browser. No data is sent to any server. These calculators are designed for quick business estimates and planning. For complex financial decisions or tax planning, always consult with a qualified accountant or financial advisor.</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 BizToolkit &mdash; Free tools for small businesses and creators. <a href="privacy.html">Privacy Policy</a></p>
+</footer>
+
+<script>
+function fmt(n, decimals) {
+    if (isNaN(n) || !isFinite(n)) return '--';
+    return n.toLocaleString('en-US', { minimumFractionDigits: decimals || 2, maximumFractionDigits: decimals || 2 });
+}
+function fmtDollar(n) {
+    if (isNaN(n) || !isFinite(n)) return '--';
+    return '$' + fmt(n);
+}
+function fmtPct(n) {
+    if (isNaN(n) || !isFinite(n)) return '--';
+    return fmt(n) + '%';
+}
+function val(id) {
+    var v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? null : v;
+}
+function setText(id, text, cls) {
+    var el = document.getElementById(id);
+    el.textContent = text;
+    el.className = 'result-value' + (cls ? ' ' + cls : '');
+}
+
+function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.calc-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.getElementById('panel-' + name).classList.add('active');
+    // Find the button
+    var btns = document.querySelectorAll('.tab-btn');
+    var map = { markup:0, margin:1, roi:2, breakeven:3, discount:4, tax:5, hourly:6 };
+    if (map[name] !== undefined) btns[map[name]].classList.add('active');
+}
+
+// 1. Markup Calculator
+function calcMarkup() {
+    var cost = val('mu-cost');
+    var markup = val('mu-markup');
+    if (cost === null || markup === null) { clearMarkup(); return; }
+    var sell = cost * (1 + markup / 100);
+    var profit = sell - cost;
+    var margin = sell !== 0 ? (profit / sell) * 100 : 0;
+    document.getElementById('mu-sell').value = '';
+    setText('mu-r-sell', fmtDollar(sell));
+    setText('mu-r-profit', fmtDollar(profit), profit >= 0 ? 'positive' : 'negative');
+    setText('mu-r-markup', fmtPct(markup));
+    setText('mu-r-margin', fmtPct(margin));
+}
+function calcMarkupReverse() {
+    var cost = val('mu-cost');
+    var sell = val('mu-sell');
+    if (cost === null || sell === null || cost === 0) { clearMarkup(); return; }
+    var profit = sell - cost;
+    var markup = (profit / cost) * 100;
+    var margin = sell !== 0 ? (profit / sell) * 100 : 0;
+    document.getElementById('mu-markup').value = '';
+    setText('mu-r-sell', fmtDollar(sell));
+    setText('mu-r-profit', fmtDollar(profit), profit >= 0 ? 'positive' : 'negative');
+    setText('mu-r-markup', fmtPct(markup));
+    setText('mu-r-margin', fmtPct(margin));
+}
+function clearMarkup() {
+    setText('mu-r-sell','--'); setText('mu-r-profit','--'); setText('mu-r-markup','--'); setText('mu-r-margin','--');
+}
+
+// 2. Profit Margin Calculator
+function calcMargin() {
+    var rev = val('pm-revenue');
+    var cost = val('pm-cost');
+    if (rev === null || cost === null) return;
+    var gp = rev - cost;
+    var gm = rev !== 0 ? (gp / rev) * 100 : 0;
+    var expenses = val('pm-expenses') || 0;
+    var np = rev - cost - expenses;
+    var nm = rev !== 0 ? (np / rev) * 100 : 0;
+    setText('pm-r-gp', fmtDollar(gp), gp >= 0 ? 'positive' : 'negative');
+    setText('pm-r-gm', fmtPct(gm));
+    setText('pm-r-np', fmtDollar(np), np >= 0 ? 'positive' : 'negative');
+    setText('pm-r-nm', fmtPct(nm));
+}
+
+// 3. ROI Calculator
+function calcROI() {
+    var invest = val('roi-invest');
+    var ret = val('roi-return');
+    if (invest === null || ret === null || invest === 0) return;
+    var gain = ret - invest;
+    var roi = (gain / invest) * 100;
+    setText('roi-r-gain', fmtDollar(gain), gain >= 0 ? 'positive' : 'negative');
+    setText('roi-r-roi', fmtPct(roi), roi >= 0 ? 'positive' : 'negative');
+    var years = val('roi-years');
+    if (years !== null && years > 0 && ret > 0) {
+        var annualized = (Math.pow(ret / invest, 1 / years) - 1) * 100;
+        setText('roi-r-annual', fmtPct(annualized), annualized >= 0 ? 'positive' : 'negative');
+    } else {
+        setText('roi-r-annual', '--');
+    }
+}
+
+// 4. Break-Even Calculator
+function calcBreakEven() {
+    var fixed = val('be-fixed');
+    var varCost = val('be-varcost');
+    var price = val('be-price');
+    if (fixed === null || varCost === null || price === null) return;
+    var cm = price - varCost;
+    if (cm <= 0) {
+        setText('be-r-units', 'N/A (price must exceed variable cost)', 'negative');
+        setText('be-r-rev', '--');
+        setText('be-r-cm', fmtDollar(cm), 'negative');
+        setText('be-r-cmp', price !== 0 ? fmtPct((cm / price) * 100) : '--', 'negative');
+        return;
+    }
+    var units = Math.ceil(fixed / cm);
+    var rev = units * price;
+    setText('be-r-units', units.toLocaleString('en-US'));
+    setText('be-r-rev', fmtDollar(rev));
+    setText('be-r-cm', fmtDollar(cm));
+    setText('be-r-cmp', fmtPct((cm / price) * 100));
+}
+
+// 5. Discount Calculator
+function calcDiscount() {
+    var orig = val('dc-original');
+    var pct = val('dc-percent');
+    if (orig === null || pct === null) return;
+    var saved = orig * (pct / 100);
+    var final_ = orig - saved;
+    setText('dc-r-saved', fmtDollar(saved), 'positive');
+    setText('dc-r-final', fmtDollar(final_));
+}
+
+// 6. Sales Tax Calculator
+function calcTax() {
+    var amount = val('tx-amount');
+    var rate = val('tx-rate');
+    if (amount === null || rate === null) return;
+    var tax = amount * (rate / 100);
+    var total = amount + tax;
+    setText('tx-r-tax', fmtDollar(tax));
+    setText('tx-r-total', fmtDollar(total));
+}
+
+// 7. Hourly Rate Calculator
+function calcHourly() {
+    var salary = val('hr-salary');
+    var hours = val('hr-hours');
+    var weeks = val('hr-weeks');
+    var expenses = val('hr-expenses') || 0;
+    var taxRate = val('hr-tax') || 0;
+    if (salary === null || hours === null || weeks === null || hours === 0 || weeks === 0) return;
+    var taxMultiplier = 1 - (taxRate / 100);
+    if (taxMultiplier <= 0) { setText('hr-r-rate', 'Tax rate too high', 'negative'); return; }
+    var pretax = (salary + expenses) / taxMultiplier;
+    var totalHours = hours * weeks;
+    var rate = pretax / totalHours;
+    setText('hr-r-pretax', fmtDollar(pretax));
+    setText('hr-r-totalhrs', totalHours.toLocaleString('en-US'));
+    setText('hr-r-rate', fmtDollar(rate));
+}
+
+// Initial calculation for hourly (has default values)
+calcHourly();
+</script>
+<script src="analytics.js"></script>
+</body>
+</html>

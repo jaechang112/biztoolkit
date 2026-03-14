@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Analytics Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #f5f6fa; padding: 24px; }
+        h1 { font-size: 1.6rem; margin-bottom: 6px; }
+        .subtitle { color: #666; margin-bottom: 24px; font-size: 0.9rem; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .stat-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e8ecf1; }
+        .stat-card .label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+        .stat-card .value { font-size: 1.8rem; font-weight: 700; color: #4f46e5; }
+        .section { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e8ecf1; margin-bottom: 20px; }
+        .section h2 { font-size: 1.1rem; margin-bottom: 14px; color: #1a1a2e; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th { text-align: left; padding: 8px 12px; background: #f9fafb; border-bottom: 2px solid #e5e7eb; font-weight: 600; color: #555; font-size: 0.8rem; text-transform: uppercase; }
+        td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; }
+        tr:hover td { background: #fafbff; }
+        .bar-container { display: flex; align-items: center; gap: 10px; }
+        .bar { height: 20px; background: linear-gradient(90deg, #6366f1, #818cf8); border-radius: 4px; min-width: 4px; }
+        .bar-label { font-size: 0.85rem; white-space: nowrap; min-width: 120px; }
+        .bar-count { font-size: 0.85rem; color: #666; min-width: 40px; text-align: right; }
+        .actions { margin-bottom: 20px; display: flex; gap: 10px; }
+        .btn { padding: 8px 16px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem; }
+        .btn-export { background: #4f46e5; color: white; }
+        .btn-export:hover { background: #4338ca; }
+        .btn-clear { background: #fee2e2; color: #dc2626; }
+        .btn-clear:hover { background: #fecaca; }
+        .filter-row { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; }
+        .filter-row select, .filter-row input { padding: 6px 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.85rem; }
+        .empty { text-align: center; padding: 40px; color: #999; }
+    </style>
+</head>
+<body>
+    <h1>Analytics Dashboard</h1>
+    <p class="subtitle">Local analytics stored in your browser's localStorage</p>
+
+    <div class="actions">
+        <button class="btn btn-export" onclick="exportCSV()">Export CSV</button>
+        <button class="btn btn-export" onclick="exportJSON()">Export JSON</button>
+        <button class="btn btn-clear" onclick="clearData()">Clear All Data</button>
+    </div>
+
+    <div class="stats" id="statsCards"></div>
+
+    <div class="filter-row">
+        <label>Period:</label>
+        <select id="periodFilter" onchange="render()">
+            <option value="all">All Time</option>
+            <option value="today">Today</option>
+            <option value="7d" selected>Last 7 Days</option>
+            <option value="30d">Last 30 Days</option>
+        </select>
+    </div>
+
+    <div class="section">
+        <h2>Page Views</h2>
+        <div id="pageChart"></div>
+    </div>
+
+    <div class="section">
+        <h2>Daily Views</h2>
+        <div id="dailyChart"></div>
+    </div>
+
+    <div class="section">
+        <h2>Referrers</h2>
+        <div id="referrerTable"></div>
+    </div>
+
+    <div class="section">
+        <h2>Recent Visits</h2>
+        <div id="recentTable"></div>
+    </div>
+
+    <script>
+        var STORAGE_KEY = 'btk_analytics';
+
+        function getData() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+            catch(e) { return []; }
+        }
+
+        function filterByPeriod(data) {
+            var period = document.getElementById('periodFilter').value;
+            if (period === 'all') return data;
+            var now = new Date();
+            var cutoff;
+            if (period === 'today') {
+                cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            } else if (period === '7d') {
+                cutoff = new Date(now - 7 * 86400000);
+            } else if (period === '30d') {
+                cutoff = new Date(now - 30 * 86400000);
+            }
+            return data.filter(function(e) { return new Date(e.t) >= cutoff; });
+        }
+
+        function countBy(arr, key) {
+            var map = {};
+            arr.forEach(function(e) {
+                var v = e[key] || '(none)';
+                map[v] = (map[v] || 0) + 1;
+            });
+            return Object.keys(map).map(function(k) { return { name: k, count: map[k] }; })
+                .sort(function(a, b) { return b.count - a.count; });
+        }
+
+        function renderBars(containerId, items, maxShow) {
+            var el = document.getElementById(containerId);
+            if (!items.length) { el.innerHTML = '<p class="empty">No data yet</p>'; return; }
+            var show = items.slice(0, maxShow || 20);
+            var max = show[0].count;
+            el.innerHTML = show.map(function(item) {
+                var pct = Math.max(2, (item.count / max) * 100);
+                return '<div class="bar-container">' +
+                    '<span class="bar-label">' + escHtml(item.name) + '</span>' +
+                    '<div class="bar" style="width:' + pct + '%"></div>' +
+                    '<span class="bar-count">' + item.count + '</span></div>';
+            }).join('');
+        }
+
+        function escHtml(s) {
+            var d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        function render() {
+            var all = getData();
+            var data = filterByPeriod(all);
+
+            // Stats cards
+            var pages = {};
+            data.forEach(function(e) { pages[e.p] = 1; });
+            var uniquePages = Object.keys(pages).length;
+            var refs = data.filter(function(e) { return e.r && e.r !== '(none)'; }).length;
+            document.getElementById('statsCards').innerHTML =
+                '<div class="stat-card"><div class="label">Total Views</div><div class="value">' + data.length + '</div></div>' +
+                '<div class="stat-card"><div class="label">All-Time Views</div><div class="value">' + all.length + '</div></div>' +
+                '<div class="stat-card"><div class="label">Unique Pages</div><div class="value">' + uniquePages + '</div></div>' +
+                '<div class="stat-card"><div class="label">With Referrer</div><div class="value">' + refs + '</div></div>';
+
+            // Page views chart
+            renderBars('pageChart', countBy(data, 'p'), 20);
+
+            // Daily chart
+            var daily = {};
+            data.forEach(function(e) {
+                var d = e.t.substring(0, 10);
+                daily[d] = (daily[d] || 0) + 1;
+            });
+            var dailyArr = Object.keys(daily).sort().map(function(d) { return { name: d, count: daily[d] }; });
+            renderBars('dailyChart', dailyArr, 30);
+
+            // Referrers
+            var refData = data.filter(function(e) { return e.r; });
+            var refItems = countBy(refData, 'r');
+            if (refItems.length) {
+                document.getElementById('referrerTable').innerHTML = '<table><tr><th>Referrer</th><th>Count</th></tr>' +
+                    refItems.slice(0, 20).map(function(r) {
+                        return '<tr><td>' + escHtml(r.name) + '</td><td>' + r.count + '</td></tr>';
+                    }).join('') + '</table>';
+            } else {
+                document.getElementById('referrerTable').innerHTML = '<p class="empty">No referrer data</p>';
+            }
+
+            // Recent visits
+            var recent = data.slice(-50).reverse();
+            if (recent.length) {
+                document.getElementById('recentTable').innerHTML = '<table><tr><th>Time</th><th>Page</th><th>Referrer</th><th>Screen</th></tr>' +
+                    recent.map(function(e) {
+                        var t = new Date(e.t);
+                        var ts = t.toLocaleDateString() + ' ' + t.toLocaleTimeString();
+                        return '<tr><td>' + ts + '</td><td>' + escHtml(e.p) + '</td><td>' + escHtml(e.r || '-') + '</td><td>' + escHtml(e.s || '-') + '</td></tr>';
+                    }).join('') + '</table>';
+            } else {
+                document.getElementById('recentTable').innerHTML = '<p class="empty">No visits recorded yet</p>';
+            }
+        }
+
+        function exportCSV() {
+            var data = getData();
+            if (!data.length) { alert('No data to export'); return; }
+            var csv = 'Page,Timestamp,Referrer,Screen,Language\n' +
+                data.map(function(e) {
+                    return [e.p, e.t, '"' + (e.r || '') + '"', e.s, e.l].join(',');
+                }).join('\n');
+            download('analytics.csv', csv, 'text/csv');
+        }
+
+        function exportJSON() {
+            var data = getData();
+            if (!data.length) { alert('No data to export'); return; }
+            download('analytics.json', JSON.stringify(data, null, 2), 'application/json');
+        }
+
+        function download(filename, content, type) {
+            var blob = new Blob([content], { type: type });
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+        }
+
+        function clearData() {
+            if (confirm('Delete all analytics data? This cannot be undone.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                render();
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>

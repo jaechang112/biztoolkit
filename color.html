@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <title>Free Color Palette Generator | Create Beautiful Color Schemes</title>
+    <meta name="description" content="Free color palette generator. Create beautiful color schemes with harmony modes, extract palettes from images, export as CSS/SCSS/Tailwind. No signup required.">
+    <meta name="keywords" content="color palette generator, color scheme generator, color picker, color harmony, complementary colors, analogous colors, triadic colors">
+    <meta property="og:title" content="Free Color Palette Generator | Create Beautiful Color Schemes">
+    <meta property="og:description" content="Generate stunning color palettes with harmony modes. Lock colors, check contrast ratios, extract from images, export as CSS/SCSS/Tailwind.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/color.html">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/color.html">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Free Color Palette Generator","url":"https://biztoolkit-free.netlify.app/color.html","description":"Generate beautiful color palettes with harmony modes, image extraction, and export options.","applicationCategory":"DesignApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"BizToolkit"}}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #fafbfc; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Palette display */
+        .palette-bar {
+            display: flex;
+            width: 100%;
+            height: 260px;
+            position: relative;
+        }
+        .palette-color {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: flex 0.3s;
+        }
+        .palette-color:hover { flex: 1.15; }
+        .palette-color .lock-icon {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            cursor: pointer;
+            user-select: none;
+            background: rgba(0,0,0,0.2);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.15s;
+        }
+        .palette-color .lock-icon:hover { opacity: 1; }
+        .palette-color.locked .lock-icon { opacity: 1; background: rgba(0,0,0,0.45); }
+        .palette-color .color-hex {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: background 0.15s;
+        }
+        .palette-color .color-hex:hover {
+            background: rgba(0,0,0,0.15);
+        }
+        .palette-color .color-values {
+            font-size: 0.75rem;
+            margin-top: 6px;
+            opacity: 0.8;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .palette-color .copied-toast {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .palette-color .copied-toast.show { opacity: 1; }
+
+        /* Contrast badges */
+        .contrast-badge {
+            position: absolute;
+            bottom: 10px;
+            right: -18px;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+        /* Controls */
+        .controls-wrap { padding: 32px 0 60px; }
+        .top-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .generate-btn {
+            padding: 10px 28px;
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 700;
+            transition: background 0.15s;
+        }
+        .generate-btn:hover { background: #4f46e5; }
+        .shortcut-hint {
+            font-size: 0.78rem;
+            color: #999;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        /* Harmony mode */
+        .harmony-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+        .harmony-btn {
+            padding: 7px 16px;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+        .harmony-btn.active {
+            border-color: #6366f1;
+            background: #eef2ff;
+            color: #6366f1;
+        }
+
+        /* Sections */
+        .section-title {
+            font-size: 1.05rem;
+            margin-bottom: 14px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        /* Export */
+        .export-section { margin-top: 32px; }
+        .export-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .export-tab {
+            padding: 6px 16px;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+        .export-tab.active {
+            border-color: #6366f1;
+            background: #eef2ff;
+            color: #6366f1;
+        }
+        .code-box {
+            position: relative;
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        .code-box pre {
+            font-family: 'SFMono-Regular', 'Consolas', 'Menlo', monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: #cdd6f4;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .code-box .kw { color: #cba6f7; }
+        .code-box .str { color: #a6e3a1; }
+        .code-box .punc { color: #9399b2; }
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 16px;
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background 0.15s;
+        }
+        .copy-btn:hover { background: #4f46e5; }
+        .copy-btn.copied { background: #22c55e; }
+
+        /* Image extract */
+        .extract-section { margin-top: 32px; }
+        .drop-zone {
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #888;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            position: relative;
+        }
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: #6366f1;
+            background: #f5f3ff;
+        }
+        .drop-zone input[type=file] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .drop-zone canvas { display: none; }
+
+        /* Saved palettes */
+        .saved-section { margin-top: 32px; }
+        .save-btn {
+            padding: 8px 20px;
+            background: #22c55e;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.15s;
+            margin-bottom: 16px;
+        }
+        .save-btn:hover { background: #16a34a; }
+        .saved-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .saved-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            border: 1px solid #e8ecf1;
+            border-radius: 10px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: box-shadow 0.15s;
+        }
+        .saved-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .saved-swatch {
+            width: 36px;
+            height: 28px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .saved-row .saved-hex {
+            font-size: 0.72rem;
+            color: #888;
+            font-family: monospace;
+        }
+        .saved-row .remove-saved {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            line-height: 1;
+        }
+        .saved-row .remove-saved:hover { background: #fdeaea; }
+        .no-saved { font-size: 0.85rem; color: #aaa; }
+
+        /* Download image button */
+        .download-img-btn {
+            padding: 8px 20px;
+            background: #6366f1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.15s;
+        }
+        .download-img-btn:hover { background: #4f46e5; }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 32px 20px;
+            color: #888;
+            font-size: 0.85rem;
+            border-top: 1px solid #e8ecf1;
+        }
+        footer a { color: #6366f1; text-decoration: none; }
+
+        /* SEO content */
+        .seo-content {
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+        }
+        .seo-content h2 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #1a1a2e;
+        }
+        .seo-content p, .seo-content li {
+            font-size: 0.92rem;
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        .seo-content ul { padding-left: 20px; margin-bottom: 16px; }
+
+        @media (max-width: 640px) {
+            .palette-bar { height: 200px; flex-direction: column; }
+            .palette-color { flex: 1 !important; flex-direction: row; justify-content: flex-start; padding-left: 20px; gap: 12px; }
+            .palette-color .lock-icon { position: static; }
+            .palette-color .color-values { display: none; }
+            .contrast-badge { display: none; }
+            .top-controls { gap: 8px; }
+            .harmony-row { gap: 6px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav style="background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+    <a href="index.html" style="color:white;text-decoration:none;font-weight:700;font-size:1.1rem;">BizToolkit</a>
+    <a href="index.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Tools</a>
+    <a href="invoice.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Invoice</a>
+    <a href="gradient.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Gradient</a>
+    <a href="color.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:1;border-bottom:2px solid #6366f1;padding-bottom:2px;">Palette</a>
+</nav>
+
+<div class="palette-bar" id="paletteBar"></div>
+
+<div class="container controls-wrap">
+    <h1 style="font-size:1.8rem;margin-bottom:6px;">Color Palette Generator</h1>
+    <p style="color:#666;font-size:0.92rem;margin-bottom:24px;">Generate beautiful color schemes instantly. Free, no signup.</p>
+
+    <div class="top-controls">
+        <button class="generate-btn" onclick="generate()">Generate Palette</button>
+        <span class="shortcut-hint">Press <strong>Spacebar</strong> to generate</span>
+    </div>
+
+    <!-- Harmony Modes -->
+    <div class="harmony-row">
+        <span style="font-size:0.85rem;font-weight:600;color:#555;margin-right:4px;">Mode:</span>
+        <button class="harmony-btn active" data-mode="random" onclick="setMode('random')">Random</button>
+        <button class="harmony-btn" data-mode="analogous" onclick="setMode('analogous')">Analogous</button>
+        <button class="harmony-btn" data-mode="complementary" onclick="setMode('complementary')">Complementary</button>
+        <button class="harmony-btn" data-mode="triadic" onclick="setMode('triadic')">Triadic</button>
+        <button class="harmony-btn" data-mode="split-complementary" onclick="setMode('split-complementary')">Split-comp.</button>
+        <button class="harmony-btn" data-mode="monochromatic" onclick="setMode('monochromatic')">Monochromatic</button>
+    </div>
+
+    <!-- Export -->
+    <div class="export-section">
+        <h3 class="section-title">Export Palette</h3>
+        <div class="export-tabs">
+            <button class="export-tab active" data-fmt="css" onclick="setExportFormat('css')">CSS Variables</button>
+            <button class="export-tab" data-fmt="scss" onclick="setExportFormat('scss')">SCSS</button>
+            <button class="export-tab" data-fmt="tailwind" onclick="setExportFormat('tailwind')">Tailwind</button>
+            <button class="export-tab" data-fmt="image" onclick="downloadImage()">Download Image</button>
+        </div>
+        <div class="code-box" id="exportCodeBox">
+            <button class="copy-btn" id="exportCopyBtn" onclick="copyExport()">Copy</button>
+            <pre id="exportCode"></pre>
+        </div>
+    </div>
+
+    <!-- Extract from image -->
+    <div class="extract-section">
+        <h3 class="section-title">Extract Palette from Image</h3>
+        <div class="drop-zone" id="dropZone">
+            <p>Drop an image here or click to upload</p>
+            <p style="font-size:0.78rem;margin-top:6px;">Extracts 5 dominant colors from your image</p>
+            <input type="file" accept="image/*" id="imageInput">
+            <canvas id="extractCanvas"></canvas>
+        </div>
+    </div>
+
+    <!-- Saved palettes -->
+    <div class="saved-section">
+        <h3 class="section-title">Saved Palettes</h3>
+        <button class="save-btn" onclick="savePalette()">Save Current Palette</button>
+        <div class="saved-grid" id="savedGrid"></div>
+    </div>
+
+    <!-- SEO Content -->
+    <div class="seo-content">
+        <h2>How to Use This Color Palette Generator</h2>
+        <p>This free color scheme generator helps designers and developers create harmonious color palettes in seconds. Click <strong>Generate</strong> or press <strong>Spacebar</strong> to create a new 5-color palette. Click any color's hex code to copy it to your clipboard.</p>
+        <ul>
+            <li>Choose a <strong>harmony mode</strong>: Analogous, Complementary, Triadic, Split-complementary, or Monochromatic</li>
+            <li><strong>Lock colors</strong> you like by clicking the lock icon &mdash; locked colors stay when you regenerate</li>
+            <li>View <strong>HEX, RGB, and HSL</strong> values for every color</li>
+            <li><strong>Export</strong> your palette as CSS variables, SCSS variables, or Tailwind config</li>
+            <li><strong>Extract palettes</strong> from any image using dominant color detection</li>
+            <li>Check <strong>contrast ratios</strong> between adjacent colors for accessibility</li>
+            <li><strong>Save favorite palettes</strong> to your browser for later use</li>
+        </ul>
+        <h2>Why Color Harmony Matters</h2>
+        <p>Color harmony creates visual balance and aesthetic appeal. This color picker tool uses color theory principles to generate palettes that work together naturally. Analogous colors sit next to each other on the color wheel for a cohesive feel. Complementary colors are opposite each other for maximum contrast. Triadic colors are evenly spaced for vibrant, balanced designs. Use this tool to find the perfect color scheme for your website, app, or design project.</p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 BizToolkit &mdash; <a href="index.html">Free Business Tools</a> | <a href="privacy.html">Privacy</a></p>
+</footer>
+
+<script>
+// ---- State ----
+let palette = [];
+let locked = [false, false, false, false, false];
+let harmonyMode = 'random';
+let exportFormat = 'css';
+
+// ---- Color utilities ----
+function hslToRgb(h, s, l) {
+    h /= 360; s /= 100; l /= 100;
+    let r, g, b;
+    if (s === 0) { r = g = b = l; }
+    else {
+        const hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1; if (t > 1) t -= 1;
+            if (t < 1/6) return p + (q - p) * 6 * t;
+            if (t < 1/2) return q;
+            if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+            return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1/3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1/3);
+    }
+    return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; }
+    else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+            case g: h = ((b - r) / d + 2) / 6; break;
+            case b: h = ((r - g) / d + 4) / 6; break;
+        }
+    }
+    return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+}
+
+function rgbToHex(r, g, b) {
+    return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+function hexToRgb(hex) {
+    hex = hex.replace('#', '');
+    return [parseInt(hex.substring(0,2),16), parseInt(hex.substring(2,4),16), parseInt(hex.substring(4,6),16)];
+}
+
+function randomHsl() {
+    return [Math.floor(Math.random() * 360), 50 + Math.floor(Math.random() * 40), 35 + Math.floor(Math.random() * 40)];
+}
+
+// Relative luminance
+function luminance(r, g, b) {
+    const a = [r, g, b].map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+}
+
+function contrastRatio(rgb1, rgb2) {
+    const l1 = luminance(...rgb1);
+    const l2 = luminance(...rgb2);
+    const lighter = Math.max(l1, l2);
+    const darker = Math.min(l1, l2);
+    return ((lighter + 0.05) / (darker + 0.05)).toFixed(2);
+}
+
+function textColor(hex) {
+    const [r, g, b] = hexToRgb(hex);
+    return luminance(r, g, b) > 0.4 ? '#1a1a2e' : '#ffffff';
+}
+
+// ---- Harmony generators ----
+function generateHarmony(mode) {
+    const base = randomHsl();
+    const h = base[0], s = base[1], l = base[2];
+    switch (mode) {
+        case 'analogous':
+            return [
+                [h, s, l],
+                [(h + 30) % 360, s, l],
+                [(h + 60) % 360, s, l],
+                [(h - 30 + 360) % 360, s, l],
+                [(h - 60 + 360) % 360, s, l]
+            ].map(c => rgbToHex(...hslToRgb(...c)));
+        case 'complementary':
+            return [
+                [h, s, l],
+                [h, s - 10, l + 15],
+                [(h + 180) % 360, s, l],
+                [(h + 180) % 360, s - 10, l + 15],
+                [h, s, Math.min(l + 30, 85)]
+            ].map(c => rgbToHex(...hslToRgb(c[0], clamp(c[1],20,90), clamp(c[2],20,85))));
+        case 'triadic':
+            return [
+                [h, s, l],
+                [(h + 120) % 360, s, l],
+                [(h + 240) % 360, s, l],
+                [h, s, Math.min(l + 20, 85)],
+                [(h + 120) % 360, s, Math.min(l + 20, 85)]
+            ].map(c => rgbToHex(...hslToRgb(...c)));
+        case 'split-complementary':
+            return [
+                [h, s, l],
+                [(h + 150) % 360, s, l],
+                [(h + 210) % 360, s, l],
+                [h, s, Math.min(l + 20, 85)],
+                [(h + 180) % 360, s - 15, Math.min(l + 25, 85)]
+            ].map(c => rgbToHex(...hslToRgb(c[0], clamp(c[1],20,90), clamp(c[2],20,85))));
+        case 'monochromatic':
+            return [
+                [h, s, 20],
+                [h, s, 35],
+                [h, s, 50],
+                [h, s, 65],
+                [h, s, 80]
+            ].map(c => rgbToHex(...hslToRgb(...c)));
+        default: // random
+            return Array.from({length: 5}, () => {
+                const c = randomHsl();
+                return rgbToHex(...hslToRgb(...c));
+            });
+    }
+}
+
+function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+// ---- Generate ----
+function generate() {
+    const newColors = generateHarmony(harmonyMode);
+    palette = palette.length === 5
+        ? palette.map((c, i) => locked[i] ? c : newColors[i])
+        : newColors;
+    render();
+}
+
+// ---- Render palette ----
+function render() {
+    const bar = document.getElementById('paletteBar');
+    bar.innerHTML = '';
+    palette.forEach((hex, i) => {
+        const div = document.createElement('div');
+        div.className = 'palette-color' + (locked[i] ? ' locked' : '');
+        div.style.background = hex;
+        const tc = textColor(hex);
+        const [r, g, b] = hexToRgb(hex);
+        const [h, s, l] = rgbToHsl(r, g, b);
+
+        div.innerHTML = `
+            <div class="lock-icon" style="color:${tc}" onclick="event.stopPropagation();toggleLock(${i})" title="${locked[i] ? 'Unlock' : 'Lock'}">${locked[i] ? '&#128274;' : '&#128275;'}</div>
+            <span class="color-hex" style="color:${tc}" onclick="event.stopPropagation();copyHex(${i})">${hex.toUpperCase()}</span>
+            <div class="color-values" style="color:${tc}">
+                rgb(${r}, ${g}, ${b})<br>
+                hsl(${h}, ${s}%, ${l}%)
+            </div>
+            <div class="copied-toast" id="toast-${i}">Copied!</div>
+        `;
+
+        // Contrast badge between adjacent colors
+        if (i < palette.length - 1) {
+            const nextRgb = hexToRgb(palette[i + 1]);
+            const ratio = contrastRatio([r, g, b], nextRgb);
+            const badge = document.createElement('div');
+            badge.className = 'contrast-badge';
+            badge.textContent = ratio + ':1';
+            badge.title = 'Contrast ratio with next color';
+            div.appendChild(badge);
+        }
+
+        bar.appendChild(div);
+    });
+    updateExport();
+    renderSaved();
+}
+
+// ---- Lock / Copy ----
+function toggleLock(i) {
+    locked[i] = !locked[i];
+    render();
+}
+
+function copyHex(i) {
+    navigator.clipboard.writeText(palette[i].toUpperCase()).then(() => {
+        const toast = document.getElementById('toast-' + i);
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 1000);
+    });
+}
+
+// ---- Harmony mode ----
+function setMode(mode) {
+    harmonyMode = mode;
+    document.querySelectorAll('.harmony-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+    generate();
+}
+
+// ---- Export ----
+function setExportFormat(fmt) {
+    exportFormat = fmt;
+    document.querySelectorAll('.export-tab').forEach(b => b.classList.toggle('active', b.dataset.fmt === fmt));
+    updateExport();
+}
+
+function updateExport() {
+    const codeEl = document.getElementById('exportCode');
+    const box = document.getElementById('exportCodeBox');
+    if (exportFormat === 'image') {
+        box.style.display = 'none';
+        return;
+    }
+    box.style.display = 'block';
+    let code = '';
+    const names = ['primary', 'secondary', 'accent', 'highlight', 'muted'];
+    if (exportFormat === 'css') {
+        code = '<span class="punc">:root {</span>\n';
+        palette.forEach((hex, i) => {
+            code += `  <span class="kw">--color-${names[i]}</span><span class="punc">:</span> <span class="str">${hex}</span><span class="punc">;</span>\n`;
+        });
+        code += '<span class="punc">}</span>';
+    } else if (exportFormat === 'scss') {
+        palette.forEach((hex, i) => {
+            code += `<span class="kw">$color-${names[i]}</span><span class="punc">:</span> <span class="str">${hex}</span><span class="punc">;</span>\n`;
+        });
+    } else if (exportFormat === 'tailwind') {
+        code = '<span class="punc">// tailwind.config.js</span>\n';
+        code += '<span class="kw">module.exports</span> <span class="punc">= {</span>\n';
+        code += '  <span class="kw">theme</span><span class="punc">: {</span>\n';
+        code += '    <span class="kw">extend</span><span class="punc">: {</span>\n';
+        code += '      <span class="kw">colors</span><span class="punc">: {</span>\n';
+        palette.forEach((hex, i) => {
+            code += `        <span class="kw">${names[i]}</span><span class="punc">:</span> <span class="str">'${hex}'</span><span class="punc">,</span>\n`;
+        });
+        code += '      <span class="punc">},</span>\n';
+        code += '    <span class="punc">},</span>\n';
+        code += '  <span class="punc">},</span>\n';
+        code += '<span class="punc">};</span>';
+    }
+    codeEl.innerHTML = code;
+}
+
+function getRawExport() {
+    const names = ['primary', 'secondary', 'accent', 'highlight', 'muted'];
+    if (exportFormat === 'css') {
+        let s = ':root {\n';
+        palette.forEach((hex, i) => { s += `  --color-${names[i]}: ${hex};\n`; });
+        s += '}';
+        return s;
+    } else if (exportFormat === 'scss') {
+        return palette.map((hex, i) => `$color-${names[i]}: ${hex};`).join('\n');
+    } else if (exportFormat === 'tailwind') {
+        let s = '// tailwind.config.js\nmodule.exports = {\n  theme: {\n    extend: {\n      colors: {\n';
+        palette.forEach((hex, i) => { s += `        ${names[i]}: '${hex}',\n`; });
+        s += '      },\n    },\n  },\n};';
+        return s;
+    }
+    return '';
+}
+
+function copyExport() {
+    const text = getRawExport();
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('exportCopyBtn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+    });
+}
+
+// ---- Download as image ----
+function downloadImage() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1200;
+    canvas.height = 400;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width / palette.length;
+    palette.forEach((hex, i) => {
+        ctx.fillStyle = hex;
+        ctx.fillRect(i * w, 0, w, canvas.height);
+        // Draw hex text
+        const tc = textColor(hex);
+        ctx.fillStyle = tc;
+        ctx.font = 'bold 22px -apple-system, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(hex.toUpperCase(), i * w + w / 2, canvas.height / 2 + 8);
+    });
+    const link = document.createElement('a');
+    link.download = 'palette.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+// ---- Image extraction ----
+const dropZone = document.getElementById('dropZone');
+const imageInput = document.getElementById('imageInput');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) extractFromFile(e.dataTransfer.files[0]);
+});
+imageInput.addEventListener('change', e => {
+    if (e.target.files.length) extractFromFile(e.target.files[0]);
+});
+
+function extractFromFile(file) {
+    if (!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            extractColors(img);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function extractColors(img) {
+    const canvas = document.getElementById('extractCanvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const size = 100;
+    canvas.width = size;
+    canvas.height = size;
+    ctx.drawImage(img, 0, 0, size, size);
+    const data = ctx.getImageData(0, 0, size, size).data;
+
+    // Simple k-means-like dominant color extraction
+    const pixels = [];
+    for (let i = 0; i < data.length; i += 4) {
+        pixels.push([data[i], data[i+1], data[i+2]]);
+    }
+
+    // Initialize 5 cluster centers with k-means++
+    const k = 5;
+    const centers = [pixels[Math.floor(Math.random() * pixels.length)]];
+    for (let c = 1; c < k; c++) {
+        const dists = pixels.map(p => {
+            const minD = centers.reduce((min, cen) => {
+                const d = (p[0]-cen[0])**2 + (p[1]-cen[1])**2 + (p[2]-cen[2])**2;
+                return Math.min(min, d);
+            }, Infinity);
+            return minD;
+        });
+        const total = dists.reduce((a, b) => a + b, 0);
+        let r = Math.random() * total;
+        for (let j = 0; j < dists.length; j++) {
+            r -= dists[j];
+            if (r <= 0) { centers.push([...pixels[j]]); break; }
+        }
+    }
+
+    // Run k-means for a few iterations
+    for (let iter = 0; iter < 10; iter++) {
+        const clusters = Array.from({length: k}, () => []);
+        pixels.forEach(p => {
+            let minD = Infinity, minI = 0;
+            centers.forEach((c, ci) => {
+                const d = (p[0]-c[0])**2 + (p[1]-c[1])**2 + (p[2]-c[2])**2;
+                if (d < minD) { minD = d; minI = ci; }
+            });
+            clusters[minI].push(p);
+        });
+        centers.forEach((c, ci) => {
+            if (clusters[ci].length === 0) return;
+            const avg = [0, 0, 0];
+            clusters[ci].forEach(p => { avg[0] += p[0]; avg[1] += p[1]; avg[2] += p[2]; });
+            centers[ci] = avg.map(v => Math.round(v / clusters[ci].length));
+        });
+    }
+
+    // Sort by luminance
+    centers.sort((a, b) => luminance(...a) - luminance(...b));
+
+    // Apply extracted colors (unlock all, set palette)
+    palette = centers.map(c => rgbToHex(...c));
+    locked = [false, false, false, false, false];
+    render();
+}
+
+// ---- Saved palettes (localStorage) ----
+function getSaved() {
+    try { return JSON.parse(localStorage.getItem('biztoolkit_palettes') || '[]'); }
+    catch { return []; }
+}
+
+function setSaved(arr) {
+    localStorage.setItem('biztoolkit_palettes', JSON.stringify(arr));
+}
+
+function savePalette() {
+    const saved = getSaved();
+    saved.unshift([...palette]);
+    if (saved.length > 30) saved.pop();
+    setSaved(saved);
+    renderSaved();
+}
+
+function loadSaved(i) {
+    const saved = getSaved();
+    if (saved[i]) {
+        palette = [...saved[i]];
+        locked = [false, false, false, false, false];
+        render();
+    }
+}
+
+function removeSaved(i) {
+    const saved = getSaved();
+    saved.splice(i, 1);
+    setSaved(saved);
+    renderSaved();
+}
+
+function renderSaved() {
+    const grid = document.getElementById('savedGrid');
+    const saved = getSaved();
+    if (saved.length === 0) {
+        grid.innerHTML = '<p class="no-saved">No saved palettes yet. Click "Save Current Palette" to save one.</p>';
+        return;
+    }
+    grid.innerHTML = '';
+    saved.forEach((pal, i) => {
+        const row = document.createElement('div');
+        row.className = 'saved-row';
+        row.onclick = () => loadSaved(i);
+        let swatches = pal.map(hex =>
+            `<div class="saved-swatch" style="background:${hex}"></div>`
+        ).join('');
+        let hexes = pal.map(h => h.toUpperCase()).join(' ');
+        row.innerHTML = `${swatches}<span class="saved-hex">${hexes}</span><button class="remove-saved" onclick="event.stopPropagation();removeSaved(${i})" title="Remove">&times;</button>`;
+        grid.appendChild(row);
+    });
+}
+
+// ---- Keyboard shortcut ----
+document.addEventListener('keydown', e => {
+    if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'BUTTON') {
+        e.preventDefault();
+        generate();
+    }
+});
+
+// ---- Init ----
+generate();
+</script>
+<script src="analytics.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Word Counter & Character Counter Tool | BizToolkit</title>
+    <meta name="description" content="Free online word counter and character counter tool. Count words, characters, sentences, paragraphs, reading time, and get readability scores. No signup required.">
+    <meta name="keywords" content="word counter, character counter, online word count tool, letter counter, text analyzer, word count online, character count, reading time calculator, readability score">
+    <meta property="og:title" content="Free Word Counter & Character Counter Tool">
+    <meta property="og:description" content="Count words, characters, sentences, paragraphs instantly. Get reading time, speaking time, keyword density and readability scores. 100% free.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/wordcount.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Free Word Counter & Character Counter Tool">
+    <meta name="twitter:description" content="Count words, characters, sentences, paragraphs instantly. Get reading time, speaking time, and readability scores.">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/wordcount.html">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Free Word Counter","url":"https://biztoolkit-free.netlify.app/wordcount.html","description":"Count words, characters, sentences with reading time calculator.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"BizToolkit"}}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #fafbfc; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Nav */
+        nav { background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        nav a:hover { opacity: 1; }
+        nav .brand { font-weight: 700; font-size: 1.1rem; opacity: 1; }
+
+        /* Header */
+        header { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: white; padding: 48px 0 56px; text-align: center; }
+        header h1 { font-size: 2.4rem; margin-bottom: 12px; font-weight: 800; }
+        header p { font-size: 1.1rem; opacity: 0.85; max-width: 620px; margin: 0 auto; line-height: 1.6; }
+
+        /* Main */
+        .main-section { margin-top: -30px; padding-bottom: 60px; }
+
+        /* Stats Bar */
+        .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: white; border-radius: 12px; padding: 20px 16px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #e8ecf1; }
+        .stat-card .stat-value { font-size: 2rem; font-weight: 800; color: #4f46e5; line-height: 1; }
+        .stat-card .stat-label { font-size: 0.78rem; color: #666; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+
+        /* Editor Area */
+        .editor-wrapper { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+        @media (max-width: 860px) {
+            .editor-wrapper { grid-template-columns: 1fr; }
+        }
+        .editor-col textarea {
+            width: 100%; min-height: 420px; padding: 24px; border: 2px solid #e0e4ea;
+            border-radius: 12px; font-size: 1rem; line-height: 1.7; resize: vertical;
+            font-family: inherit; color: #1a1a2e; background: white;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04); transition: border-color 0.2s;
+        }
+        .editor-col textarea:focus { outline: none; border-color: #6366f1; box-shadow: 0 4px 20px rgba(99,102,241,0.12); }
+        .editor-col textarea::placeholder { color: #aaa; }
+        .editor-actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+        .btn-sm { padding: 8px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; }
+        .btn-clear { background: #fee2e2; color: #dc2626; }
+        .btn-clear:hover { background: #fecaca; }
+        .btn-copy { background: #e0e7ff; color: #4338ca; }
+        .btn-copy:hover { background: #c7d2fe; }
+        .btn-paste { background: #dcfce7; color: #166534; }
+        .btn-paste:hover { background: #bbf7d0; }
+        .btn-sample { background: #f3f4f6; color: #374151; }
+        .btn-sample:hover { background: #e5e7eb; }
+
+        /* Sidebar */
+        .sidebar-col { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-panel { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border: 1px solid #e8ecf1; }
+        .sidebar-panel h3 { font-size: 1rem; margin-bottom: 14px; color: #1a1a2e; display: flex; align-items: center; gap: 8px; }
+        .sidebar-panel h3 span { font-size: 1.1rem; }
+
+        /* Readability */
+        .readability-score { text-align: center; margin-bottom: 12px; }
+        .readability-score .score-circle {
+            width: 80px; height: 80px; border-radius: 50%; display: inline-flex;
+            align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 800;
+            color: white; margin-bottom: 8px;
+        }
+        .readability-score .score-label { font-size: 0.85rem; color: #555; font-weight: 600; }
+        .readability-details { font-size: 0.82rem; color: #666; line-height: 1.7; }
+        .readability-details .detail-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #f0f0f0; }
+        .readability-details .detail-row:last-child { border-bottom: none; }
+
+        /* Keywords */
+        .keyword-list { list-style: none; }
+        .keyword-list li {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 7px 0; border-bottom: 1px solid #f3f4f6; font-size: 0.88rem;
+        }
+        .keyword-list li:last-child { border-bottom: none; }
+        .keyword-list .kw-word { color: #1a1a2e; font-weight: 500; }
+        .keyword-list .kw-count { background: #e0e7ff; color: #4338ca; padding: 2px 10px; border-radius: 50px; font-size: 0.78rem; font-weight: 700; }
+        .keyword-list .kw-bar { flex: 1; margin: 0 12px; height: 4px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+        .keyword-list .kw-bar-fill { height: 100%; background: linear-gradient(90deg, #6366f1, #818cf8); border-radius: 4px; }
+        .kw-empty { color: #999; font-size: 0.88rem; font-style: italic; padding: 12px 0; }
+
+        /* Upsell */
+        .upsell { background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; border-radius: 12px; padding: 28px 24px; text-align: center; }
+        .upsell h3 { font-size: 1.15rem; margin-bottom: 8px; color: white; }
+        .upsell p { opacity: 0.85; font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px; }
+        .upsell .price { font-size: 1.4rem; font-weight: 800; margin-bottom: 14px; }
+        .btn-upsell { display: inline-block; background: white; color: #312e81; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: transform 0.2s; }
+        .btn-upsell:hover { transform: translateY(-2px); }
+
+        /* Footer */
+        footer { text-align: center; padding: 40px 20px; color: #888; font-size: 0.85rem; border-top: 1px solid #e8ecf1; }
+
+        /* SEO content */
+        .seo-section { padding: 60px 0 40px; }
+        .seo-section h2 { font-size: 1.6rem; margin-bottom: 16px; text-align: center; }
+        .seo-section p { color: #555; line-height: 1.7; max-width: 800px; margin: 0 auto 16px; font-size: 0.95rem; }
+        .seo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 30px; }
+        .seo-card { background: white; padding: 24px; border-radius: 12px; border: 1px solid #e8ecf1; }
+        .seo-card h4 { font-size: 1.05rem; margin-bottom: 8px; color: #1a1a2e; }
+        .seo-card p { font-size: 0.9rem; color: #555; line-height: 1.6; margin: 0; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="brand">BizToolkit</a>
+    <a href="index.html">Tools</a>
+    <a href="invoice.html">Invoice</a>
+    <a href="contract.html">Contract</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="wordcount.html" style="opacity:1; border-bottom: 2px solid #6366f1; padding-bottom: 2px;">Word Counter</a>
+</nav>
+
+<header>
+    <div class="container">
+        <h1>Word Counter & Text Analyzer</h1>
+        <p>Count words, characters, sentences and paragraphs in real time. Get readability scores, keyword density and estimated reading time. 100% free, no signup.</p>
+    </div>
+</header>
+
+<section class="main-section">
+    <div class="container">
+
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="statsBar">
+            <div class="stat-card"><div class="stat-value" id="statWords">0</div><div class="stat-label">Words</div></div>
+            <div class="stat-card"><div class="stat-value" id="statChars">0</div><div class="stat-label">Characters</div></div>
+            <div class="stat-card"><div class="stat-value" id="statCharsNoSpace">0</div><div class="stat-label">No Spaces</div></div>
+            <div class="stat-card"><div class="stat-value" id="statSentences">0</div><div class="stat-label">Sentences</div></div>
+            <div class="stat-card"><div class="stat-value" id="statParagraphs">0</div><div class="stat-label">Paragraphs</div></div>
+            <div class="stat-card"><div class="stat-value" id="statReadTime">0s</div><div class="stat-label">Read Time</div></div>
+            <div class="stat-card"><div class="stat-value" id="statSpeakTime">0s</div><div class="stat-label">Speak Time</div></div>
+        </div>
+
+        <!-- Editor + Sidebar -->
+        <div class="editor-wrapper">
+            <div class="editor-col">
+                <textarea id="textInput" placeholder="Start typing or paste your text here to count words, characters, and analyze your content..."></textarea>
+                <div class="editor-actions">
+                    <button class="btn-sm btn-paste" onclick="pasteText()">Paste Text</button>
+                    <button class="btn-sm btn-copy" onclick="copyText()">Copy Text</button>
+                    <button class="btn-sm btn-sample" onclick="loadSample()">Load Sample</button>
+                    <button class="btn-sm btn-clear" onclick="clearText()">Clear</button>
+                </div>
+            </div>
+            <div class="sidebar-col">
+                <!-- Readability -->
+                <div class="sidebar-panel">
+                    <h3><span>&#128209;</span> Readability</h3>
+                    <div class="readability-score">
+                        <div class="score-circle" id="scoreCircle" style="background: #94a3b8;">--</div>
+                        <div class="score-label" id="scoreLabel">Enter text to analyze</div>
+                    </div>
+                    <div class="readability-details">
+                        <div class="detail-row"><span>Avg words/sentence</span><span id="avgWordsPerSentence">0</span></div>
+                        <div class="detail-row"><span>Avg syllables/word</span><span id="avgSyllablesPerWord">0</span></div>
+                        <div class="detail-row"><span>Grade level</span><span id="gradeLevel">--</span></div>
+                    </div>
+                </div>
+
+                <!-- Top Keywords -->
+                <div class="sidebar-panel">
+                    <h3><span>&#128273;</span> Top Keywords</h3>
+                    <ul class="keyword-list" id="keywordList">
+                        <li class="kw-empty">Start typing to see top keywords</li>
+                    </ul>
+                </div>
+
+                <!-- Upsell -->
+                <div class="upsell">
+                    <h3>Content Creator's Playbook</h3>
+                    <p>Create content that performs across every platform. Strategy, templates, and frameworks to grow your audience.</p>
+                    <div class="price">$9</div>
+                    <a href="https://jaechang112.gumroad.com/l/nwdis" class="btn-upsell" target="_blank" rel="noopener">Get the Playbook</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- SEO Content Section -->
+<section class="seo-section">
+    <div class="container">
+        <h2>Why Use a Word Counter?</h2>
+        <p>Whether you are writing a blog post, academic essay, social media caption, or email newsletter, knowing your word count matters. Our free online word counter gives you real-time stats including character count, sentence count, paragraph count, estimated reading time, and a readability score to help you write better content.</p>
+
+        <div class="seo-grid">
+            <div class="seo-card">
+                <h4>Real-Time Analysis</h4>
+                <p>See your word count, character count, and all other metrics update instantly as you type. No need to press any buttons or wait for results.</p>
+            </div>
+            <div class="seo-card">
+                <h4>Readability Scoring</h4>
+                <p>Get a Flesch-Kincaid readability score to ensure your content matches your target audience. Aim for grade 6-8 for general audiences.</p>
+            </div>
+            <div class="seo-card">
+                <h4>Keyword Density</h4>
+                <p>See which words appear most frequently in your text. Useful for SEO optimization and ensuring your content stays focused on your topic.</p>
+            </div>
+            <div class="seo-card">
+                <h4>100% Private</h4>
+                <p>Your text never leaves your browser. All counting and analysis happens entirely on your device. No data is sent to any server.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 BizToolkit. Free tools for professionals. All processing happens in your browser.</p>
+    </div>
+</footer>
+
+<script>
+(function() {
+    const textInput = document.getElementById('textInput');
+
+    // Common English stop words to exclude from keyword analysis
+    const STOP_WORDS = new Set([
+        'the','be','to','of','and','a','in','that','have','i','it','for','not','on','with',
+        'he','as','you','do','at','this','but','his','by','from','they','we','her','she',
+        'or','an','will','my','one','all','would','there','their','what','so','up','out',
+        'if','about','who','get','which','go','me','when','make','can','like','time','no',
+        'just','him','know','take','people','into','year','your','good','some','could',
+        'them','see','other','than','then','now','look','only','come','its','over','think',
+        'also','back','after','use','two','how','our','work','first','well','way','even',
+        'new','want','because','any','these','give','day','most','us','is','are','was',
+        'were','been','being','has','had','did','does','doing','am','very','more','much',
+        'own','say','said','each','tell','set','three','put','too','here','may','should'
+    ]);
+
+    // Count syllables in a word (approximation)
+    function countSyllables(word) {
+        word = word.toLowerCase().replace(/[^a-z]/g, '');
+        if (word.length <= 2) return 1;
+
+        // Remove trailing silent e
+        word = word.replace(/e$/, '');
+
+        // Count vowel groups
+        const vowelGroups = word.match(/[aeiouy]+/g);
+        let count = vowelGroups ? vowelGroups.length : 1;
+
+        return Math.max(1, count);
+    }
+
+    // Format time for display
+    function formatTime(seconds) {
+        if (seconds < 60) return Math.ceil(seconds) + 's';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.ceil(seconds % 60);
+        if (mins < 60) return secs > 0 ? mins + 'm ' + secs + 's' : mins + 'm';
+        const hrs = Math.floor(mins / 60);
+        const remainMins = mins % 60;
+        return hrs + 'h ' + remainMins + 'm';
+    }
+
+    // Get readability color
+    function getReadabilityColor(score) {
+        if (score >= 80) return '#22c55e';
+        if (score >= 60) return '#84cc16';
+        if (score >= 40) return '#eab308';
+        if (score >= 20) return '#f97316';
+        return '#ef4444';
+    }
+
+    // Get readability label
+    function getReadabilityLabel(score) {
+        if (score >= 90) return 'Very Easy';
+        if (score >= 80) return 'Easy';
+        if (score >= 70) return 'Fairly Easy';
+        if (score >= 60) return 'Standard';
+        if (score >= 50) return 'Fairly Difficult';
+        if (score >= 30) return 'Difficult';
+        return 'Very Difficult';
+    }
+
+    // Get Flesch-Kincaid Grade Level
+    function getGradeLevel(words, sentences, syllables) {
+        if (words === 0 || sentences === 0) return '--';
+        const grade = 0.39 * (words / sentences) + 11.8 * (syllables / words) - 15.59;
+        const clamped = Math.max(1, Math.min(18, grade));
+        return clamped.toFixed(1);
+    }
+
+    // Main analysis function
+    function analyze() {
+        const text = textInput.value;
+
+        // Characters
+        const chars = text.length;
+        const charsNoSpace = text.replace(/\s/g, '').length;
+
+        // Words
+        const wordsArr = text.trim() === '' ? [] : text.trim().split(/\s+/);
+        const wordCount = wordsArr.length;
+
+        // Sentences (split on . ! ? followed by space or end)
+        const sentenceMatches = text.match(/[^.!?]*[.!?]+(\s|$)/g);
+        const sentenceCount = text.trim() === '' ? 0 : (sentenceMatches ? sentenceMatches.length : (wordCount > 0 ? 1 : 0));
+
+        // Paragraphs (non-empty lines)
+        const paragraphs = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(function(p) { return p.trim().length > 0; }).length;
+        const paraCount = Math.max(paragraphs, text.trim() !== '' ? 1 : 0);
+
+        // Reading time (238 wpm avg) and speaking time (150 wpm avg)
+        const readSeconds = (wordCount / 238) * 60;
+        const speakSeconds = (wordCount / 150) * 60;
+
+        // Syllable count
+        let totalSyllables = 0;
+        for (let i = 0; i < wordsArr.length; i++) {
+            totalSyllables += countSyllables(wordsArr[i]);
+        }
+
+        // Flesch Reading Ease
+        let fleschScore = 0;
+        let avgWPS = 0;
+        let avgSPW = 0;
+        if (wordCount > 0 && sentenceCount > 0) {
+            avgWPS = wordCount / sentenceCount;
+            avgSPW = totalSyllables / wordCount;
+            fleschScore = 206.835 - 1.015 * avgWPS - 84.6 * avgSPW;
+            fleschScore = Math.max(0, Math.min(100, fleschScore));
+        }
+
+        // Update stat cards
+        document.getElementById('statWords').textContent = wordCount.toLocaleString();
+        document.getElementById('statChars').textContent = chars.toLocaleString();
+        document.getElementById('statCharsNoSpace').textContent = charsNoSpace.toLocaleString();
+        document.getElementById('statSentences').textContent = sentenceCount.toLocaleString();
+        document.getElementById('statParagraphs').textContent = paraCount.toLocaleString();
+        document.getElementById('statReadTime').textContent = wordCount === 0 ? '0s' : formatTime(readSeconds);
+        document.getElementById('statSpeakTime').textContent = wordCount === 0 ? '0s' : formatTime(speakSeconds);
+
+        // Update readability
+        const scoreCircle = document.getElementById('scoreCircle');
+        const scoreLabel = document.getElementById('scoreLabel');
+        if (wordCount >= 10) {
+            scoreCircle.textContent = Math.round(fleschScore);
+            scoreCircle.style.background = getReadabilityColor(fleschScore);
+            scoreLabel.textContent = getReadabilityLabel(fleschScore);
+            document.getElementById('avgWordsPerSentence').textContent = avgWPS.toFixed(1);
+            document.getElementById('avgSyllablesPerWord').textContent = avgSPW.toFixed(2);
+            document.getElementById('gradeLevel').textContent = getGradeLevel(wordCount, sentenceCount, totalSyllables);
+        } else {
+            scoreCircle.textContent = '--';
+            scoreCircle.style.background = '#94a3b8';
+            scoreLabel.textContent = wordCount === 0 ? 'Enter text to analyze' : 'Need 10+ words';
+            document.getElementById('avgWordsPerSentence').textContent = '0';
+            document.getElementById('avgSyllablesPerWord').textContent = '0';
+            document.getElementById('gradeLevel').textContent = '--';
+        }
+
+        // Top Keywords
+        updateKeywords(wordsArr);
+    }
+
+    function updateKeywords(wordsArr) {
+        const freq = {};
+        for (let i = 0; i < wordsArr.length; i++) {
+            const w = wordsArr[i].toLowerCase().replace(/[^a-z0-9'-]/g, '');
+            if (w.length < 2 || STOP_WORDS.has(w)) continue;
+            freq[w] = (freq[w] || 0) + 1;
+        }
+
+        const sorted = Object.entries(freq).sort(function(a, b) { return b[1] - a[1]; }).slice(0, 10);
+        const list = document.getElementById('keywordList');
+
+        if (sorted.length === 0) {
+            list.innerHTML = '<li class="kw-empty">Start typing to see top keywords</li>';
+            return;
+        }
+
+        const maxCount = sorted[0][1];
+        let html = '';
+        for (let i = 0; i < sorted.length; i++) {
+            const pct = (sorted[i][1] / maxCount * 100).toFixed(0);
+            html += '<li>' +
+                '<span class="kw-word">' + sorted[i][0] + '</span>' +
+                '<span class="kw-bar"><span class="kw-bar-fill" style="width:' + pct + '%"></span></span>' +
+                '<span class="kw-count">' + sorted[i][1] + '</span>' +
+                '</li>';
+        }
+        list.innerHTML = html;
+    }
+
+    // Debounce for performance
+    let timer;
+    textInput.addEventListener('input', function() {
+        clearTimeout(timer);
+        timer = setTimeout(analyze, 50);
+    });
+
+    // Button actions
+    window.clearText = function() {
+        textInput.value = '';
+        analyze();
+        textInput.focus();
+    };
+
+    window.copyText = function() {
+        if (textInput.value.trim() === '') return;
+        navigator.clipboard.writeText(textInput.value).then(function() {
+            var btn = document.querySelector('.btn-copy');
+            var orig = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(function() { btn.textContent = orig; }, 1500);
+        });
+    };
+
+    window.pasteText = function() {
+        navigator.clipboard.readText().then(function(t) {
+            textInput.value = t;
+            analyze();
+            textInput.focus();
+        }).catch(function() {
+            textInput.focus();
+        });
+    };
+
+    window.loadSample = function() {
+        textInput.value = "The art of writing well is not about using complex vocabulary or constructing elaborate sentences. It is about clarity, precision, and the ability to convey your ideas in a way that resonates with your audience.\n\nGood writing starts with understanding your reader. Who are they? What do they need? What problem are you solving for them? When you answer these questions before you begin, your writing becomes focused and purposeful.\n\nStructure matters more than most writers realize. A well-organized piece guides the reader effortlessly from one point to the next. Use short paragraphs, clear transitions, and descriptive headings to break up your content and make it scannable.\n\nFinally, editing is where good writing becomes great writing. Read your work aloud. Cut unnecessary words. Replace jargon with plain language. Every sentence should earn its place on the page.";
+        analyze();
+        textInput.focus();
+    };
+
+    // Initial state
+    analyze();
+})();
+</script>
+
+<script src="analytics.js"></script>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Markdown Editor Online | Live Preview & HTML Export</title>
+    <meta name="description" content="Free online Markdown editor with live preview. Convert markdown to HTML instantly. No signup required. Export as .md or .html file with one click.">
+    <meta name="keywords" content="markdown editor online, markdown preview, markdown to html, free markdown editor, markdown converter, markdown live preview">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/markdown.html">
+    <meta property="og:title" content="Free Markdown Editor Online | Live Preview & HTML Export">
+    <meta property="og:description" content="Write Markdown with live HTML preview. Export as .md or .html. No signup, no ads, 100% free.">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/markdown.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Free Markdown Editor","url":"https://biztoolkit-free.netlify.app/markdown.html","description":"Write Markdown with live preview and export to HTML.","applicationCategory":"DeveloperApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Organization","name":"BizToolkit"}}
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #f5f6fa; }
+
+        /* Nav */
+        nav { background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        nav a:hover { opacity: 1; }
+        nav .brand { font-weight: 700; font-size: 1.1rem; opacity: 1; }
+        nav .active { opacity: 1; border-bottom: 2px solid #6366f1; padding-bottom: 2px; }
+
+        /* Header */
+        .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 40px 20px; text-align: center; }
+        .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
+        .hero p { font-size: 1.1rem; opacity: 0.85; max-width: 600px; margin: 0 auto; }
+
+        /* Toolbar */
+        .toolbar { background: #fff; border-bottom: 1px solid #e0e0e0; padding: 8px 16px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+        .toolbar button { background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 0.85rem; font-family: inherit; color: #374151; display: flex; align-items: center; gap: 4px; transition: all 0.15s; }
+        .toolbar button:hover { background: #e0e0ff; border-color: #6366f1; color: #4f46e5; }
+        .toolbar .sep { width: 1px; height: 24px; background: #d1d5db; margin: 0 4px; }
+        .toolbar-right { margin-left: auto; display: flex; gap: 6px; align-items: center; }
+        .toolbar-right button { background: #4f46e5; color: white; border-color: #4f46e5; }
+        .toolbar-right button:hover { background: #4338ca; }
+
+        /* Editor layout */
+        .editor-wrap { display: flex; height: calc(100vh - 220px); min-height: 500px; }
+        .editor-wrap.fullscreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; }
+        .editor-wrap.fullscreen .pane-editor,
+        .editor-wrap.fullscreen .pane-preview { height: 100vh; }
+
+        .pane-editor, .pane-preview { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+        .pane-header { background: #f9fafb; border-bottom: 1px solid #e0e0e0; padding: 8px 16px; font-size: 0.8rem; font-weight: 600; color: #6366f1; text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center; }
+        .pane-header span { color: #999; font-weight: 400; text-transform: none; letter-spacing: 0; }
+
+        #markdown-input { flex: 1; width: 100%; border: none; outline: none; resize: none; padding: 20px; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace; font-size: 14px; line-height: 1.7; background: #1e1e2e; color: #cdd6f4; tab-size: 4; }
+        #markdown-input::placeholder { color: #585b70; }
+
+        .pane-preview { border-left: 3px solid #6366f1; }
+        #preview { flex: 1; overflow-y: auto; padding: 24px 32px; background: white; }
+
+        /* Preview markdown styles */
+        #preview h1 { font-size: 2em; font-weight: 800; margin: 0.5em 0 0.3em; padding-bottom: 0.3em; border-bottom: 2px solid #e5e7eb; color: #1a1a2e; }
+        #preview h2 { font-size: 1.5em; font-weight: 700; margin: 0.8em 0 0.3em; padding-bottom: 0.2em; border-bottom: 1px solid #e5e7eb; color: #1a1a2e; }
+        #preview h3 { font-size: 1.25em; font-weight: 600; margin: 0.8em 0 0.3em; color: #1a1a2e; }
+        #preview h4 { font-size: 1.1em; font-weight: 600; margin: 0.6em 0 0.2em; color: #374151; }
+        #preview p { margin: 0.6em 0; line-height: 1.7; color: #374151; }
+        #preview a { color: #4f46e5; text-decoration: underline; }
+        #preview strong { font-weight: 700; color: #1a1a2e; }
+        #preview em { font-style: italic; }
+        #preview code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.9em; color: #e11d48; }
+        #preview pre { background: #1e1e2e; color: #cdd6f4; padding: 16px 20px; border-radius: 8px; overflow-x: auto; margin: 1em 0; line-height: 1.6; }
+        #preview pre code { background: none; padding: 0; color: inherit; font-size: 0.9em; }
+        #preview blockquote { border-left: 4px solid #6366f1; margin: 1em 0; padding: 12px 20px; background: #f8f7ff; color: #555; border-radius: 0 8px 8px 0; }
+        #preview blockquote p { margin: 0.3em 0; }
+        #preview ul, #preview ol { margin: 0.6em 0; padding-left: 2em; }
+        #preview li { margin: 0.3em 0; line-height: 1.6; color: #374151; }
+        #preview hr { border: none; border-top: 2px solid #e5e7eb; margin: 1.5em 0; }
+        #preview img { max-width: 100%; border-radius: 8px; margin: 0.5em 0; }
+        #preview table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+        #preview th { background: #4f46e5; color: white; padding: 10px 14px; text-align: left; font-size: 0.85rem; font-weight: 600; }
+        #preview th:first-child { border-radius: 8px 0 0 0; }
+        #preview th:last-child { border-radius: 0 8px 0 0; }
+        #preview td { padding: 10px 14px; border-bottom: 1px solid #e5e7eb; font-size: 0.9rem; }
+        #preview tr:nth-child(even) td { background: #f9fafb; }
+
+        /* Syntax highlight colors in code blocks */
+        #preview pre .kw { color: #cba6f7; }
+        #preview pre .str { color: #a6e3a1; }
+        #preview pre .cm { color: #6c7086; font-style: italic; }
+        #preview pre .num { color: #fab387; }
+
+        /* Status bar */
+        .status-bar { background: #1a1a2e; color: rgba(255,255,255,0.7); padding: 6px 16px; font-size: 0.8rem; display: flex; gap: 20px; }
+        .status-bar span { display: flex; align-items: center; gap: 4px; }
+
+        /* CTA Section */
+        .cta-section { background: linear-gradient(135deg, #f8f7ff, #eef2ff); padding: 48px 20px; text-align: center; border-top: 1px solid #e0e0e0; }
+        .cta-box { max-width: 600px; margin: 0 auto; background: white; border-radius: 16px; padding: 36px; box-shadow: 0 8px 30px rgba(99,102,241,0.12); }
+        .cta-box h2 { font-size: 1.5rem; margin-bottom: 12px; color: #1a1a2e; }
+        .cta-box p { color: #555; line-height: 1.6; margin-bottom: 20px; }
+        .cta-btn { display: inline-block; background: #4f46e5; color: white; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 1rem; transition: background 0.2s; }
+        .cta-btn:hover { background: #4338ca; }
+        .cta-price { font-size: 0.85rem; color: #888; margin-top: 10px; }
+
+        /* SEO content */
+        .seo-content { max-width: 800px; margin: 0 auto; padding: 48px 20px; }
+        .seo-content h2 { font-size: 1.5rem; margin-bottom: 16px; color: #1a1a2e; }
+        .seo-content h3 { font-size: 1.15rem; margin: 20px 0 8px; color: #374151; }
+        .seo-content p { color: #555; line-height: 1.7; margin-bottom: 12px; }
+        .seo-content ul { padding-left: 1.5em; color: #555; line-height: 1.8; margin-bottom: 12px; }
+
+        /* Footer */
+        footer { background: #1a1a2e; color: rgba(255,255,255,0.6); text-align: center; padding: 20px; font-size: 0.85rem; }
+        footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+
+        /* Toast */
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #10b981; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; z-index: 10000; opacity: 0; transform: translateY(20px); transition: all 0.3s; pointer-events: none; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .editor-wrap { flex-direction: column; height: auto; min-height: auto; }
+            .pane-editor, .pane-preview { flex: none; height: 50vh; }
+            .pane-preview { border-left: none; border-top: 3px solid #6366f1; }
+            .hero h1 { font-size: 1.5rem; }
+            .toolbar { gap: 2px; }
+            .toolbar button { padding: 5px 7px; font-size: 0.78rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="brand">BizToolkit</a>
+    <a href="index.html">Tools</a>
+    <a href="invoice.html">Invoice</a>
+    <a href="markdown.html" class="active">Markdown</a>
+</nav>
+
+<header class="hero">
+    <h1>Free Markdown Editor Online</h1>
+    <p>Write Markdown with instant live preview. Export to HTML or download as .md file. No signup, no limits.</p>
+</header>
+
+<div class="toolbar" id="toolbar">
+    <button onclick="insertMd('bold')" title="Bold (Ctrl+B)"><b>B</b></button>
+    <button onclick="insertMd('italic')" title="Italic (Ctrl+I)"><i>I</i></button>
+    <span class="sep"></span>
+    <button onclick="insertMd('h1')" title="Heading 1">H1</button>
+    <button onclick="insertMd('h2')" title="Heading 2">H2</button>
+    <button onclick="insertMd('h3')" title="Heading 3">H3</button>
+    <span class="sep"></span>
+    <button onclick="insertMd('link')" title="Insert Link">Link</button>
+    <button onclick="insertMd('image')" title="Insert Image">Img</button>
+    <button onclick="insertMd('code')" title="Inline Code">Code</button>
+    <button onclick="insertMd('codeblock')" title="Code Block">{ }</button>
+    <span class="sep"></span>
+    <button onclick="insertMd('quote')" title="Blockquote">" "</button>
+    <button onclick="insertMd('ul')" title="Unordered List">&#8226; List</button>
+    <button onclick="insertMd('ol')" title="Ordered List">1. List</button>
+    <button onclick="insertMd('hr')" title="Horizontal Rule">&mdash;</button>
+    <button onclick="insertMd('table')" title="Insert Table">Table</button>
+    <div class="toolbar-right">
+        <button onclick="toggleFullscreen()" title="Toggle Fullscreen" id="fs-btn">&#x26F6; Fullscreen</button>
+    </div>
+</div>
+
+<div class="editor-wrap" id="editor-wrap">
+    <div class="pane-editor">
+        <div class="pane-header">
+            Markdown
+            <span id="stats">0 words &middot; 0 characters</span>
+        </div>
+        <textarea id="markdown-input" placeholder="Start writing Markdown here..." spellcheck="false"></textarea>
+    </div>
+    <div class="pane-preview">
+        <div class="pane-header">
+            Preview
+            <span>
+                <button onclick="copyHTML()" style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:3px 8px;font-size:0.75rem;cursor:pointer;color:#374151;">Copy HTML</button>
+                <button onclick="copyMarkdown()" style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:3px 8px;font-size:0.75rem;cursor:pointer;color:#374151;margin-left:4px;">Copy MD</button>
+                <button onclick="downloadMd()" style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:3px 8px;font-size:0.75rem;cursor:pointer;color:#374151;margin-left:4px;">&#8595; .md</button>
+                <button onclick="downloadHTML()" style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:3px 8px;font-size:0.75rem;cursor:pointer;color:#374151;margin-left:4px;">&#8595; .html</button>
+            </span>
+        </div>
+        <div id="preview"></div>
+    </div>
+</div>
+
+<div class="status-bar">
+    <span id="status-words">Words: 0</span>
+    <span id="status-chars">Characters: 0</span>
+    <span id="status-lines">Lines: 0</span>
+</div>
+
+<section class="cta-section">
+    <div class="cta-box">
+        <h2>Content Creator's Playbook</h2>
+        <p>Turn your Markdown skills into a content machine. Learn proven frameworks for blogs, newsletters, and social media that drive traffic and revenue. Templates, workflows, and strategies included.</p>
+        <a href="https://jaechang112.gumroad.com/l/nwdis" target="_blank" rel="noopener" class="cta-btn">Get the Playbook &rarr;</a>
+        <p class="cta-price">Just $9 &mdash; instant download</p>
+    </div>
+</section>
+
+<section class="seo-content">
+    <h2>Free Online Markdown Editor with Live Preview</h2>
+    <p>This free markdown editor online lets you write and preview Markdown in real time, side by side. Whether you're drafting a README, blog post, or documentation, you'll see the rendered HTML output instantly as you type. No account required and nothing to install.</p>
+
+    <h3>What is Markdown?</h3>
+    <p>Markdown is a lightweight markup language created by John Gruber. It uses plain text formatting syntax that converts to structurally valid HTML. Markdown is widely used on GitHub, Stack Overflow, Reddit, and most modern content platforms.</p>
+
+    <h3>Markdown Editor Features</h3>
+    <ul>
+        <li><strong>Live Preview</strong> &mdash; See rendered HTML output in real time as you type</li>
+        <li><strong>Toolbar</strong> &mdash; Quick-insert buttons for headings, bold, italic, links, images, code blocks, tables, and lists</li>
+        <li><strong>Markdown to HTML</strong> &mdash; One-click copy of the generated HTML code</li>
+        <li><strong>Export Options</strong> &mdash; Download as .md or .html file</li>
+        <li><strong>Word & Character Count</strong> &mdash; Track your writing progress</li>
+        <li><strong>Fullscreen Mode</strong> &mdash; Distraction-free writing experience</li>
+        <li><strong>Keyboard Shortcuts</strong> &mdash; Ctrl+B for bold, Ctrl+I for italic</li>
+    </ul>
+
+    <h3>Supported Markdown Syntax</h3>
+    <p>This markdown preview tool supports all common Markdown syntax including headings (H1-H6), bold and italic text, ordered and unordered lists, links, images, inline code, fenced code blocks, blockquotes, horizontal rules, and tables.</p>
+
+    <h3>Markdown to HTML Converter</h3>
+    <p>Need the raw HTML? Click "Copy HTML" to get the rendered HTML output on your clipboard. You can also download a complete .html file ready to use on any website. Perfect for converting markdown to HTML for blogs, emails, or documentation.</p>
+</section>
+
+<div style="text-align:center;padding:20px;background:#f0f4ff;margin-top:20px;border-radius:12px"><strong>Related Tools:</strong> <a href="json.html" style="color:#4f46e5;text-decoration:none;font-weight:600">JSON Formatter</a> | <a href="diff.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Text Diff Checker</a> | <a href="wordcount.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Word Counter</a></div>
+
+<footer>
+    <p>&copy; 2025 BizToolkit. Free tools for creators and businesses.</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const input = document.getElementById('markdown-input');
+const preview = document.getElementById('preview');
+
+// Sample markdown
+const sampleMd = `# Welcome to Markdown Editor
+
+Write **Markdown** on the left and see the *live preview* on the right.
+
+## Features
+
+- **Bold** and *italic* text
+- [Links](https://example.com) and images
+- Code blocks with syntax highlighting
+- Tables, lists, and blockquotes
+
+## Code Example
+
+\`\`\`javascript
+function greet(name) {
+    // Say hello
+    const message = "Hello, " + name + "!";
+    console.log(message);
+    return message;
+}
+
+greet("World");
+\`\`\`
+
+You can also use \`inline code\` in your text.
+
+## Blockquote
+
+> Markdown is a lightweight markup language that you can use to add
+> formatting elements to plain text documents.
+>
+> &mdash; John Gruber
+
+## Table Example
+
+| Feature       | Status    | Notes            |
+|---------------|-----------|------------------|
+| Live Preview  | Done      | Real-time render |
+| HTML Export   | Done      | One-click copy   |
+| File Download | Done      | .md and .html    |
+| Fullscreen    | Done      | Distraction-free |
+
+## Lists
+
+### Ordered List
+
+1. First item
+2. Second item
+3. Third item
+
+### Unordered List
+
+- Apples
+- Oranges
+- Bananas
+
+---
+
+## Image
+
+![Placeholder](https://via.placeholder.com/600x200/6366f1/ffffff?text=Markdown+Editor)
+
+---
+
+*Start editing to see the magic happen!*
+`;
+
+input.value = sampleMd;
+
+// Markdown parser
+function parseMd(md) {
+    let html = md;
+
+    // Escape HTML
+    html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    // Fenced code blocks
+    html = html.replace(/```(\w*)\n([\s\S]*?)```/g, function(m, lang, code) {
+        return '<pre><code class="language-' + lang + '">' + code.replace(/\n$/, '') + '</code></pre>';
+    });
+
+    // Tables
+    html = html.replace(/^(\|.+\|)\n(\|[\s\-:|]+\|)\n((?:\|.+\|\n?)*)/gm, function(m, headerRow, sepRow, bodyRows) {
+        const headers = headerRow.split('|').filter(c => c.trim() !== '');
+        let table = '<table><thead><tr>';
+        headers.forEach(h => { table += '<th>' + h.trim() + '</th>'; });
+        table += '</tr></thead><tbody>';
+        const rows = bodyRows.trim().split('\n');
+        rows.forEach(row => {
+            const cells = row.split('|').filter(c => c.trim() !== '');
+            table += '<tr>';
+            cells.forEach(c => { table += '<td>' + c.trim() + '</td>'; });
+            table += '</tr>';
+        });
+        table += '</tbody></table>';
+        return table;
+    });
+
+    // Blockquotes (multi-line)
+    html = html.replace(/^(?:&gt;\s?.+\n?)+/gm, function(m) {
+        const inner = m.replace(/^&gt;\s?/gm, '').trim();
+        return '<blockquote><p>' + inner.replace(/\n/g, '<br>') + '</p></blockquote>';
+    });
+
+    // Headings
+    html = html.replace(/^######\s+(.+)$/gm, '<h6>$1</h6>');
+    html = html.replace(/^#####\s+(.+)$/gm, '<h5>$1</h5>');
+    html = html.replace(/^####\s+(.+)$/gm, '<h4>$1</h4>');
+    html = html.replace(/^###\s+(.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^##\s+(.+)$/gm, '<h2>$1</h2>');
+    html = html.replace(/^#\s+(.+)$/gm, '<h1>$1</h1>');
+
+    // Horizontal rule
+    html = html.replace(/^---+$/gm, '<hr>');
+
+    // Images
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+
+    // Links
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+    // Bold + italic
+    html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    // Bold
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Italic
+    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // Inline code (after code blocks)
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // Unordered lists
+    html = html.replace(/^(?:- .+\n?)+/gm, function(m) {
+        const items = m.trim().split('\n').map(l => '<li>' + l.replace(/^- /, '') + '</li>').join('');
+        return '<ul>' + items + '</ul>';
+    });
+
+    // Ordered lists
+    html = html.replace(/^(?:\d+\. .+\n?)+/gm, function(m) {
+        const items = m.trim().split('\n').map(l => '<li>' + l.replace(/^\d+\. /, '') + '</li>').join('');
+        return '<ol>' + items + '</ol>';
+    });
+
+    // Paragraphs: wrap remaining loose text lines
+    const lines = html.split('\n');
+    let result = [];
+    let inPre = false;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (line.includes('<pre>')) inPre = true;
+        if (line.includes('</pre>')) { inPre = false; result.push(line); continue; }
+        if (inPre) { result.push(line); continue; }
+
+        // Skip lines that are already block elements
+        if (/^<(h[1-6]|ul|ol|li|table|thead|tbody|tr|th|td|blockquote|hr|pre|div|p)/.test(line.trim())) {
+            result.push(line);
+        } else if (line.trim() === '') {
+            result.push('');
+        } else {
+            result.push('<p>' + line + '</p>');
+        }
+    }
+
+    html = result.join('\n');
+
+    // Clean up empty paragraphs
+    html = html.replace(/<p>\s*<\/p>/g, '');
+
+    // Fix &mdash; entity that got escaped
+    html = html.replace(/&amp;mdash;/g, '&mdash;');
+    html = html.replace(/&amp;rarr;/g, '&rarr;');
+    html = html.replace(/&amp;nbsp;/g, '&nbsp;');
+    html = html.replace(/&amp;#(\d+);/g, '&#$1;');
+
+    return html;
+}
+
+// Render
+function render() {
+    const md = input.value;
+    preview.innerHTML = parseMd(md);
+    updateStats(md);
+}
+
+// Stats
+function updateStats(text) {
+    const chars = text.length;
+    const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+    const lines = text.split('\n').length;
+    document.getElementById('stats').textContent = words + ' words \u00B7 ' + chars + ' chars';
+    document.getElementById('status-words').textContent = 'Words: ' + words;
+    document.getElementById('status-chars').textContent = 'Characters: ' + chars;
+    document.getElementById('status-lines').textContent = 'Lines: ' + lines;
+}
+
+// Insert markdown syntax
+function insertMd(type) {
+    const ta = input;
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    const selected = ta.value.substring(start, end);
+    let before = '', after = '', replacement = '';
+
+    switch (type) {
+        case 'bold':
+            before = '**'; after = '**';
+            replacement = selected || 'bold text';
+            break;
+        case 'italic':
+            before = '*'; after = '*';
+            replacement = selected || 'italic text';
+            break;
+        case 'h1':
+            before = '# '; after = '';
+            replacement = selected || 'Heading 1';
+            break;
+        case 'h2':
+            before = '## '; after = '';
+            replacement = selected || 'Heading 2';
+            break;
+        case 'h3':
+            before = '### '; after = '';
+            replacement = selected || 'Heading 3';
+            break;
+        case 'link':
+            before = '['; after = '](https://example.com)';
+            replacement = selected || 'link text';
+            break;
+        case 'image':
+            before = '!['; after = '](https://example.com/image.png)';
+            replacement = selected || 'alt text';
+            break;
+        case 'code':
+            before = '`'; after = '`';
+            replacement = selected || 'code';
+            break;
+        case 'codeblock':
+            before = '```\n'; after = '\n```';
+            replacement = selected || 'code here';
+            break;
+        case 'quote':
+            before = '> '; after = '';
+            replacement = selected || 'blockquote text';
+            break;
+        case 'ul':
+            before = '- '; after = '';
+            replacement = selected || 'list item';
+            break;
+        case 'ol':
+            before = '1. '; after = '';
+            replacement = selected || 'list item';
+            break;
+        case 'hr':
+            before = '\n---\n'; after = '';
+            replacement = '';
+            break;
+        case 'table':
+            replacement = '| Column 1 | Column 2 | Column 3 |\n|----------|----------|----------|\n| Cell 1   | Cell 2   | Cell 3   |\n| Cell 4   | Cell 5   | Cell 6   |';
+            before = ''; after = '';
+            break;
+    }
+
+    const insert = before + replacement + after;
+    ta.value = ta.value.substring(0, start) + insert + ta.value.substring(end);
+    const cursorPos = start + before.length + replacement.length;
+    ta.setSelectionRange(cursorPos, cursorPos);
+    ta.focus();
+    render();
+}
+
+// Copy HTML
+function copyHTML() {
+    const html = preview.innerHTML;
+    navigator.clipboard.writeText(html).then(() => showToast('HTML copied to clipboard!'));
+}
+
+// Copy Markdown
+function copyMarkdown() {
+    navigator.clipboard.writeText(input.value).then(() => showToast('Markdown copied to clipboard!'));
+}
+
+// Download .md
+function downloadMd() {
+    download(input.value, 'document.md', 'text/markdown');
+    showToast('Downloaded as .md');
+}
+
+// Download .html
+function downloadHTML() {
+    const fullHtml = '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>Document</title>\n<style>\nbody { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; line-height: 1.6; }\nh1, h2, h3 { color: #1a1a2e; }\ncode { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }\npre { background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 8px; overflow-x: auto; }\npre code { background: none; color: inherit; }\nblockquote { border-left: 4px solid #6366f1; padding: 12px 20px; margin: 1em 0; background: #f8f7ff; }\ntable { border-collapse: collapse; width: 100%; }\nth, td { border: 1px solid #ddd; padding: 10px 14px; }\nth { background: #4f46e5; color: white; }\nimg { max-width: 100%; }\nhr { border: none; border-top: 2px solid #e5e7eb; margin: 1.5em 0; }\n</style>\n</head>\n<body>\n' + preview.innerHTML + '\n</body>\n</html>';
+    download(fullHtml, 'document.html', 'text/html');
+    showToast('Downloaded as .html');
+}
+
+function download(content, filename, type) {
+    const blob = new Blob([content], { type: type + ';charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+// Fullscreen
+function toggleFullscreen() {
+    const wrap = document.getElementById('editor-wrap');
+    wrap.classList.toggle('fullscreen');
+    const btn = document.getElementById('fs-btn');
+    btn.innerHTML = wrap.classList.contains('fullscreen') ? '&#x2716; Exit' : '&#x26F6; Fullscreen';
+}
+
+// Toast
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// Keyboard shortcuts
+input.addEventListener('keydown', function(e) {
+    if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'b') { e.preventDefault(); insertMd('bold'); }
+        if (e.key === 'i') { e.preventDefault(); insertMd('italic'); }
+    }
+    // Tab support
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        const s = this.selectionStart;
+        this.value = this.value.substring(0, s) + '    ' + this.value.substring(this.selectionEnd);
+        this.selectionStart = this.selectionEnd = s + 4;
+        render();
+    }
+});
+
+// Escape to exit fullscreen
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const wrap = document.getElementById('editor-wrap');
+        if (wrap.classList.contains('fullscreen')) toggleFullscreen();
+    }
+});
+
+// Listen for input
+input.addEventListener('input', render);
+
+// Initial render
+render();
+</script>
+
+<script src="analytics.js" defer></script>
+</body>
+</html>

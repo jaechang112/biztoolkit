@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Favicon Generator - Create Favicon Online from Text | BizToolkit</title>
+    <meta name="description" content="Free online favicon generator. Create favicons from text or emoji instantly. Download as ICO, PNG, and Apple touch icon. No signup required.">
+    <meta name="keywords" content="favicon generator, favicon maker, create favicon online free, text to favicon, ico generator, favicon creator, free favicon tool">
+    <link rel="canonical" href="https://biztoolkit-free.netlify.app/favicon.html">
+    <meta property="og:title" content="Free Favicon Generator - Create Favicon Online">
+    <meta property="og:description" content="Create beautiful favicons from text or emoji. Download as ICO, PNG, Apple touch icon. 100% free, no signup.">
+    <meta property="og:url" content="https://biztoolkit-free.netlify.app/favicon.html">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Free Favicon Generator - Create Favicon Online">
+    <meta name="twitter:description" content="Create favicons from text instantly. Download ICO, PNG, Apple touch icon. Free online tool.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #1a1a2e; min-height: 100vh; }
+        nav a:hover { opacity: 1 !important; }
+        .container { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
+        h1 { font-size: 1.8rem; text-align: center; margin-bottom: 8px; color: #1a1a2e; }
+        .subtitle { text-align: center; color: #555; margin-bottom: 28px; font-size: 1rem; }
+        .panel { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .panel h2 { font-size: 1.1rem; margin-bottom: 16px; color: #1a1a2e; border-bottom: 2px solid #6366f1; display: inline-block; padding-bottom: 4px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+        label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 4px; color: #333; }
+        input[type="text"], select { width: 100%; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; }
+        input[type="text"]:focus, select:focus { outline: none; border-color: #6366f1; }
+        input[type="color"] { width: 48px; height: 36px; border: 1.5px solid #ddd; border-radius: 6px; cursor: pointer; padding: 2px; }
+        input[type="range"] { width: 100%; accent-color: #6366f1; }
+        .color-row { display: flex; align-items: center; gap: 10px; }
+        .color-row span { font-size: 0.85rem; color: #555; min-width: 60px; }
+        .form-group { margin-bottom: 16px; }
+        .shape-options { display: flex; gap: 8px; }
+        .shape-btn { padding: 8px 16px; border: 2px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+        .shape-btn.active { border-color: #6366f1; background: #eef2ff; color: #6366f1; }
+        .shape-btn:hover { border-color: #6366f1; }
+        .preview-area { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; justify-content: center; padding: 20px; background: repeating-conic-gradient(#e8e8e8 0% 25%, #fff 0% 50%) 50%/16px 16px; border-radius: 8px; border: 1.5px solid #eee; }
+        .preview-item { text-align: center; }
+        .preview-item canvas { display: block; margin: 0 auto 4px; image-rendering: pixelated; border: 1px solid #ddd; }
+        .preview-item span { font-size: 0.7rem; color: #777; }
+        .browser-mockup { background: #f5f5f5; border-radius: 10px; overflow: hidden; border: 1.5px solid #ddd; max-width: 360px; margin: 16px auto 0; }
+        .browser-bar { background: #e0e0e0; padding: 8px 12px; display: flex; align-items: center; gap: 8px; }
+        .browser-dots { display: flex; gap: 5px; }
+        .browser-dots span { width: 10px; height: 10px; border-radius: 50%; }
+        .browser-dots span:nth-child(1) { background: #ff5f57; }
+        .browser-dots span:nth-child(2) { background: #ffbd2e; }
+        .browser-dots span:nth-child(3) { background: #28c840; }
+        .browser-tab { display: flex; align-items: center; gap: 6px; background: #f5f5f5; padding: 4px 12px; border-radius: 6px 6px 0 0; margin-left: 8px; font-size: 0.75rem; color: #333; }
+        .browser-tab canvas { border-radius: 2px; }
+        .browser-body { height: 60px; background: #fff; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #6366f1; color: #fff; }
+        .btn-primary:hover { background: #4f46e5; }
+        .btn-secondary { background: #e0e7ff; color: #4338ca; }
+        .btn-secondary:hover { background: #c7d2fe; }
+        .btn-success { background: #10b981; color: #fff; }
+        .btn-success:hover { background: #059669; }
+        .download-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+        .code-block { background: #1e1e2e; color: #cdd6f4; padding: 16px; border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.6; overflow-x: auto; position: relative; white-space: pre; margin-top: 8px; }
+        .copy-btn { position: absolute; top: 8px; right: 8px; background: #45475a; color: #cdd6f4; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+        .copy-btn:hover { background: #585b70; }
+        .font-preview { font-size: 1.2rem; margin-left: 8px; color: #6366f1; }
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1a1a2e; color: #fff; padding: 10px 24px; border-radius: 8px; font-size: 0.9rem; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 999; }
+        .toast.show { opacity: 1; }
+        footer { text-align: center; padding: 24px; color: #888; font-size: 0.8rem; }
+        footer a { color: #6366f1; text-decoration: none; }
+        .seo-content { margin-top: 12px; }
+        .seo-content h2 { font-size: 1.2rem; margin-bottom: 10px; display: block; border: none; }
+        .seo-content h3 { font-size: 1rem; margin: 12px 0 6px; }
+        .seo-content p, .seo-content li { font-size: 0.9rem; line-height: 1.6; color: #444; }
+        .seo-content ul { padding-left: 20px; margin-bottom: 10px; }
+        details summary { cursor: pointer; font-weight: 600; color: #1a1a2e; padding: 8px 0; }
+    </style>
+</head>
+<body>
+    <nav style="background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <a href="index.html" style="color:white;text-decoration:none;font-weight:700;font-size:1.1rem;">BizToolkit</a>
+        <a href="index.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Tools</a>
+        <a href="invoice.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Invoice</a>
+        <a href="contract.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Contract</a>
+        <a href="favicon.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:1;border-bottom:2px solid #6366f1;padding-bottom:2px;">Favicon</a>
+    </nav>
+
+    <div class="container">
+        <h1>Free Favicon Generator</h1>
+        <p class="subtitle">Create beautiful favicons from text or emoji. Download as ICO, PNG &amp; Apple touch icon.</p>
+
+        <div class="grid-2">
+            <div class="panel">
+                <h2>Customize</h2>
+
+                <div class="form-group">
+                    <label for="faviconText">Text (1-2 characters or emoji)</label>
+                    <input type="text" id="faviconText" value="B" maxlength="2" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="fontFamily">Font Family</label>
+                    <select id="fontFamily">
+                        <option value="Inter, sans-serif">Inter (Sans-serif)</option>
+                        <option value="Arial, sans-serif">Arial</option>
+                        <option value="Georgia, serif">Georgia (Serif)</option>
+                        <option value="'Times New Roman', serif">Times New Roman</option>
+                        <option value="'Courier New', monospace">Courier New (Mono)</option>
+                        <option value="Impact, sans-serif">Impact</option>
+                        <option value="Verdana, sans-serif">Verdana</option>
+                        <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                        <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                        <option value="system-ui, sans-serif">System UI</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Shape</label>
+                    <div class="shape-options">
+                        <button class="shape-btn active" data-shape="square" onclick="setShape('square',this)">Square</button>
+                        <button class="shape-btn" data-shape="rounded" onclick="setShape('rounded',this)">Rounded</button>
+                        <button class="shape-btn" data-shape="circle" onclick="setShape('circle',this)">Circle</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Background Color</label>
+                    <div class="color-row">
+                        <input type="color" id="bgColor" value="#6366f1">
+                        <span id="bgColorVal">#6366f1</span>
+                        <label style="display:inline;font-weight:400;font-size:0.8rem;cursor:pointer;"><input type="checkbox" id="bgTransparent"> Transparent</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Text Color</label>
+                    <div class="color-row">
+                        <input type="color" id="textColor" value="#ffffff">
+                        <span id="textColorVal">#ffffff</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="fontSize">Font Size: <span id="fontSizeVal">70</span>%</label>
+                    <input type="range" id="fontSize" min="30" max="100" value="70">
+                </div>
+
+                <div class="form-group">
+                    <label>Font Style</label>
+                    <div class="shape-options">
+                        <button class="shape-btn active" data-style="normal" onclick="setFontStyle('normal',this)">Normal</button>
+                        <button class="shape-btn" data-style="bold" onclick="setFontStyle('bold',this)">Bold</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2>Preview</h2>
+                <div class="preview-area" id="previewArea"></div>
+                <div class="browser-mockup">
+                    <div class="browser-bar">
+                        <div class="browser-dots"><span></span><span></span><span></span></div>
+                        <div class="browser-tab">
+                            <canvas id="tabFavicon" width="16" height="16"></canvas>
+                            <span>My Website</span>
+                        </div>
+                    </div>
+                    <div class="browser-body"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Download</h2>
+            <div class="download-grid">
+                <button class="btn btn-primary" onclick="downloadICO()">&#11015; Download .ico (multi-size)</button>
+                <button class="btn btn-secondary" onclick="downloadPNG(16)">PNG 16x16</button>
+                <button class="btn btn-secondary" onclick="downloadPNG(32)">PNG 32x32</button>
+                <button class="btn btn-secondary" onclick="downloadPNG(48)">PNG 48x48</button>
+                <button class="btn btn-secondary" onclick="downloadPNG(192)">PNG 192x192</button>
+                <button class="btn btn-success" onclick="downloadPNG(180)">&#127823; Apple Touch Icon 180x180</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>HTML Link Tags</h2>
+            <p style="font-size:0.85rem;color:#555;margin-bottom:8px;">Copy and paste these into your &lt;head&gt; tag:</p>
+            <div style="position:relative;">
+                <div class="code-block" id="htmlTags">&lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;
+&lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"&gt;
+&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
+&lt;link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png"&gt;</div>
+                <button class="copy-btn" onclick="copyTags()">Copy</button>
+            </div>
+        </div>
+
+        <div class="panel seo-content">
+            <h2>Free Favicon Generator - Create Favicons Online</h2>
+            <p>Use this <strong>free favicon generator</strong> to create professional favicons for your website in seconds. No design skills needed &mdash; just type text or paste an emoji, choose your colors and shape, and download.</p>
+
+            <h3>What is a Favicon?</h3>
+            <p>A favicon (short for "favorite icon") is the small icon shown in browser tabs, bookmarks, and search results next to your website name. A good favicon helps with brand recognition and makes your site look professional.</p>
+
+            <h3>Supported Formats</h3>
+            <ul>
+                <li><strong>.ICO</strong> &mdash; The classic favicon format, supported by all browsers. Our generator creates multi-size ICO files (16x16, 32x32, 48x48).</li>
+                <li><strong>.PNG</strong> &mdash; Modern browsers prefer PNG favicons. Download individual sizes or all at once.</li>
+                <li><strong>Apple Touch Icon</strong> &mdash; 180x180 PNG used when someone adds your site to their iPhone or iPad home screen.</li>
+                <li><strong>Android Chrome</strong> &mdash; 192x192 PNG for Android devices and Progressive Web Apps.</li>
+            </ul>
+
+            <details>
+                <summary>Favicon Best Practices</summary>
+                <ul>
+                    <li>Keep your favicon simple &mdash; it needs to be recognizable at 16x16 pixels.</li>
+                    <li>Use 1-2 characters or a simple emoji for text-based favicons.</li>
+                    <li>High contrast between background and text colors works best.</li>
+                    <li>Include both .ico and .png formats for maximum browser compatibility.</li>
+                    <li>Always include an Apple Touch Icon for iOS users.</li>
+                    <li>Place favicon files in your website's root directory.</li>
+                </ul>
+            </details>
+        </div>
+    </div>
+
+    <div style="text-align:center;padding:20px;background:#f0f4ff;margin-top:20px;border-radius:12px"><strong>Related Tools:</strong> <a href="meta.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Meta Tag Generator</a> | <a href="robots-generator.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Robots.txt Generator</a> | <a href="schema.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Schema Markup Generator</a></div>
+
+<footer>
+        <p>&copy; 2025 BizToolkit. Free online tools for businesses.</p>
+        <p style="margin-top:6px;"><a href="index.html">All Tools</a> &middot; <a href="privacy.html">Privacy</a></p>
+    </footer>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+    const SIZES = [16, 32, 48, 180, 192];
+    let currentShape = 'square';
+    let currentFontStyle = 'normal';
+
+    const els = {
+        text: document.getElementById('faviconText'),
+        font: document.getElementById('fontFamily'),
+        bg: document.getElementById('bgColor'),
+        bgT: document.getElementById('bgTransparent'),
+        tc: document.getElementById('textColor'),
+        fs: document.getElementById('fontSize'),
+        fsVal: document.getElementById('fontSizeVal'),
+        bgVal: document.getElementById('bgColorVal'),
+        tcVal: document.getElementById('textColorVal'),
+        preview: document.getElementById('previewArea'),
+        tabFav: document.getElementById('tabFavicon')
+    };
+
+    function setShape(s, btn) {
+        currentShape = s;
+        document.querySelectorAll('.shape-btn[data-shape]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+    }
+
+    function setFontStyle(s, btn) {
+        currentFontStyle = s;
+        document.querySelectorAll('.shape-btn[data-style]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        render();
+    }
+
+    function drawFavicon(canvas, size) {
+        const ctx = canvas.getContext('2d');
+        canvas.width = size;
+        canvas.height = size;
+        ctx.clearRect(0, 0, size, size);
+
+        const transparent = els.bgT.checked;
+        const bgColor = els.bg.value;
+        const textColor = els.tc.value;
+        const text = els.text.value || 'B';
+        const fontFamily = els.font.value;
+        const fontPct = parseInt(els.fs.value);
+        const fontSize = Math.round(size * fontPct / 100);
+        const r = size * 0.15;
+
+        if (!transparent) {
+            ctx.fillStyle = bgColor;
+            ctx.beginPath();
+            if (currentShape === 'circle') {
+                ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+            } else if (currentShape === 'rounded') {
+                ctx.roundRect(0, 0, size, size, r);
+            } else {
+                ctx.rect(0, 0, size, size);
+            }
+            ctx.fill();
+        }
+
+        ctx.fillStyle = textColor;
+        const weight = currentFontStyle === 'bold' ? 'bold ' : '';
+        ctx.font = weight + fontSize + 'px ' + fontFamily;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, size / 2, size / 2 + size * 0.03);
+    }
+
+    function render() {
+        els.preview.innerHTML = '';
+        SIZES.forEach(size => {
+            const div = document.createElement('div');
+            div.className = 'preview-item';
+            const c = document.createElement('canvas');
+            const displaySize = Math.max(size, 48);
+            c.style.width = displaySize + 'px';
+            c.style.height = displaySize + 'px';
+            c.style.borderRadius = currentShape === 'circle' ? '50%' : currentShape === 'rounded' ? '15%' : '0';
+            drawFavicon(c, size);
+            const label = document.createElement('span');
+            label.textContent = size + 'x' + size;
+            div.appendChild(c);
+            div.appendChild(label);
+            els.preview.appendChild(div);
+        });
+        drawFavicon(els.tabFav, 16);
+    }
+
+    function downloadPNG(size) {
+        const c = document.createElement('canvas');
+        drawFavicon(c, size);
+        const link = document.createElement('a');
+        const names = { 180: 'apple-touch-icon.png', 192: 'android-chrome-192x192.png' };
+        link.download = names[size] || 'favicon-' + size + 'x' + size + '.png';
+        link.href = c.toDataURL('image/png');
+        link.click();
+        showToast('Downloaded ' + link.download);
+    }
+
+    function downloadICO() {
+        const icoSizes = [16, 32, 48];
+        const images = icoSizes.map(size => {
+            const c = document.createElement('canvas');
+            drawFavicon(c, size);
+            return { size, canvas: c };
+        });
+
+        const pngDatas = [];
+        let totalSize = 6 + icoSizes.length * 16;
+        const promises = images.map(img => {
+            return new Promise(resolve => {
+                img.canvas.toBlob(blob => {
+                    blob.arrayBuffer().then(buf => {
+                        pngDatas.push({ size: img.size, data: new Uint8Array(buf) });
+                        totalSize += buf.byteLength;
+                        resolve();
+                    });
+                }, 'image/png');
+            });
+        });
+
+        Promise.all(promises).then(() => {
+            pngDatas.sort((a, b) => a.size - b.size);
+            const buffer = new ArrayBuffer(totalSize);
+            const view = new DataView(buffer);
+            const arr = new Uint8Array(buffer);
+
+            // ICO header
+            view.setUint16(0, 0, true); // reserved
+            view.setUint16(2, 1, true); // type: icon
+            view.setUint16(4, pngDatas.length, true); // count
+
+            let dataOffset = 6 + pngDatas.length * 16;
+            pngDatas.forEach((png, i) => {
+                const entryOffset = 6 + i * 16;
+                const s = png.size >= 256 ? 0 : png.size;
+                view.setUint8(entryOffset, s);      // width
+                view.setUint8(entryOffset + 1, s);   // height
+                view.setUint8(entryOffset + 2, 0);   // palette
+                view.setUint8(entryOffset + 3, 0);   // reserved
+                view.setUint16(entryOffset + 4, 1, true);  // color planes
+                view.setUint16(entryOffset + 6, 32, true); // bits per pixel
+                view.setUint32(entryOffset + 8, png.data.byteLength, true);  // size
+                view.setUint32(entryOffset + 12, dataOffset, true); // offset
+
+                arr.set(png.data, dataOffset);
+                dataOffset += png.data.byteLength;
+            });
+
+            const blob = new Blob([buffer], { type: 'image/x-icon' });
+            const link = document.createElement('a');
+            link.download = 'favicon.ico';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            URL.revokeObjectURL(link.href);
+            showToast('Downloaded favicon.ico (16, 32, 48px)');
+        });
+    }
+
+    function copyTags() {
+        const text = document.getElementById('htmlTags').textContent;
+        navigator.clipboard.writeText(text).then(() => showToast('HTML tags copied to clipboard!'));
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    // Event listeners
+    [els.text, els.font, els.bg, els.tc, els.fs].forEach(el => {
+        el.addEventListener('input', () => {
+            els.fsVal.textContent = els.fs.value;
+            els.bgVal.textContent = els.bg.value;
+            els.tcVal.textContent = els.tc.value;
+            render();
+        });
+    });
+    els.bgT.addEventListener('change', render);
+
+    // Initial render
+    render();
+    </script>
+    <script src="analytics.js"></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Free Favicon Generator",
+        "url": "https://biztoolkit-free.netlify.app/favicon.html",
+        "description": "Create favicons from text or emoji online. Download as ICO, PNG, and Apple touch icon. Free, no signup required.",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>
