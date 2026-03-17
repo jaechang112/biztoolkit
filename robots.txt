@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /admin.html
-Sitemap: https://biztoolkit-free.netlify.app/sitemap.xml
+Sitemap: https://biztoolkit-free.pages.dev/sitemap.xml

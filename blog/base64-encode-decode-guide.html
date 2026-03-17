@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encode & Decode: Complete Guide with Examples (2026) | BizToolkit</title>
+    <meta name="description" content="Learn how to Base64 encode and decode data. Covers what Base64 is, how it works, encoding/decoding in JavaScript, Python, and command line, common use cases like data URIs, email attachments, and API authentication.">
+    <meta name="keywords" content="base64 encode, base64 decode, base64 converter, base64 encoding, base64 online, encode base64, decode base64, base64 string, base64 image, data URI base64">
+    <link rel="canonical" href="https://biztoolkit-free.pages.dev/blog/base64-encode-decode-guide.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Base64 Encode & Decode: Complete Guide with Examples (2026)">
+    <meta property="og:description" content="Everything about Base64 encoding and decoding. How it works, use cases, code examples, and free online tool.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://biztoolkit-free.pages.dev/blog/base64-encode-decode-guide.html">
+    <meta property="og:site_name" content="BizToolkit">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Base64 Encode & Decode: Complete Guide with Examples (2026)">
+    <meta name="twitter:description" content="Everything about Base64 encoding and decoding. How it works, use cases, code examples, and free online tool.">
+
+    <!-- Article meta -->
+    <meta property="article:published_time" content="2026-03-17">
+    <meta property="article:author" content="BizToolkit">
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is Base64 encoding?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Base64 is a binary-to-text encoding scheme that converts binary data into a string of 64 printable ASCII characters. It is used to safely transmit binary data over text-based systems like email, HTML, URLs, and JSON APIs."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is Base64 encryption?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Base64 is an encoding scheme, not encryption. It does not provide any security. Anyone can decode a Base64 string back to its original data without a key. Never use Base64 to hide passwords, tokens, or sensitive data."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does Base64 increase file size?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Base64 encodes every 3 bytes of binary data into 4 ASCII characters, resulting in approximately 33% larger output. This overhead is the trade-off for being able to safely transmit binary data through text-only channels."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I Base64 encode a string in JavaScript?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "In the browser, use btoa() to encode and atob() to decode. For Node.js, use Buffer.from(string).toString('base64') to encode and Buffer.from(base64String, 'base64').toString() to decode. For Unicode strings, encode to UTF-8 first using TextEncoder."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What are data URIs and how do they use Base64?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Data URIs embed file content directly into HTML or CSS using the format data:[mediatype];base64,[data]. For example, a small PNG image can be embedded as data:image/png;base64,iVBORw0KGgo... This eliminates an extra HTTP request but increases HTML size by about 33%."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://biztoolkit-free.pages.dev/" },
+            { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://biztoolkit-free.pages.dev/blog/" },
+            { "@type": "ListItem", "position": 3, "name": "Base64 Encode & Decode Guide" }
+        ]
+    }
+    </script>
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Base64 Encode & Decode: Complete Guide with Examples (2026)",
+        "description": "Learn how to Base64 encode and decode data. Covers what Base64 is, how it works, encoding and decoding in JavaScript, Python, and command line, plus common use cases.",
+        "datePublished": "2026-03-17",
+        "dateModified": "2026-03-17",
+        "author": { "@type": "Organization", "name": "BizToolkit" },
+        "publisher": { "@type": "Organization", "name": "BizToolkit" }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1a1a2e;
+            background: #ffffff;
+            line-height: 1.7;
+        }
+
+        /* Nav */
+        nav { background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; transition: opacity 0.2s; }
+        nav a:hover { opacity: 1; }
+        nav .brand { font-weight: 700; font-size: 1.1rem; opacity: 1; }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 720px;
+            margin: 20px auto 0;
+            padding: 0 20px;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        .breadcrumb a { color: #6366f1; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .breadcrumb span { margin: 0 6px; }
+
+        /* Article */
+        .article-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 20px 60px;
+        }
+
+        .article-meta {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.25;
+            margin-bottom: 16px;
+            color: #111827;
+            letter-spacing: -0.02em;
+        }
+
+        .article-intro {
+            font-size: 1.15rem;
+            color: #4b5563;
+            margin-bottom: 32px;
+            line-height: 1.8;
+            border-left: 3px solid #6366f1;
+            padding-left: 16px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin: 40px 0 16px;
+            color: #111827;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            margin: 28px 0 10px;
+            color: #1f2937;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: #374151;
+        }
+
+        ol, ul {
+            margin: 0 0 16px 24px;
+            color: #374151;
+        }
+        li { margin-bottom: 8px; }
+
+        strong { color: #111827; }
+
+        /* Code blocks */
+        pre {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        code {
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            font-size: 0.88em;
+        }
+
+        p code, li code {
+            background: #f1f5f9;
+            color: #6366f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .code-label {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-bottom: -12px;
+            display: block;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin: 36px 0;
+            text-align: center;
+        }
+        .cta-box h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin: 0 0 8px;
+        }
+        .cta-box p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: white;
+            color: #6366f1;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Tip/Warning boxes */
+        .tip-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .tip-box strong { color: #166534; }
+        .tip-box p { color: #166534; margin: 0; }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .warning-box strong { color: #92400e; }
+        .warning-box p { color: #92400e; margin: 0; }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.92rem;
+        }
+        .comparison-table th {
+            background: #f8fafc;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+            color: #1e293b;
+            font-weight: 600;
+        }
+        .comparison-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #475569;
+        }
+        .comparison-table tr:hover td { background: #f8fafc; }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            padding: 0;
+        }
+        .checklist li {
+            padding: 8px 0 8px 32px;
+            position: relative;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .checklist li::before {
+            content: "\2713";
+            position: absolute;
+            left: 4px;
+            color: #22c55e;
+            font-weight: 700;
+        }
+
+        /* FAQ */
+        .faq-section { margin-top: 40px; }
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 20px 0;
+        }
+        .faq-item h3 {
+            margin: 0 0 8px;
+            font-size: 1.05rem;
+            color: #111827;
+        }
+        .faq-item p {
+            margin: 0;
+            color: #4b5563;
+            font-size: 0.95rem;
+        }
+
+        /* Playbook mention */
+        .playbook-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 24px;
+            margin: 36px 0;
+        }
+        .playbook-box h3 { margin: 0 0 8px; color: #111827; }
+        .playbook-box p { font-size: 0.95rem; color: #4b5563; margin-bottom: 12px; }
+        .playbook-link {
+            color: #6366f1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .playbook-link:hover { text-decoration: underline; }
+
+        /* Footer */
+        .article-footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            text-align: center;
+        }
+        .article-footer a { color: #6366f1; text-decoration: none; }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            h1 { font-size: 1.7rem; }
+            h2 { font-size: 1.3rem; }
+            .cta-box { padding: 20px; }
+            .comparison-table { font-size: 0.82rem; }
+            .comparison-table th, .comparison-table td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="../index.html" class="brand">BizToolkit</a>
+    <a href="../index.html">Tools</a>
+    <a href="../base64.html">Base64 Tool</a>
+    <a href="../json.html">JSON Formatter</a>
+</nav>
+
+<div class="breadcrumb">
+    <a href="../index.html">Home</a> <span>&rsaquo;</span>
+    <a href="./">Blog</a> <span>&rsaquo;</span>
+    Base64 Encode &amp; Decode Guide
+</div>
+
+<article class="article-container">
+    <p class="article-meta">Updated March 17, 2026 &middot; 12 min read</p>
+
+    <h1>Base64 Encode &amp; Decode: Complete Guide with Examples (2026)</h1>
+
+    <p class="article-intro">
+        Base64 encoding is everywhere &mdash; in email attachments, data URIs, API authentication headers, and embedded images. This guide explains exactly what Base64 is, how it works under the hood, when to use it (and when not to), and how to encode and decode Base64 in every major programming language.
+    </p>
+
+    <div class="cta-box">
+        <h3>Need to Encode or Decode Base64 Right Now?</h3>
+        <p>Paste any text or Base64 string into our free tool. Instant results, no signup required.</p>
+        <a href="../base64.html" class="cta-btn">Open Free Base64 Tool</a>
+    </div>
+
+    <!-- ====== Section 1 ====== -->
+    <h2>What Is Base64 Encoding?</h2>
+
+    <p>Base64 is a <strong>binary-to-text encoding scheme</strong> that represents binary data using a set of 64 printable ASCII characters. It was originally designed to allow binary data to be transmitted over systems that only support text, such as email (SMTP) and early HTTP.</p>
+
+    <p>The name "Base64" comes from the fact that the encoding uses exactly 64 characters to represent data. These 64 characters are:</p>
+
+    <ul>
+        <li>Uppercase letters: <code>A</code> through <code>Z</code> (26 characters)</li>
+        <li>Lowercase letters: <code>a</code> through <code>z</code> (26 characters)</li>
+        <li>Digits: <code>0</code> through <code>9</code> (10 characters)</li>
+        <li>Two special characters: <code>+</code> and <code>/</code></li>
+        <li>A padding character: <code>=</code></li>
+    </ul>
+
+    <p>The standard Base64 alphabet is defined in <strong>RFC 4648</strong>, which is the authoritative specification for Base64 encoding. There is also a "URL-safe" variant that replaces <code>+</code> with <code>-</code> and <code>/</code> with <code>_</code> to avoid conflicts in URLs and filenames.</p>
+
+    <div class="warning-box">
+        <p><strong>Important:</strong> Base64 is <em>not</em> encryption. It provides zero security. Anyone can decode a Base64 string instantly. Never use Base64 to "hide" passwords, API keys, or sensitive data. If you see credentials stored as Base64, they are effectively stored in plain text.</p>
+    </div>
+
+    <!-- ====== Section 2 ====== -->
+    <h2>How Base64 Encoding Works (Step by Step)</h2>
+
+    <p>Understanding the algorithm makes it much easier to debug encoding issues. Here is exactly how Base64 converts binary data to text:</p>
+
+    <h3>Step 1: Convert Input to Binary</h3>
+    <p>Take the input data and represent it as a sequence of bytes (8-bit binary values). For text input, this means converting each character to its ASCII or UTF-8 byte value.</p>
+
+    <p>For example, the string <code>Hi!</code> becomes:</p>
+    <pre>H  = 72  = 01001000
+i  = 105 = 01101001
+!  = 33  = 00100001</pre>
+
+    <h3>Step 2: Split Into 6-Bit Groups</h3>
+    <p>Concatenate all the binary bits and split them into groups of 6 bits (instead of the usual 8). This is the core of the algorithm &mdash; each 6-bit group maps to exactly one Base64 character.</p>
+
+    <pre>01001000 01101001 00100001
+↓
+010010 000110 100100 100001</pre>
+
+    <p>Since 6 bits can represent values from 0 to 63, this gives us exactly 64 possible values &mdash; hence the name Base64.</p>
+
+    <h3>Step 3: Map to Base64 Characters</h3>
+    <p>Each 6-bit value is looked up in the Base64 alphabet table:</p>
+
+    <pre>010010 = 18 → S
+000110 = 6  → G
+100100 = 36 → k
+100001 = 33 → h</pre>
+
+    <p>So <code>Hi!</code> encodes to <code>SGkh</code>.</p>
+
+    <h3>Step 4: Add Padding If Needed</h3>
+    <p>Base64 works on groups of 3 input bytes (24 bits) at a time. If the input length is not a multiple of 3, padding characters (<code>=</code>) are added to the output:</p>
+
+    <ul>
+        <li>If 1 byte is left over: add <code>==</code> (two padding characters)</li>
+        <li>If 2 bytes are left over: add <code>=</code> (one padding character)</li>
+        <li>If exactly divisible by 3: no padding needed</li>
+    </ul>
+
+    <span class="code-label">Padding examples:</span>
+    <pre>"A"   → "QQ=="   (1 byte → 2 padding chars)
+"AB"  → "QUI="   (2 bytes → 1 padding char)
+"ABC" → "QUJD"   (3 bytes → no padding)
+"ABCD"→ "QUJDRA==" (4 bytes → starts new group)</pre>
+
+    <div class="tip-box">
+        <p><strong>Tip:</strong> You can always tell how many "extra" bytes were in the original data by counting the <code>=</code> signs at the end. Two equals signs means one extra byte; one equals sign means two extra bytes. This is useful for debugging encoding issues.</p>
+    </div>
+
+    <!-- ====== Section 3 ====== -->
+    <h2>Base64 vs URL-Safe Base64 vs Other Variants</h2>
+
+    <p>Not all Base64 is the same. There are several variants, and using the wrong one is a common source of bugs.</p>
+
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Variant</th>
+                <th>Characters 62 &amp; 63</th>
+                <th>Padding</th>
+                <th>Use Case</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Standard (RFC 4648)</strong></td>
+                <td><code>+</code> and <code>/</code></td>
+                <td>Required (<code>=</code>)</td>
+                <td>Email (MIME), general encoding</td>
+            </tr>
+            <tr>
+                <td><strong>URL-Safe (RFC 4648 &sect;5)</strong></td>
+                <td><code>-</code> and <code>_</code></td>
+                <td>Often omitted</td>
+                <td>URLs, filenames, JWT tokens</td>
+            </tr>
+            <tr>
+                <td><strong>MIME (RFC 2045)</strong></td>
+                <td><code>+</code> and <code>/</code></td>
+                <td>Required</td>
+                <td>Email attachments, line-wrapped at 76 chars</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>The most common mistake is using standard Base64 in URLs. The <code>+</code> character gets interpreted as a space, and <code>/</code> is a path separator. Always use URL-safe Base64 when the encoded string will appear in a URL, query parameter, or filename.</p>
+
+    <!-- ====== Section 4 ====== -->
+    <h2>Common Use Cases for Base64</h2>
+
+    <p>Base64 appears in more places than most developers realize. Here are the most common real-world use cases.</p>
+
+    <h3>1. Data URIs (Embedding Images in HTML/CSS)</h3>
+    <p>Data URIs let you embed small files directly in your HTML or CSS, eliminating an HTTP request. The format is:</p>
+    <pre>data:[mediatype];base64,[encoded-data]</pre>
+
+    <span class="code-label">Embedding a small image in HTML:</span>
+    <pre>&lt;img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA
+AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHx
+gljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot"&gt;</pre>
+
+    <div class="tip-box">
+        <p><strong>Best practice:</strong> Only use data URIs for very small files (under 2&ndash;5 KB). For larger images, a separate file with proper caching is more efficient. Remember, Base64 adds ~33% overhead, and the browser cannot cache inline data URIs separately from the HTML.</p>
+    </div>
+
+    <h3>2. Email Attachments (MIME)</h3>
+    <p>SMTP email was designed for 7-bit ASCII text. To attach a PDF, image, or any binary file, email clients Base64-encode the file and embed it in the message body with MIME headers. When you send an email with an attachment, this happens automatically behind the scenes.</p>
+
+    <h3>3. HTTP Basic Authentication</h3>
+    <p>HTTP Basic Auth transmits credentials as a Base64-encoded <code>username:password</code> string in the <code>Authorization</code> header:</p>
+    <pre>Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=</pre>
+    <p>Decoding <code>dXNlcm5hbWU6cGFzc3dvcmQ=</code> gives <code>username:password</code>. This is why Basic Auth should <strong>always</strong> be used over HTTPS &mdash; the Base64 encoding provides zero security.</p>
+
+    <h3>4. JWT Tokens</h3>
+    <p>JSON Web Tokens (JWTs) consist of three Base64URL-encoded parts separated by dots: <code>header.payload.signature</code>. The header and payload are just JSON objects encoded with URL-safe Base64. You can decode the first two parts of any JWT to read its contents (the signature part requires the secret key to verify, not decode).</p>
+
+    <h3>5. Storing Binary Data in JSON or XML</h3>
+    <p>JSON and XML are text formats that cannot directly represent binary data. If you need to include an image, certificate, or binary blob in a JSON API response, Base64 encoding is the standard approach. Many APIs including Stripe, GitHub, and AWS return binary data as Base64 strings within JSON.</p>
+
+    <h3>6. Embedding Fonts and SVGs in CSS</h3>
+    <p>Web fonts and SVG icons can be Base64-encoded and embedded directly in CSS stylesheets using <code>@font-face</code> or <code>background-image</code> data URIs. This reduces the number of network requests at the cost of larger CSS files and lost caching benefits.</p>
+
+    <!-- ====== Section 5 ====== -->
+    <h2>Base64 Encoding in JavaScript</h2>
+
+    <p>JavaScript provides built-in Base64 functions in both browser and Node.js environments, but they work differently.</p>
+
+    <h3>Browser (btoa and atob)</h3>
+    <span class="code-label">Encoding a string:</span>
+    <pre>const encoded = btoa("Hello, World!");
+console.log(encoded); // "SGVsbG8sIFdvcmxkIQ=="</pre>
+
+    <span class="code-label">Decoding a Base64 string:</span>
+    <pre>const decoded = atob("SGVsbG8sIFdvcmxkIQ==");
+console.log(decoded); // "Hello, World!"</pre>
+
+    <div class="warning-box">
+        <p><strong>Watch out:</strong> <code>btoa()</code> only handles Latin-1 characters. If your string contains Unicode characters (emoji, CJK, accented characters), it will throw an error. Use the UTF-8 safe method below instead.</p>
+    </div>
+
+    <h3>Handling Unicode Strings (Browser)</h3>
+    <span class="code-label">UTF-8 safe Base64 encode/decode:</span>
+    <pre>// Encode (handles Unicode)
+function utf8ToBase64(str) {
+    return btoa(
+        encodeURIComponent(str).replace(
+            /%([0-9A-F]{2})/g,
+            (_, p1) => String.fromCharCode(parseInt(p1, 16))
+        )
+    );
+}
+
+// Decode
+function base64ToUtf8(base64) {
+    return decodeURIComponent(
+        atob(base64).split('').map(
+            c => '%' + c.charCodeAt(0).toString(16).padStart(2, '0')
+        ).join('')
+    );
+}
+
+utf8ToBase64("Hello! Bonjour!"); // Works with Unicode</pre>
+
+    <h3>Node.js (Buffer)</h3>
+    <span class="code-label">Encoding and decoding in Node.js:</span>
+    <pre>// Encode string to Base64
+const encoded = Buffer.from("Hello, World!").toString("base64");
+// "SGVsbG8sIFdvcmxkIQ=="
+
+// Decode Base64 to string
+const decoded = Buffer.from("SGVsbG8sIFdvcmxkIQ==", "base64").toString();
+// "Hello, World!"
+
+// URL-safe Base64
+const urlSafe = Buffer.from("Hello, World!").toString("base64url");
+// "SGVsbG8sIFdvcmxkIQ"
+
+// Encode a file to Base64
+const fs = require("fs");
+const fileBase64 = fs.readFileSync("image.png").toString("base64");</pre>
+
+    <!-- ====== Section 6 ====== -->
+    <h2>Base64 Encoding in Python</h2>
+
+    <p>Python's standard library includes the <code>base64</code> module with functions for all Base64 variants.</p>
+
+    <span class="code-label">Basic encoding and decoding:</span>
+    <pre>import base64
+
+# Encode
+encoded = base64.b64encode(b"Hello, World!")
+print(encoded)  # b'SGVsbG8sIFdvcmxkIQ=='
+
+# Decode
+decoded = base64.b64decode(b"SGVsbG8sIFdvcmxkIQ==")
+print(decoded)  # b'Hello, World!'
+
+# URL-safe variant
+url_safe = base64.urlsafe_b64encode(b"Hello, World!")
+print(url_safe)  # b'SGVsbG8sIFdvcmxkIQ=='</pre>
+
+    <span class="code-label">Encoding a file:</span>
+    <pre>import base64
+
+# Read and encode an image file
+with open("photo.jpg", "rb") as f:
+    encoded = base64.b64encode(f.read()).decode("ascii")
+
+# Create a data URI
+data_uri = f"data:image/jpeg;base64,{encoded}"
+
+# Decode and write back to a file
+with open("output.jpg", "wb") as f:
+    f.write(base64.b64decode(encoded))</pre>
+
+    <!-- ====== Section 7 ====== -->
+    <h2>Base64 on the Command Line</h2>
+
+    <p>Every major operating system has built-in Base64 command-line tools.</p>
+
+    <h3>Linux / macOS</h3>
+    <pre># Encode a string
+echo -n "Hello, World!" | base64
+# SGVsbG8sIFdvcmxkIQ==
+
+# Decode a string
+echo "SGVsbG8sIFdvcmxkIQ==" | base64 --decode
+# Hello, World!
+
+# Encode a file
+base64 image.png > image_base64.txt
+
+# Decode a file
+base64 --decode image_base64.txt > image_restored.png</pre>
+
+    <h3>Windows (PowerShell)</h3>
+    <pre># Encode
+[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes("Hello, World!"))
+# SGVsbG8sIFdvcmxkIQ==
+
+# Decode
+[Text.Encoding]::UTF8.GetString([Convert]::FromBase64String("SGVsbG8sIFdvcmxkIQ=="))
+# Hello, World!</pre>
+
+    <div class="tip-box">
+        <p><strong>Tip:</strong> On Linux, use <code>echo -n</code> (not just <code>echo</code>) when encoding. Without <code>-n</code>, echo adds a newline character that becomes part of the encoded output, giving you an incorrect result.</p>
+    </div>
+
+    <!-- ====== Section 8 ====== -->
+    <h2>Base64 in Other Languages</h2>
+
+    <h3>Java</h3>
+    <pre>import java.util.Base64;
+
+// Encode
+String encoded = Base64.getEncoder().encodeToString("Hello".getBytes());
+
+// Decode
+byte[] decoded = Base64.getDecoder().decode(encoded);
+String original = new String(decoded);
+
+// URL-safe
+String urlSafe = Base64.getUrlEncoder().encodeToString("Hello".getBytes());</pre>
+
+    <h3>PHP</h3>
+    <pre>// Encode
+$encoded = base64_encode("Hello, World!");
+// "SGVsbG8sIFdvcmxkIQ=="
+
+// Decode
+$decoded = base64_decode("SGVsbG8sIFdvcmxkIQ==");
+// "Hello, World!"</pre>
+
+    <h3>Go</h3>
+    <pre>import "encoding/base64"
+
+// Encode
+encoded := base64.StdEncoding.EncodeToString([]byte("Hello"))
+
+// Decode
+decoded, err := base64.StdEncoding.DecodeString(encoded)
+
+// URL-safe
+urlSafe := base64.URLEncoding.EncodeToString([]byte("Hello"))</pre>
+
+    <!-- ====== Section 9 ====== -->
+    <h2>The 33% Size Overhead: When to Use Base64 (and When Not To)</h2>
+
+    <p>Every 3 bytes of input become 4 bytes of Base64 output. That is a <strong>33.3% increase</strong> in size. For small data like authentication tokens or tiny icons, this overhead is negligible. For large files, it matters.</p>
+
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Original Size</th>
+                <th>Base64 Size</th>
+                <th>Overhead</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>100 bytes</td><td>136 bytes</td><td>+36 bytes</td></tr>
+            <tr><td>1 KB</td><td>1.33 KB</td><td>+0.33 KB</td></tr>
+            <tr><td>1 MB</td><td>1.33 MB</td><td>+0.33 MB</td></tr>
+            <tr><td>10 MB</td><td>13.3 MB</td><td>+3.3 MB</td></tr>
+        </tbody>
+    </table>
+
+    <h3>When to use Base64:</h3>
+    <ul>
+        <li>Embedding small images or icons in HTML/CSS (under 2&ndash;5 KB)</li>
+        <li>Transmitting binary data through text-only protocols (email, JSON APIs)</li>
+        <li>HTTP authentication headers</li>
+        <li>Storing small binary blobs in databases that only support text</li>
+        <li>Creating self-contained HTML files with embedded resources</li>
+    </ul>
+
+    <h3>When NOT to use Base64:</h3>
+    <ul>
+        <li>Storing large files (use binary storage or object storage like S3)</li>
+        <li>Embedding large images in HTML (use separate files with CDN caching)</li>
+        <li>Security purposes (it is not encryption)</li>
+        <li>Compressing data (it makes data <em>larger</em>, not smaller)</li>
+    </ul>
+
+    <!-- ====== Section 10 ====== -->
+    <h2>Debugging Common Base64 Issues</h2>
+
+    <p>Base64 encoding problems can be tricky because the output always <em>looks</em> valid but the decoded result may be wrong. Here are the most common issues and their fixes.</p>
+
+    <h3>Problem: Unexpected Whitespace or Newlines</h3>
+    <p>MIME-style Base64 wraps lines at 76 characters. If you are feeding MIME-encoded data to a strict decoder, strip whitespace first. Conversely, if you are generating Base64 for email, you may need to add line breaks.</p>
+
+    <h3>Problem: Unicode Characters Cause Errors</h3>
+    <p>The browser's <code>btoa()</code> function only handles Latin-1. For Unicode text, encode to UTF-8 bytes first, then Base64-encode those bytes. See the JavaScript section above for the correct approach.</p>
+
+    <h3>Problem: URL-Safe vs Standard Mismatch</h3>
+    <p>If you encode with standard Base64 but the data is used in a URL, the <code>+</code> and <code>/</code> characters will be corrupted. Always match the Base64 variant to the transport method. Convert between variants by replacing <code>+</code> with <code>-</code>, <code>/</code> with <code>_</code>, and removing <code>=</code> padding.</p>
+
+    <h3>Problem: Padding Errors</h3>
+    <p>Some decoders are strict about padding and will reject Base64 strings where the padding is missing. If you receive a Base64 string without padding (common in JWTs and URL-safe contexts), add the missing <code>=</code> characters:</p>
+    <pre>// JavaScript: Add missing padding
+function addPadding(base64) {
+    const pad = base64.length % 4;
+    if (pad === 2) return base64 + "==";
+    if (pad === 3) return base64 + "=";
+    return base64;
+}</pre>
+
+    <!-- ====== Quick Reference ====== -->
+    <h2>Base64 Quick Reference</h2>
+
+    <ul class="checklist">
+        <li>Base64 uses 64 ASCII characters (A-Z, a-z, 0-9, +, /) plus = for padding</li>
+        <li>URL-safe Base64 replaces + with - and / with _ (use this for URLs and JWTs)</li>
+        <li>Output is always ~33% larger than the input</li>
+        <li>Every 3 input bytes produce exactly 4 output characters</li>
+        <li>Base64 is encoding, NOT encryption &mdash; never use it for security</li>
+        <li>Use data URIs only for small files (under 5 KB)</li>
+        <li>Browser btoa()/atob() do not support Unicode &mdash; encode to UTF-8 first</li>
+        <li>Node.js Buffer supports base64 and base64url encodings natively</li>
+        <li>Python's base64 module handles all variants (standard, URL-safe, MIME)</li>
+        <li>Always use echo -n on Linux to avoid encoding an extra newline</li>
+    </ul>
+
+    <!-- ====== FAQ Section ====== -->
+    <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <h3>What is Base64 encoding?</h3>
+            <p>Base64 is a binary-to-text encoding scheme that converts binary data into a string of 64 printable ASCII characters. It is used to safely transmit binary data over text-based systems like email, HTML, URLs, and JSON APIs.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Is Base64 encryption?</h3>
+            <p>No. Base64 is an encoding scheme, not encryption. It does not provide any security. Anyone can decode a Base64 string back to its original data without a key. Never use Base64 to hide passwords, tokens, or sensitive data.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Why does Base64 increase file size?</h3>
+            <p>Base64 encodes every 3 bytes of binary data into 4 ASCII characters, resulting in approximately 33% larger output. This overhead is the trade-off for being able to safely transmit binary data through text-only channels.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do I Base64 encode a string in JavaScript?</h3>
+            <p>In the browser, use <code>btoa()</code> to encode and <code>atob()</code> to decode. For Node.js, use <code>Buffer.from(string).toString('base64')</code> to encode and <code>Buffer.from(base64String, 'base64').toString()</code> to decode. For Unicode strings, encode to UTF-8 first using TextEncoder.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What are data URIs and how do they use Base64?</h3>
+            <p>Data URIs embed file content directly into HTML or CSS using the format <code>data:[mediatype];base64,[data]</code>. For example, a small PNG image can be embedded as <code>data:image/png;base64,iVBORw0KGgo...</code> This eliminates an extra HTTP request but increases HTML size by about 33%.</p>
+        </div>
+    </div>
+
+    <!-- ====== Related Tools ====== -->
+    <div class="playbook-box">
+        <h3>Encode or Decode Base64 Instantly</h3>
+        <p>Our free Base64 encoder/decoder tool runs entirely in your browser. Paste any text to encode it to Base64, or paste a Base64 string to decode it back to plain text. No signup, no data sent to any server, works on desktop and mobile.</p>
+        <a href="../base64.html" class="playbook-link">Open the Free Base64 Tool &rarr;</a>
+    </div>
+
+    <p style="font-size: 0.95rem; color: #4b5563; margin-top: 24px;">
+        <strong>Related guides:</strong>
+        <a href="json-format-validate-guide.html" style="color: #6366f1;">JSON Formatting Guide</a> &middot;
+        <a href="utm-parameters-tracking-guide.html" style="color: #6366f1;">UTM Parameters Guide</a> &middot;
+        <a href="what-are-meta-tags-seo-guide.html" style="color: #6366f1;">Meta Tags SEO Guide</a> &middot;
+        <a href="robots-txt-complete-guide.html" style="color: #6366f1;">Robots.txt Guide</a>
+    </p>
+
+    <div class="article-footer">
+        <p>&copy; 2026 <a href="../index.html">BizToolkit</a>. Free tools for freelancers and small businesses.</p>
+    </div>
+</article>
+
+</body>
+</html>

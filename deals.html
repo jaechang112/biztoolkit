@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch Week Deals | BizToolkit Premium Products</title>
+    <meta name="description" content="Launch Week Special: Get all premium business playbooks and data products at massive discounts. Limited time offer.">
+    <meta property="og:title" content="BizToolkit Launch Week Deals — Up to 80% Off">
+    <meta property="og:description" content="Premium business playbooks and data products at launch week prices. Limited time.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://biztoolkit-free.pages.dev/deals.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BizToolkit Launch Week Deals - Up to 80% Off Premium Products">
+    <meta name="twitter:description" content="Premium business playbooks and data products at launch week prices. Limited time offer.">
+    <link rel="canonical" href="https://biztoolkit-free.pages.dev/deals.html">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #fafbfc; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        nav { background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; }
+        nav a:hover { opacity: 1; }
+        nav .brand { font-weight: 700; font-size: 1.1rem; opacity: 1; }
+        nav .deals-link { background: #ef4444; padding: 4px 12px; border-radius: 50px; opacity: 1; font-weight: 600; font-size: 0.8rem; }
+
+        .hero { background: linear-gradient(135deg, #7c1d1d, #991b1b, #b91c1c); color: white; padding: 60px 0 80px; text-align: center; }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 16px; font-weight: 800; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 30px; line-height: 1.6; }
+
+        .countdown-container { display: inline-block; background: rgba(0,0,0,0.3); border-radius: 16px; padding: 20px 40px; margin-bottom: 10px; }
+        .countdown-label { font-size: 0.9rem; opacity: 0.8; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .countdown { display: flex; gap: 20px; justify-content: center; }
+        .countdown-item { text-align: center; }
+        .countdown-num { font-size: 2.5rem; font-weight: 800; line-height: 1; }
+        .countdown-unit { font-size: 0.75rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+
+        .bundle-section { margin-top: -40px; padding-bottom: 40px; }
+        .bundle-card { background: linear-gradient(135deg, #1e1b4b, #312e81); color: white; border-radius: 20px; padding: 40px; max-width: 800px; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
+        .bundle-card::before { content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%; background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%); }
+        .bundle-badge { display: inline-block; background: #ef4444; color: white; padding: 6px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .bundle-card h2 { font-size: 2rem; margin-bottom: 12px; position: relative; }
+        .bundle-card .bundle-desc { opacity: 0.85; font-size: 1rem; line-height: 1.6; margin-bottom: 24px; position: relative; }
+        .bundle-pricing { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; position: relative; }
+        .bundle-price { font-size: 3rem; font-weight: 800; }
+        .bundle-original { font-size: 1.3rem; text-decoration: line-through; opacity: 0.5; }
+        .bundle-savings { background: rgba(34,197,94,0.2); color: #4ade80; padding: 4px 12px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; }
+        .bundle-items { list-style: none; margin: 24px 0; position: relative; }
+        .bundle-items li { padding: 8px 0; opacity: 0.9; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
+        .bundle-items li::before { content: '\2713'; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgba(74,222,128,0.2); color: #4ade80; border-radius: 50%; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+        .btn-bundle { display: inline-block; background: white; color: #312e81; padding: 14px 36px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 1.1rem; position: relative; transition: transform 0.2s; }
+        .btn-bundle:hover { transform: scale(1.05); }
+
+        .products-section { padding: 60px 0; }
+        .products-section h2 { font-size: 2rem; text-align: center; margin-bottom: 12px; }
+        .products-section .subtitle { text-align: center; color: #555; font-size: 1rem; margin-bottom: 40px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+
+        .product-card { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #e8ecf1; transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+        .product-tag { display: inline-block; padding: 3px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 600; margin-bottom: 12px; width: fit-content; }
+        .tag-sale { background: #fef2f2; color: #dc2626; }
+        .tag-data { background: #eff6ff; color: #2563eb; }
+        .tag-tool { background: #f0fdf4; color: #16a34a; }
+        .product-card h3 { font-size: 1.15rem; margin-bottom: 8px; color: #1a1a2e; }
+        .product-card .description { color: #555; line-height: 1.6; margin-bottom: 16px; font-size: 0.9rem; flex-grow: 1; }
+        .product-card .benefits { list-style: none; margin-bottom: 20px; }
+        .product-card .benefits li { color: #555; font-size: 0.85rem; padding: 3px 0; padding-left: 20px; position: relative; }
+        .product-card .benefits li::before { content: '\2713'; position: absolute; left: 0; color: #4f46e5; font-weight: 700; }
+        .price-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+        .price-display { display: flex; align-items: baseline; gap: 8px; }
+        .price-current { font-size: 1.4rem; font-weight: 800; color: #1a1a2e; }
+        .price-original { font-size: 0.95rem; text-decoration: line-through; color: #999; }
+        .discount-badge { background: #fef2f2; color: #dc2626; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .btn { display: inline-block; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+        .btn-primary { background: #4f46e5; color: white; }
+        .btn-primary:hover { background: #4338ca; }
+
+        .guarantee { text-align: center; padding: 40px 0 60px; }
+        .guarantee-box { display: inline-block; background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 16px; padding: 30px 40px; max-width: 600px; }
+        .guarantee-box h3 { color: #166534; margin-bottom: 8px; font-size: 1.1rem; }
+        .guarantee-box p { color: #555; font-size: 0.95rem; line-height: 1.6; }
+
+        footer { background: #1a1a2e; color: rgba(255,255,255,0.7); padding: 40px 0; text-align: center; font-size: 0.9rem; }
+        footer a { color: #a5b4fc; text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .bundle-card { padding: 28px 20px; }
+            .bundle-price { font-size: 2.2rem; }
+            .countdown-num { font-size: 1.8rem; }
+            .products-grid { grid-template-columns: 1fr; }
+            .countdown-container { padding: 16px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="brand">BizToolkit</a>
+        <a href="index.html">All Tools</a>
+        <a href="invoice.html">Invoice</a>
+        <a href="contract.html">Contract</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="qr.html">QR</a>
+        <a href="password.html">Password</a>
+        <a href="blog/">Blog</a>
+        <a href="deals.html" class="deals-link">Deals</a>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Launch Week Special</h1>
+            <p>Massive discounts on all premium business playbooks and data products. These prices won't last.</p>
+            <div class="countdown-container">
+                <div class="countdown-label">Offer ends in</div>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-num" id="days">0</div>
+                        <div class="countdown-unit">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-num" id="hours">0</div>
+                        <div class="countdown-unit">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-num" id="minutes">0</div>
+                        <div class="countdown-unit">Min</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-num" id="seconds">0</div>
+                        <div class="countdown-unit">Sec</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bundle-section">
+        <div class="container">
+            <div class="bundle-card">
+                <span class="bundle-badge">Best Value — Save 88%</span>
+                <h2>Complete Business Bundle</h2>
+                <p class="bundle-desc">Get all 6 premium playbooks in one package. Everything you need to run a professional freelance business — invoicing systems, contracts, legal compliance, content strategy, brand presentation, and AI-powered meeting prep.</p>
+                <div class="bundle-pricing">
+                    <span class="bundle-price">$29</span>
+                    <span class="bundle-original">$242</span>
+                    <span class="bundle-savings">You save $213</span>
+                </div>
+                <ul class="bundle-items">
+                    <li>The $10K Invoice System — 30 psychological billing workflows ($47 value)</li>
+                    <li>Contract Builder's Blueprint — 15+ advanced templates ($47 value)</li>
+                    <li>Privacy Policy Playbook — Complete legal compliance kit ($47 value)</li>
+                    <li>Content Creator's Playbook — Multi-platform content strategy ($47 value)</li>
+                    <li>Logo Presentation Playbook — Professional brand showcase ($47 value)</li>
+                    <li>AI Meeting Prep Playbook — Cut prep time by 90% ($37 value)</li>
+                </ul>
+                <a href="https://jaechang112.gumroad.com/l/nlkjqo?wanted=true" class="btn-bundle">Get the Complete Bundle — $29</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="container">
+            <h2>Individual Products</h2>
+            <p class="subtitle">Prefer to pick and choose? Every product is discounted during launch week.</p>
+
+            <div class="products-grid">
+
+                <div class="product-card">
+                    <span class="product-tag tag-sale">LAUNCH SALE — 81% OFF</span>
+                    <h3>The $10K Invoice System</h3>
+                    <p class="description">30 psychological billing workflows that get your invoices paid 3x faster. Includes templates, automation scripts, and follow-up sequences.</p>
+                    <ul class="benefits">
+                        <li>30 proven billing workflows</li>
+                        <li>Payment psychology triggers</li>
+                        <li>Follow-up email templates</li>
+                        <li>Automation setup guides</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$9</span>
+                            <span class="price-original">$47</span>
+                            <span class="discount-badge">-81%</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/nlkjqo?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-sale">LAUNCH SALE — 81% OFF</span>
+                    <h3>Contract Builder's Blueprint</h3>
+                    <p class="description">15+ advanced contract templates with negotiation scripts and clause libraries. Protect yourself legally without expensive lawyers.</p>
+                    <ul class="benefits">
+                        <li>15+ contract templates</li>
+                        <li>Negotiation scripts</li>
+                        <li>Clause library for customization</li>
+                        <li>Red flag checklist</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$9</span>
+                            <span class="price-original">$47</span>
+                            <span class="discount-badge">-81%</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/fbktdr?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-sale">LAUNCH SALE — 81% OFF</span>
+                    <h3>Privacy Policy Playbook</h3>
+                    <p class="description">Complete legal compliance kit covering GDPR, CCPA, terms of service, and cookie policies. Stay compliant without a legal team.</p>
+                    <ul class="benefits">
+                        <li>GDPR compliance templates</li>
+                        <li>CCPA compliance templates</li>
+                        <li>Terms of service generator</li>
+                        <li>Cookie policy builder</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$9</span>
+                            <span class="price-original">$47</span>
+                            <span class="discount-badge">-81%</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/ahaks?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-sale">LAUNCH SALE — 81% OFF</span>
+                    <h3>Content Creator's Playbook</h3>
+                    <p class="description">Multi-platform content strategy with templates, calendars, and repurposing workflows. Create once, publish everywhere.</p>
+                    <ul class="benefits">
+                        <li>Content calendar templates</li>
+                        <li>Repurposing workflows</li>
+                        <li>Platform-specific guides</li>
+                        <li>Engagement frameworks</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$9</span>
+                            <span class="price-original">$47</span>
+                            <span class="discount-badge">-81%</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/nwdis?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-sale">LAUNCH SALE — 81% OFF</span>
+                    <h3>Logo Presentation Playbook</h3>
+                    <p class="description">Professional brand showcase system. Present your logo and brand identity like a top design agency.</p>
+                    <ul class="benefits">
+                        <li>Presentation templates</li>
+                        <li>Mockup frameworks</li>
+                        <li>Brand guideline builder</li>
+                        <li>Client delivery system</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$9</span>
+                            <span class="price-original">$47</span>
+                            <span class="discount-badge">-81%</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/lqmvfc?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-sale">LAUNCH SALE — 68% OFF</span>
+                    <h3>AI Meeting Prep Playbook</h3>
+                    <p class="description">Cut meeting preparation time by 90% using AI workflows. Tested across 200+ meetings with proven results.</p>
+                    <ul class="benefits">
+                        <li>AI prompt templates</li>
+                        <li>Pre-meeting research workflows</li>
+                        <li>Follow-up automation</li>
+                        <li>Deal closing frameworks</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$12</span>
+                            <span class="price-original">$37</span>
+                            <span class="discount-badge">-68%</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/tvkzl?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-data">DATA PRODUCT</span>
+                    <h3>Reddit vs Hacker News Analysis</h3>
+                    <p class="description">Which platform drives more traffic and sales? Real data from 1,000+ launches comparing engagement, conversion rates, and ROI.</p>
+                    <ul class="benefits">
+                        <li>22,000+ posts analyzed</li>
+                        <li>Traffic & conversion data</li>
+                        <li>Platform comparison matrix</li>
+                        <li>Launch timing insights</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$5</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/ipsaeo?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-tool">CALCULATOR</span>
+                    <h3>Freelance Rate Calculator</h3>
+                    <p class="description">Data-driven rate calculator built from 244 real freelance rate reports across 17 sources. Know exactly what to charge.</p>
+                    <ul class="benefits">
+                        <li>244 real rate data points</li>
+                        <li>Industry-specific benchmarks</li>
+                        <li>Experience-level adjustments</li>
+                        <li>Geographic rate differences</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$19</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/ptsmqm?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-data">DATA PRODUCT</span>
+                    <h3>SaaS Metrics Benchmark</h3>
+                    <p class="description">208 real SaaS benchmarks from 19 sources. Know what "good" metrics look like at every stage of growth.</p>
+                    <ul class="benefits">
+                        <li>208 benchmark data points</li>
+                        <li>Stage-by-stage metrics</li>
+                        <li>Churn, MRR, LTV targets</li>
+                        <li>Investor-ready comparisons</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$25</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/clailz?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <span class="product-tag tag-data">DATA PRODUCT</span>
+                    <h3>Side Hustle Reality Check</h3>
+                    <p class="description">Data-backed analysis of 50+ side hustles with real income ranges, time investment, and startup costs. Pick the right one.</p>
+                    <ul class="benefits">
+                        <li>303 income reports analyzed</li>
+                        <li>64 side hustle types compared</li>
+                        <li>Real income ranges</li>
+                        <li>Time-to-profit estimates</li>
+                    </ul>
+                    <div class="price-row">
+                        <div class="price-display">
+                            <span class="price-current">$15</span>
+                        </div>
+                        <a href="https://jaechang112.gumroad.com/l/jeklro?wanted=true" target="_blank" rel="noopener" class="btn btn-primary">Get It</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="guarantee">
+        <div class="guarantee-box">
+            <h3>30-Day Money-Back Guarantee</h3>
+            <p>Not satisfied? Get a full refund within 30 days, no questions asked. We stand behind every product.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 BizToolkit. Free tools for freelancers and small businesses.</p>
+            <p style="margin-top: 8px;"><a href="index.html">Free Tools</a> &bull; <a href="privacy.html">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        // Set countdown to 7 days from now (or a fixed end date)
+        var now = new Date();
+        var endKey = 'biztoolkit_deal_end';
+        var stored = localStorage.getItem(endKey);
+        var end;
+        if (stored) {
+            end = new Date(parseInt(stored));
+            if (end < now) {
+                // Reset if expired (rolling 7-day window)
+                end = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+                localStorage.setItem(endKey, end.getTime().toString());
+            }
+        } else {
+            end = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+            localStorage.setItem(endKey, end.getTime().toString());
+        }
+
+        function updateCountdown() {
+            var now = new Date();
+            var diff = end - now;
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                return;
+            }
+            var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var s = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('days').textContent = d;
+            document.getElementById('hours').textContent = h;
+            document.getElementById('minutes').textContent = m;
+            document.getElementById('seconds').textContent = s;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    })();
+    </script>
+</body>
+</html>
