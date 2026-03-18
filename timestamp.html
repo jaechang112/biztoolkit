@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <title>Free Unix Timestamp Converter Online | Epoch to Date - BizToolkit</title>
+    <meta name="description" content="Free online Unix timestamp converter. Convert epoch time to human-readable date, date to timestamp, ISO 8601 format, with timezone support. No signup required.">
+    <meta name="keywords" content="unix timestamp converter, epoch converter, timestamp to date, date to timestamp, epoch time converter, unix time converter, iso 8601 converter, epoch to human date">
+    <meta property="og:title" content="Free Unix Timestamp Converter Online | Epoch to Date">
+    <meta property="og:description" content="Convert Unix timestamps to human-readable dates and vice versa. ISO 8601, relative time, timezone support. 100% free, no signup.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://biztoolkit-free.pages.dev/timestamp.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free Unix Timestamp Converter Online | BizToolkit">
+    <meta name="twitter:description" content="Convert Unix timestamps to human-readable dates and vice versa. ISO 8601, relative time, timezone support. 100% free, no signup.">
+    <link rel="canonical" href="https://biztoolkit-free.pages.dev/timestamp.html">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Free Unix Timestamp Converter",
+        "url": "https://biztoolkit-free.pages.dev/timestamp.html",
+        "description": "Convert Unix epoch timestamps to human-readable dates and vice versa with timezone and ISO 8601 support.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "browserRequirements": "Requires a modern web browser"
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fafbfc;
+            --surface: #ffffff;
+            --surface-alt: #f6f8fa;
+            --border: #d0d7de;
+            --text: #1a1a2e;
+            --text-muted: #656d76;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --error-bg: #fef2f2;
+            --error-border: #fca5a5;
+            --error-text: #dc2626;
+            --success-bg: #f0fdf4;
+            --success-border: #86efac;
+            --success-text: #16a34a;
+            --mono-color: #0550ae;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface-alt: #21262d;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --error-bg: #3d1212;
+            --error-border: #7f1d1d;
+            --error-text: #fca5a5;
+            --success-bg: #0a2912;
+            --success-border: #166534;
+            --success-text: #86efac;
+            --mono-color: #79c0ff;
+        }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
+
+        nav a { transition: opacity 0.2s; }
+        nav a:hover { opacity: 1 !important; }
+
+        .app-container { flex: 1; max-width: 960px; margin: 0 auto; padding: 0 20px; width: 100%; }
+
+        h1.page-title { font-size: 1.6rem; margin: 32px 0 8px; }
+        .page-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 28px; line-height: 1.5; }
+
+        /* Cards */
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+        .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .card-title .icon { font-size: 1.2rem; }
+
+        /* Live clock */
+        .live-clock { text-align: center; padding: 28px 24px; }
+        .live-ts { font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace; font-size: 2.2rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; }
+        .live-date { color: var(--text-muted); font-size: 0.95rem; margin-top: 8px; }
+        .live-unit-toggle { margin-top: 12px; display: flex; justify-content: center; gap: 4px; }
+
+        /* Toggle pill */
+        .toggle-pill { display: inline-flex; background: var(--surface-alt); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+        .toggle-pill button { padding: 6px 16px; border: none; background: transparent; color: var(--text-muted); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+        .toggle-pill button.active { background: var(--accent); color: #fff; }
+
+        /* Form rows */
+        .form-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 14px; flex-wrap: wrap; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 160px; }
+        .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.3px; }
+        .form-group input, .form-group select { padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.92rem; font-family: 'SF Mono', 'Fira Code', Consolas, monospace; outline: none; transition: border-color 0.15s; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+
+        .btn { padding: 10px 18px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+        .btn:hover { background: var(--surface-alt); }
+        .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+        .btn-sm { padding: 6px 12px; font-size: 0.78rem; }
+        .btn-copy { padding: 4px 10px; font-size: 0.75rem; border-radius: 6px; }
+
+        /* Result display */
+        .result-box { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-family: 'SF Mono', 'Fira Code', Consolas, monospace; font-size: 0.9rem; line-height: 1.7; word-break: break-all; position: relative; min-height: 48px; }
+        .result-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+        .result-row .label { color: var(--text-muted); font-size: 0.78rem; font-weight: 600; text-transform: uppercase; min-width: 90px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        .result-row .value { flex: 1; color: var(--mono-color); }
+        .result-row + .result-row { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+
+        /* Quick reference */
+        .ref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+        .ref-item { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+        .ref-item .ref-label { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; }
+        .ref-item .ref-value { font-family: 'SF Mono', Consolas, monospace; font-size: 0.82rem; color: var(--mono-color); }
+
+        /* Messages */
+        .msg { padding: 10px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; margin-top: 10px; }
+        .msg-error { background: var(--error-bg); border: 1px solid var(--error-border); color: var(--error-text); }
+        .msg-success { background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
+
+        .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+        .theme-toggle:hover { background: var(--surface-alt); }
+
+        /* Content sections */
+        .content-section { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .content-section h2 { font-size: 1.5rem; margin-bottom: 16px; color: var(--text); }
+        .content-section h3 { font-size: 1.15rem; margin: 24px 0 10px; color: var(--text); }
+        .content-section p, .content-section li { color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; }
+        .content-section ul, .content-section ol { padding-left: 20px; margin-bottom: 16px; }
+        .content-section li { margin-bottom: 6px; }
+        .faq-item { margin-bottom: 20px; }
+        .faq-item h3 { font-size: 1rem; color: var(--text); margin-bottom: 6px; }
+
+        footer { text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Tooltip */
+        .copied-tooltip { position: fixed; background: var(--accent); color: #fff; padding: 6px 14px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; pointer-events: none; z-index: 999; opacity: 0; transition: opacity 0.2s; }
+        .copied-tooltip.show { opacity: 1; }
+
+        @media (max-width: 600px) {
+            .live-ts { font-size: 1.5rem; }
+            .form-row { flex-direction: column; }
+            .form-group { min-width: 100%; }
+            .ref-grid { grid-template-columns: 1fr; }
+            h1.page-title { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<nav style="background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+    <a href="index.html" style="color:white;text-decoration:none;font-weight:700;font-size:1.1rem;">BizToolkit</a>
+    <a href="index.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Tools</a>
+    <a href="invoice.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Invoice</a>
+    <a href="contract.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Contract</a>
+    <a href="privacy.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Privacy</a>
+    <a href="qr.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">QR</a>
+    <a href="password.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Password</a>
+    <a href="timestamp.html" style="color:white;text-decoration:none;font-size:0.9rem;opacity:1;border-bottom:2px solid #6366f1;padding-bottom:2px;">Timestamp</a>
+    <a href="blog/" style="color:white;text-decoration:none;font-size:0.9rem;opacity:0.8;">Blog</a>
+    <div style="flex:1"></div>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle dark/light theme" style="color:white;">&#9790;</button>
+</nav>
+
+<div class="app-container">
+    <h1 class="page-title">Unix Timestamp Converter</h1>
+    <p class="page-subtitle">Convert between Unix epoch timestamps and human-readable dates. Supports timezones, ISO 8601, relative time, and millisecond precision.</p>
+
+    <!-- Live Clock -->
+    <div class="card live-clock">
+        <div class="live-date" id="liveDate"></div>
+        <div class="live-ts" id="liveTsDisplay"></div>
+        <div style="color:var(--text-muted);font-size:0.8rem;margin-top:4px;" id="liveIso"></div>
+        <div class="live-unit-toggle">
+            <div class="toggle-pill" id="unitToggle">
+                <button class="active" data-unit="s" onclick="setUnit('s')">Seconds</button>
+                <button data-unit="ms" onclick="setUnit('ms')">Milliseconds</button>
+            </div>
+        </div>
+        <button class="btn btn-sm" style="margin-top:14px;" onclick="copyText(document.getElementById('liveTsDisplay').textContent.trim())">Copy Current Timestamp</button>
+    </div>
+
+    <!-- Timestamp to Date -->
+    <div class="card">
+        <div class="card-title"><span class="icon">&#128337;</span> Timestamp to Date</div>
+        <div class="form-row">
+            <div class="form-group" style="flex:2;">
+                <label>Unix Timestamp</label>
+                <input type="text" id="tsInput" placeholder="e.g. 1700000000 or 1700000000000" oninput="autoConvertTs()">
+            </div>
+            <div class="form-group" style="flex:1;">
+                <label>Timezone</label>
+                <select id="tzSelect" onchange="autoConvertTs()"></select>
+            </div>
+            <button class="btn btn-primary" onclick="convertTsToDate()" style="margin-bottom:0;">Convert</button>
+        </div>
+        <div id="tsResult" style="display:none;">
+            <div class="result-box">
+                <div class="result-row"><span class="label">Local</span><span class="value" id="tsLocal"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('tsLocal').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">UTC</span><span class="value" id="tsUtc"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('tsUtc').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">ISO 8601</span><span class="value" id="tsIso"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('tsIso').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">Relative</span><span class="value" id="tsRelative"></span></div>
+            </div>
+        </div>
+        <div id="tsError"></div>
+    </div>
+
+    <!-- Date to Timestamp -->
+    <div class="card">
+        <div class="card-title"><span class="icon">&#128197;</span> Date to Timestamp</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="dateInput">
+            </div>
+            <div class="form-group">
+                <label>Time</label>
+                <input type="time" id="timeInput" step="1" value="00:00:00">
+            </div>
+            <div class="form-group">
+                <label>Timezone</label>
+                <select id="tzSelect2"></select>
+            </div>
+            <button class="btn btn-primary" onclick="convertDateToTs()">Convert</button>
+        </div>
+        <div id="dateResult" style="display:none;">
+            <div class="result-box">
+                <div class="result-row"><span class="label">Seconds</span><span class="value" id="dateTsSec"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('dateTsSec').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">Milliseconds</span><span class="value" id="dateTsMs"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('dateTsMs').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">ISO 8601</span><span class="value" id="dateIso"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('dateIso').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">Relative</span><span class="value" id="dateRelative"></span></div>
+            </div>
+        </div>
+        <div id="dateError"></div>
+    </div>
+
+    <!-- ISO 8601 Converter -->
+    <div class="card">
+        <div class="card-title"><span class="icon">&#128195;</span> ISO 8601 Converter</div>
+        <div class="form-row">
+            <div class="form-group" style="flex:3;">
+                <label>ISO 8601 String</label>
+                <input type="text" id="isoInput" placeholder="e.g. 2024-11-14T22:13:20Z or 2024-11-14T22:13:20+09:00">
+            </div>
+            <button class="btn btn-primary" onclick="convertIso()">Convert</button>
+        </div>
+        <div id="isoResult" style="display:none;">
+            <div class="result-box">
+                <div class="result-row"><span class="label">Timestamp (s)</span><span class="value" id="isoTsSec"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('isoTsSec').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">Timestamp (ms)</span><span class="value" id="isoTsMs"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('isoTsMs').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">UTC</span><span class="value" id="isoUtc"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('isoUtc').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">Local</span><span class="value" id="isoLocal"></span><button class="btn btn-copy" onclick="copyText(document.getElementById('isoLocal').textContent)">Copy</button></div>
+                <div class="result-row"><span class="label">Relative</span><span class="value" id="isoRelative"></span></div>
+            </div>
+        </div>
+        <div id="isoError"></div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="card">
+        <div class="card-title"><span class="icon">&#9889;</span> Quick Reference Timestamps</div>
+        <div class="ref-grid" id="refGrid"></div>
+    </div>
+</div>
+
+<!-- SEO Content -->
+<main class="content-section">
+    <h2>About the Unix Timestamp Converter</h2>
+    <p>A Unix timestamp (also known as epoch time or POSIX time) is the number of seconds that have elapsed since January 1, 1970 00:00:00 UTC. This free tool lets you instantly convert between Unix timestamps and human-readable dates, with full timezone and ISO 8601 support.</p>
+
+    <h2>Features</h2>
+    <ul>
+        <li><strong>Live Current Timestamp</strong> &mdash; See the current Unix timestamp updating in real time, in seconds or milliseconds</li>
+        <li><strong>Timestamp to Date</strong> &mdash; Convert any Unix epoch value to a formatted date with timezone selection</li>
+        <li><strong>Date to Timestamp</strong> &mdash; Pick a date and time to get the corresponding Unix timestamp</li>
+        <li><strong>ISO 8601 Conversion</strong> &mdash; Parse ISO 8601 strings into timestamps and human-readable formats</li>
+        <li><strong>Relative Time</strong> &mdash; See how long ago or how far in the future a timestamp is ("3 hours ago", "in 2 days")</li>
+        <li><strong>Timezone Support</strong> &mdash; Convert across all major timezones worldwide</li>
+        <li><strong>Seconds &amp; Milliseconds</strong> &mdash; Toggle between second and millisecond precision</li>
+        <li><strong>Quick Reference</strong> &mdash; Common timestamps for start of today, this week, this month, and this year</li>
+        <li><strong>Copy to Clipboard</strong> &mdash; One-click copy for any converted value</li>
+    </ul>
+
+    <h2>How to Use</h2>
+    <ol>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Enter a Unix timestamp (seconds or milliseconds) to convert it to a human-readable date</li>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Or pick a date and time to get the corresponding Unix timestamp</li>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Paste an ISO 8601 string to convert it to a timestamp and other formats</li>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Use the timezone selector to convert between different time zones</li>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Click any Copy button to copy a value to your clipboard</li>
+    </ol>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+        <h3>What is a Unix timestamp?</h3>
+        <p>A Unix timestamp is the number of seconds since the Unix epoch (January 1, 1970 00:00:00 UTC). It is a widely used format for representing dates in programming, databases, and APIs because it is timezone-independent and easy to do arithmetic with.</p>
+    </div>
+    <div class="faq-item">
+        <h3>How do I tell if a timestamp is in seconds or milliseconds?</h3>
+        <p>Timestamps in seconds are typically 10 digits long (e.g., 1700000000), while millisecond timestamps are 13 digits (e.g., 1700000000000). This tool auto-detects the format, but you can also toggle between seconds and milliseconds manually.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Is my data safe?</h3>
+        <p>Yes. All conversions happen entirely in your browser. No data is sent to any server.</p>
+    </div>
+    <div class="faq-item">
+        <h3>What is ISO 8601?</h3>
+        <p>ISO 8601 is an international standard for date and time representation. Examples include "2024-11-14T22:13:20Z" (UTC) and "2024-11-14T22:13:20+09:00" (with timezone offset). It is the most common format used in APIs and data interchange.</p>
+    </div>
+</main>
+
+<!-- CTA Banner -->
+<div style="max-width:900px;margin:30px auto;padding:32px 36px;background:linear-gradient(135deg,#0f172a,#1e1b4b,#312e81);border-radius:16px;border:1px solid rgba(99,102,241,0.3);color:white;text-align:center;">
+    <h3 style="font-size:1.3rem;margin-bottom:10px;font-weight:700;">Building a SaaS? Know Your Numbers.</h3>
+    <p style="opacity:0.9;font-size:0.95rem;line-height:1.6;margin-bottom:16px;max-width:600px;margin-left:auto;margin-right:auto;">The <strong>SaaS Metrics Dashboard</strong> gives you the complete metrics framework: MRR/ARR tracking, churn analysis, LTV/CAC ratios, cohort analysis templates, and investor-ready reporting &mdash; the same toolkit used by funded startups.</p>
+    <div style="margin-bottom:16px;">
+        <span style="text-decoration:line-through;opacity:0.5;font-size:1rem;">$97</span>
+        <span style="font-size:1.6rem;font-weight:800;margin-left:8px;">$25</span>
+        <span style="background:#22c55e;color:white;padding:3px 10px;border-radius:4px;font-size:0.75rem;font-weight:700;margin-left:10px;vertical-align:middle;">74% OFF</span>
+    </div>
+    <a href="https://jaechang112.gumroad.com/l/clailz" target="_blank" rel="noopener" style="display:inline-block;background:#6366f1;color:white;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem;transition:background 0.2s;">Get the Full Guide &rarr;</a>
+</div>
+
+<div style="text-align:center;padding:20px;background:#f0f4ff;margin-top:20px;border-radius:12px"><strong>Related Tools:</strong> <a href="json.html" style="color:#4f46e5;text-decoration:none;font-weight:600">JSON Formatter</a> | <a href="base64.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Base64 Encoder</a> | <a href="calc.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Calculator</a></div>
+
+<footer>
+    <p>&copy; 2025 BizToolkit &mdash; Free tools for developers and businesses. <a href="privacy.html">Privacy Policy</a></p>
+</footer>
+
+<!-- Tooltip for copy -->
+<div class="copied-tooltip" id="copiedTooltip">Copied!</div>
+
+<script>
+// ========== Theme ==========
+function toggleTheme() {
+    var html = document.documentElement;
+    var isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeBtn').innerHTML = isDark ? '&#9790;' : '&#9728;';
+    localStorage.setItem('ts-theme', isDark ? 'light' : 'dark');
+}
+(function() {
+    var saved = localStorage.getItem('ts-theme');
+    if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeBtn').innerHTML = '&#9728;';
+    }
+})();
+
+// ========== State ==========
+var currentUnit = 's';
+
+function setUnit(u) {
+    currentUnit = u;
+    document.querySelectorAll('#unitToggle button').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-unit') === u);
+    });
+}
+
+// ========== Timezone Setup ==========
+var commonTzs = [
+    'UTC',
+    'America/New_York',
+    'America/Chicago',
+    'America/Denver',
+    'America/Los_Angeles',
+    'America/Sao_Paulo',
+    'Europe/London',
+    'Europe/Paris',
+    'Europe/Berlin',
+    'Europe/Moscow',
+    'Asia/Dubai',
+    'Asia/Kolkata',
+    'Asia/Bangkok',
+    'Asia/Shanghai',
+    'Asia/Tokyo',
+    'Asia/Seoul',
+    'Australia/Sydney',
+    'Pacific/Auckland'
+];
+
+function populateTimezones() {
+    var localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    var tzs = commonTzs.slice();
+    if (tzs.indexOf(localTz) === -1) tzs.unshift(localTz);
+
+    ['tzSelect', 'tzSelect2'].forEach(function(id) {
+        var sel = document.getElementById(id);
+        tzs.forEach(function(tz) {
+            var opt = document.createElement('option');
+            opt.value = tz;
+            opt.textContent = tz.replace(/_/g, ' ');
+            if (tz === localTz) opt.selected = true;
+            sel.appendChild(opt);
+        });
+    });
+}
+populateTimezones();
+
+// Set default date to today
+(function() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var m = String(now.getMonth() + 1).padStart(2, '0');
+    var d = String(now.getDate()).padStart(2, '0');
+    document.getElementById('dateInput').value = y + '-' + m + '-' + d;
+    var h = String(now.getHours()).padStart(2, '0');
+    var mi = String(now.getMinutes()).padStart(2, '0');
+    var s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('timeInput').value = h + ':' + mi + ':' + s;
+})();
+
+// ========== Live Clock ==========
+function updateLiveClock() {
+    var now = new Date();
+    var ts = currentUnit === 'ms' ? now.getTime() : Math.floor(now.getTime() / 1000);
+    document.getElementById('liveTsDisplay').textContent = ts.toLocaleString('en-US');
+    document.getElementById('liveDate').textContent = now.toLocaleString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+        timeZoneName: 'short'
+    });
+    document.getElementById('liveIso').textContent = now.toISOString();
+}
+updateLiveClock();
+setInterval(updateLiveClock, 1000);
+
+// ========== Relative Time ==========
+function relativeTime(date) {
+    var now = new Date();
+    var diffMs = date.getTime() - now.getTime();
+    var absDiff = Math.abs(diffMs);
+    var past = diffMs < 0;
+
+    var seconds = Math.floor(absDiff / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+    var weeks = Math.floor(days / 7);
+    var months = Math.floor(days / 30.44);
+    var years = Math.floor(days / 365.25);
+
+    var str;
+    if (seconds < 5) str = 'just now';
+    else if (seconds < 60) str = seconds + ' second' + (seconds !== 1 ? 's' : '');
+    else if (minutes < 60) str = minutes + ' minute' + (minutes !== 1 ? 's' : '');
+    else if (hours < 24) str = hours + ' hour' + (hours !== 1 ? 's' : '');
+    else if (days < 7) str = days + ' day' + (days !== 1 ? 's' : '');
+    else if (weeks < 5) str = weeks + ' week' + (weeks !== 1 ? 's' : '');
+    else if (months < 12) str = months + ' month' + (months !== 1 ? 's' : '');
+    else str = years + ' year' + (years !== 1 ? 's' : '');
+
+    if (str === 'just now') return str;
+    return past ? str + ' ago' : 'in ' + str;
+}
+
+// ========== Format date in timezone ==========
+function formatInTz(date, tz) {
+    return date.toLocaleString('en-US', {
+        timeZone: tz,
+        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+        timeZoneName: 'short'
+    });
+}
+
+// ========== Detect ms vs s ==========
+function normalizeTs(input) {
+    var n = Number(input);
+    if (isNaN(n)) return null;
+    // If > 1e12, likely milliseconds
+    if (Math.abs(n) > 1e12) return { ms: n, s: Math.floor(n / 1000), wasMs: true };
+    return { ms: n * 1000, s: n, wasMs: false };
+}
+
+// ========== Timestamp to Date ==========
+function autoConvertTs() {
+    var val = document.getElementById('tsInput').value.trim();
+    if (val && !isNaN(Number(val))) convertTsToDate();
+}
+
+function convertTsToDate() {
+    var val = document.getElementById('tsInput').value.trim();
+    var tz = document.getElementById('tzSelect').value;
+
+    if (!val) { showError('tsError', 'Please enter a timestamp.'); hideEl('tsResult'); return; }
+
+    var parsed = normalizeTs(val);
+    if (!parsed) { showError('tsError', 'Invalid timestamp. Enter a numeric value.'); hideEl('tsResult'); return; }
+
+    var date = new Date(parsed.ms);
+    if (isNaN(date.getTime())) { showError('tsError', 'Invalid timestamp value.'); hideEl('tsResult'); return; }
+
+    document.getElementById('tsLocal').textContent = formatInTz(date, tz);
+    document.getElementById('tsUtc').textContent = formatInTz(date, 'UTC');
+    document.getElementById('tsIso').textContent = date.toISOString();
+    document.getElementById('tsRelative').textContent = relativeTime(date);
+
+    document.getElementById('tsResult').style.display = '';
+    clearError('tsError');
+}
+
+// ========== Date to Timestamp ==========
+function convertDateToTs() {
+    var dateVal = document.getElementById('dateInput').value;
+    var timeVal = document.getElementById('timeInput').value || '00:00:00';
+    var tz = document.getElementById('tzSelect2').value;
+
+    if (!dateVal) { showError('dateError', 'Please select a date.'); hideEl('dateResult'); return; }
+
+    // Build date string and parse in the selected timezone
+    var dtStr = dateVal + 'T' + timeVal;
+
+    // Use a formatter trick to get the UTC offset for the target timezone
+    var date;
+    try {
+        // Create a date in the specified timezone
+        var formatter = new Intl.DateTimeFormat('en-US', {
+            timeZone: tz,
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+        });
+
+        // Parse the input as local and adjust
+        var localDate = new Date(dtStr);
+        // Get what time it shows in target TZ
+        var parts = {};
+        formatter.formatToParts(localDate).forEach(function(p) { parts[p.type] = p.value; });
+
+        // Compute offset: local interpretation vs target TZ interpretation
+        var targetStr = parts.year + '-' + parts.month + '-' + parts.day + 'T' + parts.hour + ':' + parts.minute + ':' + parts.second;
+        var targetLocal = new Date(targetStr);
+        var offsetMs = targetLocal.getTime() - localDate.getTime();
+
+        date = new Date(localDate.getTime() - offsetMs);
+    } catch (e) {
+        date = new Date(dtStr);
+    }
+
+    if (isNaN(date.getTime())) { showError('dateError', 'Invalid date/time.'); hideEl('dateResult'); return; }
+
+    var sec = Math.floor(date.getTime() / 1000);
+    var ms = date.getTime();
+
+    document.getElementById('dateTsSec').textContent = sec;
+    document.getElementById('dateTsMs').textContent = ms;
+    document.getElementById('dateIso').textContent = date.toISOString();
+    document.getElementById('dateRelative').textContent = relativeTime(date);
+
+    document.getElementById('dateResult').style.display = '';
+    clearError('dateError');
+}
+
+// ========== ISO 8601 Converter ==========
+function convertIso() {
+    var val = document.getElementById('isoInput').value.trim();
+    if (!val) { showError('isoError', 'Please enter an ISO 8601 string.'); hideEl('isoResult'); return; }
+
+    var date = new Date(val);
+    if (isNaN(date.getTime())) { showError('isoError', 'Invalid ISO 8601 string. Example: 2024-11-14T22:13:20Z'); hideEl('isoResult'); return; }
+
+    var sec = Math.floor(date.getTime() / 1000);
+    var localTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    document.getElementById('isoTsSec').textContent = sec;
+    document.getElementById('isoTsMs').textContent = date.getTime();
+    document.getElementById('isoUtc').textContent = formatInTz(date, 'UTC');
+    document.getElementById('isoLocal').textContent = formatInTz(date, localTz);
+    document.getElementById('isoRelative').textContent = relativeTime(date);
+
+    document.getElementById('isoResult').style.display = '';
+    clearError('isoError');
+}
+
+// ========== Quick Reference ==========
+function buildQuickRef() {
+    var now = new Date();
+    var grid = document.getElementById('refGrid');
+
+    // Start of today
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    // Start of this week (Monday)
+    var dayOfWeek = now.getDay();
+    var mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    var weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() + mondayOffset);
+    // Start of this month
+    var monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    // Start of this year
+    var yearStart = new Date(now.getFullYear(), 0, 1);
+    // End of today
+    var todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    // Tomorrow
+    var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+
+    var refs = [
+        { label: 'Start of Today', ts: Math.floor(today.getTime() / 1000) },
+        { label: 'End of Today', ts: Math.floor(todayEnd.getTime() / 1000) },
+        { label: 'Tomorrow', ts: Math.floor(tomorrow.getTime() / 1000) },
+        { label: 'Start of Week (Mon)', ts: Math.floor(weekStart.getTime() / 1000) },
+        { label: 'Start of Month', ts: Math.floor(monthStart.getTime() / 1000) },
+        { label: 'Start of Year', ts: Math.floor(yearStart.getTime() / 1000) },
+        { label: '1 Hour Ago', ts: Math.floor((now.getTime() - 3600000) / 1000) },
+        { label: '24 Hours Ago', ts: Math.floor((now.getTime() - 86400000) / 1000) },
+        { label: 'In 1 Hour', ts: Math.floor((now.getTime() + 3600000) / 1000) },
+        { label: 'In 24 Hours', ts: Math.floor((now.getTime() + 86400000) / 1000) },
+        { label: 'In 7 Days', ts: Math.floor((now.getTime() + 604800000) / 1000) },
+        { label: 'In 30 Days', ts: Math.floor((now.getTime() + 2592000000) / 1000) }
+    ];
+
+    grid.innerHTML = refs.map(function(r) {
+        return '<div class="ref-item">' +
+            '<span class="ref-label">' + r.label + '</span>' +
+            '<span class="ref-value">' + r.ts + '</span>' +
+            '<button class="btn btn-copy" onclick="copyText(\'' + r.ts + '\')">Copy</button>' +
+            '</div>';
+    }).join('');
+}
+buildQuickRef();
+
+// ========== Helpers ==========
+function showError(elId, msg) {
+    document.getElementById(elId).innerHTML = '<div class="msg msg-error">' + escapeHtml(msg) + '</div>';
+}
+function clearError(elId) {
+    document.getElementById(elId).innerHTML = '';
+}
+function hideEl(id) {
+    document.getElementById(id).style.display = 'none';
+}
+function escapeHtml(s) {
+    var div = document.createElement('div');
+    div.textContent = s;
+    return div.innerHTML;
+}
+
+// ========== Copy ==========
+function copyText(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        showCopiedTooltip();
+    }).catch(function() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showCopiedTooltip();
+    });
+}
+
+function showCopiedTooltip() {
+    var tip = document.getElementById('copiedTooltip');
+    tip.style.top = '80px';
+    tip.style.left = '50%';
+    tip.style.transform = 'translateX(-50%)';
+    tip.classList.add('show');
+    setTimeout(function() { tip.classList.remove('show'); }, 1200);
+}
+
+// Enter key support
+document.getElementById('tsInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') convertTsToDate(); });
+document.getElementById('isoInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') convertIso(); });
+</script>
+<script data-goatcounter="https://biztoolkit.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

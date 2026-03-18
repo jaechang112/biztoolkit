@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA" />
+    <title>Free CSS Minifier Online | Minify CSS, JS, HTML - BizToolkit</title>
+    <meta name="description" content="Free online CSS, JavaScript, and HTML minifier. Compress your code by removing comments, whitespace, and redundant characters. Beautify mode included. No signup required.">
+    <meta name="keywords" content="css minifier, javascript minifier, html minifier, minify css online, minify js online, css compressor, js compressor, html compressor, css beautifier, code minification">
+    <meta property="og:title" content="Free CSS Minifier Online | Minify CSS, JS, HTML">
+    <meta property="og:description" content="Minify CSS, JavaScript, and HTML instantly. Remove comments, collapse whitespace, compare sizes. Beautify mode included. 100% free, no signup.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://biztoolkit-free.pages.dev/minifier.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Free CSS Minifier Online | Minify CSS, JS, HTML - BizToolkit">
+    <meta name="twitter:description" content="Minify CSS, JavaScript, and HTML instantly. Remove comments, collapse whitespace, compare sizes. Beautify mode included. 100% free, no signup.">
+    <link rel="canonical" href="https://biztoolkit-free.pages.dev/minifier.html">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Free CSS, JS & HTML Minifier",
+        "url": "https://biztoolkit-free.pages.dev/minifier.html",
+        "description": "Minify and beautify CSS, JavaScript, and HTML online. Remove comments, collapse whitespace, and compress code instantly.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "browserRequirements": "Requires a modern web browser"
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fafbfc;
+            --surface: #ffffff;
+            --surface-alt: #f6f8fa;
+            --border: #d0d7de;
+            --text: #1a1a2e;
+            --text-muted: #656d76;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --editor-bg: #ffffff;
+            --editor-gutter: #f6f8fa;
+            --editor-line: #636c76;
+            --error-bg: #fef2f2;
+            --error-border: #fca5a5;
+            --error-text: #dc2626;
+            --success-bg: #f0fdf4;
+            --success-border: #86efac;
+            --success-text: #16a34a;
+            --info-bg: #eff6ff;
+            --info-border: #93c5fd;
+            --info-text: #2563eb;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface-alt: #21262d;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --editor-bg: #0d1117;
+            --editor-gutter: #161b22;
+            --editor-line: #8b949e;
+            --error-bg: #3d1212;
+            --error-border: #7f1d1d;
+            --error-text: #fca5a5;
+            --success-bg: #0a2912;
+            --success-border: #166534;
+            --success-text: #86efac;
+            --info-bg: #0c1929;
+            --info-border: #1e3a5f;
+            --info-text: #93c5fd;
+        }
+
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--text); background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* Nav */
+        nav { background: #1a1a2e; padding: 12px 20px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+        nav a { color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.8; transition: opacity 0.2s; }
+        nav a:hover { opacity: 1 !important; }
+        nav a.brand { font-weight: 700; font-size: 1.1rem; opacity: 1; }
+        nav a.active { opacity: 1; border-bottom: 2px solid #6366f1; padding-bottom: 2px; }
+
+        /* Main layout */
+        .app-container { flex: 1; display: flex; flex-direction: column; }
+
+        /* Language tabs */
+        .lang-tabs { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; gap: 0; }
+        .lang-tab { padding: 12px 24px; border: none; background: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 600; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s; }
+        .lang-tab:hover { color: var(--text); background: var(--surface-alt); }
+        .lang-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* Toolbar */
+        .toolbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .toolbar-group { display: flex; align-items: center; gap: 6px; }
+        .toolbar-sep { width: 1px; height: 24px; background: var(--border); margin: 0 6px; }
+        .btn { padding: 7px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 5px; }
+        .btn:hover { background: var(--surface-alt); }
+        .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+        .btn-danger { color: var(--error-text); }
+        .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 4px 8px; border-radius: 6px; }
+        .theme-toggle:hover { background: var(--surface-alt); }
+
+        /* Panels */
+        .panels { flex: 1; display: flex; min-height: 0; }
+        .panel { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+        .panel-header { background: var(--surface-alt); border-bottom: 1px solid var(--border); padding: 8px 16px; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; text-transform: uppercase; letter-spacing: 0.5px; }
+        .panel-divider { width: 3px; background: var(--border); cursor: col-resize; flex-shrink: 0; }
+        .panel-divider:hover { background: var(--accent); }
+
+        /* Input panel */
+        .input-wrap { flex: 1; position: relative; display: flex; }
+        .input-wrap textarea { flex: 1; border: none; resize: none; padding: 16px; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace; font-size: 13px; line-height: 1.6; background: var(--editor-bg); color: var(--text); outline: none; tab-size: 4; }
+        .input-wrap textarea::placeholder { color: var(--text-muted); }
+
+        /* Drop zone overlay */
+        .drop-overlay { position: absolute; inset: 0; background: rgba(99,102,241,0.12); border: 2px dashed var(--accent); display: none; align-items: center; justify-content: center; z-index: 10; pointer-events: none; border-radius: 4px; }
+        .drop-overlay.active { display: flex; }
+        .drop-overlay span { background: var(--accent); color: #fff; padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
+
+        /* Output panel */
+        .output-wrap { flex: 1; overflow: auto; position: relative; }
+        .output-code { padding: 16px; font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace; font-size: 13px; line-height: 1.6; white-space: pre-wrap; word-break: break-all; background: var(--editor-bg); min-height: 100%; }
+
+        /* Size comparison */
+        .size-bar { background: var(--surface); border-top: 1px solid var(--border); padding: 10px 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .size-stat { font-size: 0.82rem; color: var(--text-muted); }
+        .size-stat strong { color: var(--text); }
+        .size-saved { font-size: 0.82rem; font-weight: 700; padding: 3px 10px; border-radius: 4px; }
+        .size-saved.positive { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+        .size-saved.neutral { background: var(--info-bg); color: var(--info-text); border: 1px solid var(--info-border); }
+
+        /* Status bar */
+        .status-bar { background: var(--surface); border-top: 1px solid var(--border); padding: 6px 20px; font-size: 0.78rem; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
+
+        /* Messages */
+        .msg { padding: 10px 16px; border-radius: 6px; font-size: 0.85rem; margin: 12px 16px; font-weight: 500; }
+        .msg-error { background: var(--error-bg); border: 1px solid var(--error-border); color: var(--error-text); }
+        .msg-success { background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
+
+        /* File input hidden */
+        .file-input { display: none; }
+
+        /* Content sections below editor */
+        .content-section { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .content-section h2 { font-size: 1.5rem; margin-bottom: 16px; color: var(--text); }
+        .content-section h3 { font-size: 1.15rem; margin: 24px 0 10px; color: var(--text); }
+        .content-section p, .content-section li { color: var(--text-muted); line-height: 1.7; font-size: 0.95rem; }
+        .content-section ul, .content-section ol { padding-left: 20px; margin-bottom: 16px; }
+        .content-section li { margin-bottom: 6px; }
+
+        .faq-item { margin-bottom: 20px; }
+        .faq-item h3 { font-size: 1rem; color: var(--text); margin-bottom: 6px; }
+
+        footer { text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .panels { flex-direction: column; }
+            .panel-divider { width: auto; height: 3px; cursor: row-resize; }
+            .panel { min-height: 200px; }
+            .toolbar { padding: 8px 12px; }
+            .lang-tabs { overflow-x: auto; }
+            .lang-tab { padding: 10px 16px; font-size: 0.82rem; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="brand">BizToolkit</a>
+    <a href="index.html">Tools</a>
+    <a href="invoice.html">Invoice</a>
+    <a href="contract.html">Contract</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="qr.html">QR Code</a>
+    <a href="password.html">Password</a>
+    <a href="minifier.html" class="active">Minifier</a>
+    <a href="blog/">Blog</a>
+</nav>
+
+<div class="app-container">
+    <!-- Language Tabs -->
+    <div class="lang-tabs">
+        <button class="lang-tab active" data-lang="css" onclick="switchLang('css')">CSS</button>
+        <button class="lang-tab" data-lang="js" onclick="switchLang('js')">JavaScript</button>
+        <button class="lang-tab" data-lang="html" onclick="switchLang('html')">HTML</button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <button class="btn btn-primary" onclick="doMinify()" title="Minify code (Ctrl+Shift+M)">Minify</button>
+            <button class="btn" onclick="doBeautify()" title="Beautify / format code (Ctrl+Shift+B)">Beautify</button>
+        </div>
+        <div class="toolbar-sep"></div>
+        <div class="toolbar-group">
+            <button class="btn" onclick="copyOutput()" title="Copy minified output to clipboard">Copy</button>
+            <button class="btn" onclick="downloadOutput()" title="Download minified file">Download</button>
+            <button class="btn" onclick="document.getElementById('fileInput').click()" title="Upload file">Upload</button>
+            <input type="file" id="fileInput" class="file-input" accept=".css,.js,.html,.htm,.txt" onchange="handleFile(event)">
+        </div>
+        <div class="toolbar-sep"></div>
+        <div class="toolbar-group">
+            <button class="btn btn-danger" onclick="clearAll()" title="Clear all">Clear</button>
+        </div>
+        <div style="flex:1"></div>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle dark/light theme">&#9790;</button>
+    </div>
+
+    <!-- Panels -->
+    <div class="panels" id="panels" style="height: calc(100vh - 210px);">
+        <!-- Input Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                <span>Input</span>
+                <span id="inputStats"></span>
+            </div>
+            <div class="input-wrap" id="inputWrap">
+                <textarea id="codeInput" spellcheck="false"></textarea>
+                <div class="drop-overlay" id="dropOverlay"><span>Drop file here</span></div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="panel-divider" id="divider"></div>
+
+        <!-- Output Panel -->
+        <div class="panel">
+            <div class="panel-header">
+                <span>Output</span>
+                <span id="outputStats"></span>
+            </div>
+            <div class="output-wrap">
+                <div id="outputCode" class="output-code"></div>
+                <div id="outputMsg"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Size comparison bar -->
+    <div class="size-bar" id="sizeBar" style="display:none;">
+        <span class="size-stat">Original: <strong id="origSize">0</strong></span>
+        <span class="size-stat">Minified: <strong id="minSize">0</strong></span>
+        <span class="size-saved neutral" id="savedPct">0% saved</span>
+        <span class="size-stat" id="savedBytes"></span>
+    </div>
+
+    <!-- Status bar -->
+    <div class="status-bar">
+        <span id="statusText">Ready &mdash; Select a language tab and paste your code</span>
+        <span id="statusRight"></span>
+    </div>
+</div>
+
+<!-- SEO Content -->
+<main class="content-section">
+    <h1>Free Online CSS, JavaScript & HTML Minifier</h1>
+    <p>Instantly minify your CSS, JavaScript, and HTML code with our free online tool. Reduce file sizes by removing comments, unnecessary whitespace, and redundant characters. Includes a beautify mode for reformatting compressed code. No signup, no data sent to servers &mdash; everything runs in your browser.</p>
+
+    <h2>Features</h2>
+    <ul>
+        <li><strong>CSS Minifier</strong> &mdash; Removes comments, collapses whitespace, strips redundant semicolons, and compresses selectors</li>
+        <li><strong>JavaScript Minifier</strong> &mdash; Safely removes comments (single-line and multi-line), collapses whitespace while preserving string literals</li>
+        <li><strong>HTML Minifier</strong> &mdash; Strips HTML comments, collapses whitespace between tags, removes unnecessary quotes</li>
+        <li><strong>Beautify / Format Mode</strong> &mdash; Reverse of minify: reformat compressed CSS, JS, or HTML with proper indentation</li>
+        <li><strong>Size Comparison</strong> &mdash; See original vs. minified sizes with percentage saved</li>
+        <li><strong>Copy & Download</strong> &mdash; One-click copy to clipboard or download as a file</li>
+        <li><strong>Drag & Drop Upload</strong> &mdash; Load files by dragging onto the editor</li>
+        <li><strong>Dark & Light Theme</strong> &mdash; Toggle for comfortable editing</li>
+    </ul>
+
+    <h2>How to Use</h2>
+    <ol>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Select the language tab: <strong>CSS</strong>, <strong>JavaScript</strong>, or <strong>HTML</strong></li>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Paste your code into the input panel, or drag & drop a file</li>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Click <strong>Minify</strong> to compress, or <strong>Beautify</strong> to format</li>
+        <li style="color:var(--text-muted);line-height:1.7;margin-bottom:6px;">Review the size comparison, then <strong>Copy</strong> or <strong>Download</strong> the result</li>
+    </ol>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+        <h3>Is my code safe?</h3>
+        <p>Yes. All processing happens entirely in your browser using JavaScript. No code is uploaded to any server. Your source code never leaves your machine.</p>
+    </div>
+    <div class="faq-item">
+        <h3>How much space can minification save?</h3>
+        <p>Typically 20-60% depending on the original formatting. Well-commented and indented files see the biggest reductions. Combined with gzip compression on your server, you can achieve 80-90% total reduction.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Is the JavaScript minifier safe to use?</h3>
+        <p>Our JS minifier performs safe transformations only: removing comments and collapsing whitespace. It does not rename variables, remove dead code, or perform tree-shaking. For production builds, consider pairing this with a build tool like Terser or esbuild.</p>
+    </div>
+    <div class="faq-item">
+        <h3>What is the Beautify mode?</h3>
+        <p>Beautify is the opposite of minify. It takes compressed, single-line code and reformats it with proper indentation and line breaks, making it readable again. This is especially useful for CSS and HTML.</p>
+    </div>
+    <div class="faq-item">
+        <h3>Can I minify large files?</h3>
+        <p>Yes. The minifier handles files up to several megabytes in the browser. For very large production codebases, consider command-line tools integrated into your build pipeline.</p>
+    </div>
+</main>
+
+<!-- CTA Banner -->
+<div style="max-width:900px;margin:30px auto;padding:32px 36px;background:linear-gradient(135deg,#0f172a,#1e1b4b,#312e81);border-radius:16px;border:1px solid rgba(99,102,241,0.3);color:white;text-align:center;">
+    <h3 style="font-size:1.3rem;margin-bottom:10px;font-weight:700;">Building a SaaS? Know Your Numbers.</h3>
+    <p style="opacity:0.9;font-size:0.95rem;line-height:1.6;margin-bottom:16px;max-width:600px;margin-left:auto;margin-right:auto;">The <strong>SaaS Metrics Dashboard</strong> gives you the complete metrics framework: MRR/ARR tracking, churn analysis, LTV/CAC ratios, cohort analysis templates, and investor-ready reporting &mdash; the same toolkit used by funded startups.</p>
+    <div style="margin-bottom:16px;">
+        <span style="text-decoration:line-through;opacity:0.5;font-size:1rem;">$97</span>
+        <span style="font-size:1.6rem;font-weight:800;margin-left:8px;">$25</span>
+        <span style="background:#22c55e;color:white;padding:3px 10px;border-radius:4px;font-size:0.75rem;font-weight:700;margin-left:10px;vertical-align:middle;">74% OFF</span>
+    </div>
+    <a href="https://jaechang112.gumroad.com/l/clailz" target="_blank" rel="noopener" style="display:inline-block;background:#6366f1;color:white;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:700;font-size:1rem;transition:background 0.2s;">Get the Full Guide &rarr;</a>
+</div>
+
+<div style="text-align:center;padding:20px;background:#f0f4ff;margin-top:20px;border-radius:12px"><strong>Related Tools:</strong> <a href="json.html" style="color:#4f46e5;text-decoration:none;font-weight:600">JSON Formatter</a> | <a href="diff.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Text Diff Checker</a> | <a href="base64.html" style="color:#4f46e5;text-decoration:none;font-weight:600">Base64 Encoder</a></div>
+
+<footer>
+    <p>&copy; 2025 BizToolkit &mdash; Free tools for developers and businesses. <a href="privacy.html">Privacy Policy</a></p>
+</footer>
+
+<script>
+// ========== Theme ==========
+function toggleTheme() {
+    var html = document.documentElement;
+    var isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeBtn').innerHTML = isDark ? '&#9790;' : '&#9728;';
+    localStorage.setItem('minifier-theme', isDark ? 'light' : 'dark');
+}
+(function() {
+    var saved = localStorage.getItem('minifier-theme');
+    if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.getElementById('themeBtn').innerHTML = '&#9728;';
+    }
+})();
+
+// ========== State ==========
+var currentLang = 'css';
+var lastOutput = '';
+
+var input = document.getElementById('codeInput');
+var outputCode = document.getElementById('outputCode');
+var outputMsg = document.getElementById('outputMsg');
+var statusText = document.getElementById('statusText');
+var statusRight = document.getElementById('statusRight');
+var inputStats = document.getElementById('inputStats');
+var outputStatsEl = document.getElementById('outputStats');
+
+var placeholders = {
+    css: '/* Paste your CSS here */\n\nbody {\n    margin: 0;\n    padding: 0;\n    font-family: Arial, sans-serif;\n}\n\n/* Header styles */\n.header {\n    background-color: #1a1a2e;\n    color: white;\n    padding: 20px;\n}',
+    js: '// Paste your JavaScript here\n\nfunction greet(name) {\n    // Say hello\n    console.log("Hello, " + name + "!");\n}\n\n/* Multi-line\n   comment */\nvar items = [1, 2, 3];\nitems.forEach(function(item) {\n    greet("User " + item);\n});',
+    html: '<!-- Paste your HTML here -->\n\n<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <title>My Page</title>\n</head>\n<body>\n    <!-- Main content -->\n    <div class="container">\n        <h1>Hello World</h1>\n        <p>This is a paragraph.</p>\n    </div>\n</body>\n</html>'
+};
+
+input.placeholder = placeholders.css;
+
+// ========== Language tabs ==========
+function switchLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-tab').forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-lang') === lang);
+    });
+    input.placeholder = placeholders[lang];
+    clearAll();
+    statusText.textContent = 'Switched to ' + lang.toUpperCase() + ' mode';
+}
+
+// ========== Input stats ==========
+input.addEventListener('input', updateInputStats);
+function updateInputStats() {
+    var val = input.value;
+    if (!val) { inputStats.textContent = ''; return; }
+    var lines = val.split('\n').length;
+    var bytes = new Blob([val]).size;
+    inputStats.textContent = lines + ' lines | ' + formatBytes(bytes);
+}
+function formatBytes(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+    return (b / 1048576).toFixed(1) + ' MB';
+}
+
+// ========== CSS Minifier ==========
+function minifyCSS(code) {
+    var result = code;
+    // Remove comments
+    result = result.replace(/\/\*[\s\S]*?\*\//g, '');
+    // Remove newlines and excess whitespace
+    result = result.replace(/\s+/g, ' ');
+    // Remove spaces around special characters
+    result = result.replace(/\s*([{}:;,>~+])\s*/g, '$1');
+    // Remove trailing semicolons before closing braces
+    result = result.replace(/;}/g, '}');
+    // Remove leading whitespace
+    result = result.trim();
+    return result;
+}
+
+// ========== CSS Beautifier ==========
+function beautifyCSS(code) {
+    // First minify to normalize
+    var result = minifyCSS(code);
+    var output = '';
+    var indent = 0;
+    var inString = false;
+    var stringChar = '';
+
+    for (var i = 0; i < result.length; i++) {
+        var ch = result[i];
+
+        if (inString) {
+            output += ch;
+            if (ch === stringChar && result[i - 1] !== '\\') inString = false;
+            continue;
+        }
+
+        if (ch === '"' || ch === "'") {
+            inString = true;
+            stringChar = ch;
+            output += ch;
+            continue;
+        }
+
+        if (ch === '{') {
+            output += ' {\n';
+            indent++;
+            output += repeat('    ', indent);
+        } else if (ch === '}') {
+            indent--;
+            if (indent < 0) indent = 0;
+            output += '\n' + repeat('    ', indent) + '}\n';
+            if (indent > 0) output += repeat('    ', indent);
+            // Add blank line between rule blocks at top level
+            if (indent === 0 && i < result.length - 1) output += '\n';
+        } else if (ch === ';') {
+            output += ';\n' + repeat('    ', indent);
+        } else if (ch === ':' && !isInSelector(result, i)) {
+            output += ': ';
+        } else if (ch === ',') {
+            output += ', ';
+        } else {
+            output += ch;
+        }
+    }
+    // Clean up trailing whitespace on lines
+    output = output.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+    return output;
+}
+
+function isInSelector(code, pos) {
+    // Simple heuristic: if we haven't seen { since the last } or start, we're in a selector
+    // Actually for CSS property: value, the colon is between { and ; or }
+    // Look backward for the nearest { or }
+    for (var i = pos - 1; i >= 0; i--) {
+        if (code[i] === '{') return false; // We're inside a rule block -> it's a property
+        if (code[i] === '}' || code[i] === ';') return false; // After a rule or property
+    }
+    return true; // At top level, likely a pseudo-selector
+}
+
+function repeat(str, n) {
+    var out = '';
+    for (var i = 0; i < n; i++) out += str;
+    return out;
+}
+
+// ========== JS Minifier ==========
+function minifyJS(code) {
+    var result = '';
+    var i = 0;
+    var len = code.length;
+    var prevNonSpace = '';
+
+    while (i < len) {
+        var ch = code[i];
+
+        // String literals - preserve exactly
+        if (ch === '"' || ch === "'" || ch === '`') {
+            var quote = ch;
+            result += ch;
+            i++;
+            while (i < len) {
+                var c = code[i];
+                result += c;
+                if (c === '\\') {
+                    i++;
+                    if (i < len) result += code[i];
+                } else if (c === quote) {
+                    break;
+                }
+                i++;
+            }
+            i++;
+            prevNonSpace = quote;
+            continue;
+        }
+
+        // Single-line comments
+        if (ch === '/' && i + 1 < len && code[i + 1] === '/') {
+            // Skip to end of line
+            while (i < len && code[i] !== '\n') i++;
+            continue;
+        }
+
+        // Multi-line comments
+        if (ch === '/' && i + 1 < len && code[i + 1] === '*') {
+            i += 2;
+            while (i < len) {
+                if (code[i] === '*' && i + 1 < len && code[i + 1] === '/') {
+                    i += 2;
+                    break;
+                }
+                i++;
+            }
+            // Add a space to prevent token merging
+            if (result.length > 0 && result[result.length - 1] !== ' ' && result[result.length - 1] !== '\n') {
+                result += ' ';
+            }
+            continue;
+        }
+
+        // Regex literals (basic detection)
+        if (ch === '/' && isRegexContext(result)) {
+            result += ch;
+            i++;
+            while (i < len) {
+                var rc = code[i];
+                result += rc;
+                if (rc === '\\') {
+                    i++;
+                    if (i < len) result += code[i];
+                } else if (rc === '/') {
+                    i++;
+                    // Flags
+                    while (i < len && /[gimsuy]/.test(code[i])) {
+                        result += code[i];
+                        i++;
+                    }
+                    break;
+                }
+                i++;
+            }
+            prevNonSpace = '/';
+            continue;
+        }
+
+        // Whitespace
+        if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
+            // Collapse to single space if needed to prevent token merging
+            if (result.length > 0) {
+                var last = result[result.length - 1];
+                if (last !== ' ' && last !== '\n' && needsSpaceBetween(last, peekNextNonSpace(code, i + 1))) {
+                    result += ' ';
+                }
+            }
+            i++;
+            continue;
+        }
+
+        // Collapse multiple newlines after semicolons/braces - just add character
+        result += ch;
+        prevNonSpace = ch;
+        i++;
+    }
+
+    // Final cleanup: remove spaces around operators where safe
+    result = result.replace(/\s*([{}();,:<>+\-*\/=!&|?~^%])\s*/g, function(match, op) {
+        // Be careful not to break things like "return -1" or "typeof x"
+        return op;
+    });
+
+    // Restore spaces that are needed around keywords
+    var keywords = ['return', 'var', 'let', 'const', 'function', 'if', 'else', 'for', 'while', 'do',
+                     'switch', 'case', 'break', 'continue', 'new', 'delete', 'typeof', 'instanceof',
+                     'in', 'of', 'throw', 'try', 'catch', 'finally', 'class', 'extends', 'import',
+                     'export', 'default', 'from', 'async', 'await', 'yield', 'void'];
+
+    keywords.forEach(function(kw) {
+        // Keyword followed by alphanumeric needs space
+        var re = new RegExp('\\b' + kw + '([a-zA-Z0-9_$({\\["\\'`])', 'g');
+        result = result.replace(re, kw + ' $1');
+        // Alphanumeric followed by keyword needs space
+        var re2 = new RegExp('([a-zA-Z0-9_$})\\]"\\'`])' + kw + '\\b', 'g');
+        result = result.replace(re2, '$1 ' + kw);
+    });
+
+    return result.trim();
+}
+
+function isRegexContext(result) {
+    // Simple heuristic: regex can appear after these tokens
+    var trimmed = result.replace(/\s+$/, '');
+    if (trimmed.length === 0) return true;
+    var last = trimmed[trimmed.length - 1];
+    return '=([{,;!&|?:~^%+-*/<>'.indexOf(last) >= 0;
+}
+
+function peekNextNonSpace(code, start) {
+    for (var i = start; i < code.length; i++) {
+        if (code[i] !== ' ' && code[i] !== '\t' && code[i] !== '\n' && code[i] !== '\r') {
+            return code[i];
+        }
+    }
+    return '';
+}
+
+function needsSpaceBetween(a, b) {
+    if (!a || !b) return false;
+    var isAlphaA = /[a-zA-Z0-9_$]/.test(a);
+    var isAlphaB = /[a-zA-Z0-9_$]/.test(b);
+    return isAlphaA && isAlphaB;
+}
+
+// ========== JS Beautifier ==========
+function beautifyJS(code) {
+    // Basic JS beautifier: add newlines after { } ; and indent
+    var result = '';
+    var indent = 0;
+    var inString = false;
+    var stringChar = '';
+    var i = 0;
+    var len = code.length;
+
+    while (i < len) {
+        var ch = code[i];
+
+        // String handling
+        if (!inString && (ch === '"' || ch === "'" || ch === '`')) {
+            inString = true;
+            stringChar = ch;
+            result += ch;
+            i++;
+            continue;
+        }
+        if (inString) {
+            result += ch;
+            if (ch === '\\') { i++; if (i < len) result += code[i]; }
+            else if (ch === stringChar) inString = false;
+            i++;
+            continue;
+        }
+
+        // Comments - pass through
+        if (ch === '/' && i + 1 < len && code[i + 1] === '/') {
+            while (i < len && code[i] !== '\n') { result += code[i]; i++; }
+            result += '\n' + repeat('    ', indent);
+            if (i < len) i++; // skip \n
+            continue;
+        }
+        if (ch === '/' && i + 1 < len && code[i + 1] === '*') {
+            result += '/*';
+            i += 2;
+            while (i < len) {
+                if (code[i] === '*' && i + 1 < len && code[i + 1] === '/') {
+                    result += '*/';
+                    i += 2;
+                    break;
+                }
+                result += code[i];
+                i++;
+            }
+            continue;
+        }
+
+        if (ch === '{') {
+            result += ' {\n';
+            indent++;
+            result += repeat('    ', indent);
+            i++;
+        } else if (ch === '}') {
+            indent--;
+            if (indent < 0) indent = 0;
+            result = result.replace(/[ \t]+$/, '');
+            result += '\n' + repeat('    ', indent) + '}';
+            i++;
+            if (i < len && code[i] !== ';' && code[i] !== ',' && code[i] !== ')') {
+                result += '\n' + repeat('    ', indent);
+            }
+        } else if (ch === ';') {
+            result += ';\n' + repeat('    ', indent);
+            i++;
+        } else if (ch === ' ' || ch === '\t' || ch === '\n' || ch === '\r') {
+            // Collapse whitespace
+            if (result.length > 0 && result[result.length - 1] !== ' ' && result[result.length - 1] !== '\n') {
+                result += ' ';
+            }
+            i++;
+        } else {
+            result += ch;
+            i++;
+        }
+    }
+    return result.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+// ========== HTML Minifier ==========
+function minifyHTML(code) {
+    var result = code;
+    // Remove HTML comments (but not conditional comments)
+    result = result.replace(/<!--(?!\[if)[\s\S]*?-->/g, '');
+    // Collapse whitespace between tags
+    result = result.replace(/>\s+</g, '><');
+    // Collapse remaining whitespace runs to single space
+    result = result.replace(/\s{2,}/g, ' ');
+    // Remove whitespace around tags
+    result = result.replace(/^\s+/gm, '');
+    result = result.replace(/\s+$/gm, '');
+    // Final collapse of newlines
+    result = result.replace(/\n+/g, '');
+    return result.trim();
+}
+
+// ========== HTML Beautifier ==========
+function beautifyHTML(code) {
+    // Normalize first
+    var result = code.replace(/>\s+</g, '>\n<').replace(/(<[^\/][^>]*[^\/]>)(?=\S)/g, '$1\n');
+    var lines = result.split('\n');
+    var indent = 0;
+    var output = [];
+    var voidElements = ['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr'];
+
+    lines.forEach(function(line) {
+        line = line.trim();
+        if (!line) return;
+
+        // Check if line is a closing tag
+        var isClosing = /^<\//.test(line);
+        // Check if it's a self-closing or void element
+        var tagMatch = line.match(/^<\/?([a-zA-Z][a-zA-Z0-9]*)/);
+        var tagName = tagMatch ? tagMatch[1].toLowerCase() : '';
+        var isVoid = voidElements.indexOf(tagName) >= 0;
+        var isSelfClosing = /\/>$/.test(line);
+
+        if (isClosing) {
+            indent--;
+            if (indent < 0) indent = 0;
+        }
+
+        output.push(repeat('    ', indent) + line);
+
+        if (!isClosing && !isVoid && !isSelfClosing && /^<[a-zA-Z]/.test(line) && !/<\//.test(line)) {
+            indent++;
+        }
+    });
+
+    return output.join('\n');
+}
+
+// ========== Main actions ==========
+function doMinify() {
+    var raw = input.value;
+    if (!raw.trim()) { showMsg('Please enter some code first.', 'error'); return; }
+
+    var result = '';
+    try {
+        if (currentLang === 'css') result = minifyCSS(raw);
+        else if (currentLang === 'js') result = minifyJS(raw);
+        else if (currentLang === 'html') result = minifyHTML(raw);
+    } catch (e) {
+        showMsg('Error during minification: ' + e.message, 'error');
+        return;
+    }
+
+    lastOutput = result;
+    renderOutput(result);
+    showSizeComparison(raw, result);
+    showMsg('', '');
+    statusText.textContent = currentLang.toUpperCase() + ' minified successfully';
+}
+
+function doBeautify() {
+    var raw = input.value;
+    if (!raw.trim()) { showMsg('Please enter some code first.', 'error'); return; }
+
+    var result = '';
+    try {
+        if (currentLang === 'css') result = beautifyCSS(raw);
+        else if (currentLang === 'js') result = beautifyJS(raw);
+        else if (currentLang === 'html') result = beautifyHTML(raw);
+    } catch (e) {
+        showMsg('Error during beautification: ' + e.message, 'error');
+        return;
+    }
+
+    lastOutput = result;
+    renderOutput(result);
+    showSizeComparison(raw, result);
+    showMsg('', '');
+    statusText.textContent = currentLang.toUpperCase() + ' beautified successfully';
+}
+
+// ========== Render output ==========
+function renderOutput(code) {
+    outputCode.textContent = code;
+    var lines = code.split('\n').length;
+    var bytes = new Blob([code]).size;
+    outputStatsEl.textContent = lines + ' lines | ' + formatBytes(bytes);
+}
+
+// ========== Size comparison ==========
+function showSizeComparison(original, minified) {
+    var origBytes = new Blob([original]).size;
+    var minBytes = new Blob([minified]).size;
+    var saved = origBytes - minBytes;
+    var pct = origBytes > 0 ? ((saved / origBytes) * 100).toFixed(1) : 0;
+
+    document.getElementById('origSize').textContent = formatBytes(origBytes);
+    document.getElementById('minSize').textContent = formatBytes(minBytes);
+
+    var savedEl = document.getElementById('savedPct');
+    var savedBytesEl = document.getElementById('savedBytes');
+
+    if (saved > 0) {
+        savedEl.textContent = pct + '% saved';
+        savedEl.className = 'size-saved positive';
+        savedBytesEl.textContent = '(' + formatBytes(saved) + ' smaller)';
+    } else if (saved < 0) {
+        savedEl.textContent = Math.abs(pct) + '% larger';
+        savedEl.className = 'size-saved neutral';
+        savedBytesEl.textContent = '(' + formatBytes(Math.abs(saved)) + ' larger)';
+    } else {
+        savedEl.textContent = 'No change';
+        savedEl.className = 'size-saved neutral';
+        savedBytesEl.textContent = '';
+    }
+
+    document.getElementById('sizeBar').style.display = 'flex';
+}
+
+// ========== Messages ==========
+function showMsg(text, type) {
+    if (!text) { outputMsg.innerHTML = ''; return; }
+    outputMsg.innerHTML = '<div class="msg msg-' + type + '">' + escapeHtml(text) + '</div>';
+}
+
+function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// ========== Copy ==========
+function copyOutput() {
+    if (!lastOutput) { statusText.textContent = 'Nothing to copy'; return; }
+    navigator.clipboard.writeText(lastOutput).then(function() {
+        statusText.textContent = 'Copied to clipboard!';
+    }).catch(function() {
+        var ta = document.createElement('textarea');
+        ta.value = lastOutput;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        statusText.textContent = 'Copied to clipboard!';
+    });
+}
+
+// ========== Download ==========
+function downloadOutput() {
+    if (!lastOutput) { statusText.textContent = 'Nothing to download'; return; }
+    var ext = currentLang === 'js' ? '.min.js' : currentLang === 'css' ? '.min.css' : '.min.html';
+    var mimeType = currentLang === 'js' ? 'text/javascript' : currentLang === 'css' ? 'text/css' : 'text/html';
+    var blob = new Blob([lastOutput], { type: mimeType });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'output' + ext;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    statusText.textContent = 'Downloaded output' + ext;
+}
+
+// ========== Clear ==========
+function clearAll() {
+    input.value = '';
+    outputCode.textContent = '';
+    outputMsg.innerHTML = '';
+    lastOutput = '';
+    statusText.textContent = 'Ready';
+    statusRight.textContent = '';
+    inputStats.textContent = '';
+    outputStatsEl.textContent = '';
+    document.getElementById('sizeBar').style.display = 'none';
+}
+
+// ========== File upload ==========
+function handleFile(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    // Auto-detect language from extension
+    var ext = file.name.split('.').pop().toLowerCase();
+    if (ext === 'css') switchLang('css');
+    else if (ext === 'js') switchLang('js');
+    else if (ext === 'html' || ext === 'htm') switchLang('html');
+
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+        input.value = ev.target.result;
+        updateInputStats();
+        statusText.textContent = 'Loaded: ' + file.name;
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+}
+
+// ========== Drag & Drop ==========
+var dropOverlay = document.getElementById('dropOverlay');
+var dragCounter = 0;
+
+document.addEventListener('dragenter', function(e) {
+    e.preventDefault();
+    dragCounter++;
+    dropOverlay.classList.add('active');
+});
+document.addEventListener('dragleave', function(e) {
+    e.preventDefault();
+    dragCounter--;
+    if (dragCounter <= 0) { dropOverlay.classList.remove('active'); dragCounter = 0; }
+});
+document.addEventListener('dragover', function(e) { e.preventDefault(); });
+document.addEventListener('drop', function(e) {
+    e.preventDefault();
+    dragCounter = 0;
+    dropOverlay.classList.remove('active');
+    var file = e.dataTransfer.files[0];
+    if (file) {
+        var ext = file.name.split('.').pop().toLowerCase();
+        if (ext === 'css') switchLang('css');
+        else if (ext === 'js') switchLang('js');
+        else if (ext === 'html' || ext === 'htm') switchLang('html');
+
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            input.value = ev.target.result;
+            updateInputStats();
+            statusText.textContent = 'Loaded: ' + file.name;
+        };
+        reader.readAsText(file);
+    }
+});
+
+// ========== Keyboard shortcuts ==========
+document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'M' || e.key === 'm')) {
+        e.preventDefault();
+        doMinify();
+    }
+    if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'B' || e.key === 'b')) {
+        e.preventDefault();
+        doBeautify();
+    }
+});
+
+// ========== Panel resizer ==========
+(function() {
+    var divider = document.getElementById('divider');
+    var panels = document.getElementById('panels');
+    var dragging = false;
+
+    divider.addEventListener('mousedown', function(e) {
+        dragging = true;
+        document.body.style.cursor = 'col-resize';
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+    });
+    document.addEventListener('mousemove', function(e) {
+        if (!dragging) return;
+        var rect = panels.getBoundingClientRect();
+        var pct = ((e.clientX - rect.left) / rect.width) * 100;
+        if (pct > 20 && pct < 80) {
+            var children = panels.children;
+            children[0].style.flex = 'none';
+            children[0].style.width = pct + '%';
+            children[2].style.flex = 'none';
+            children[2].style.width = (100 - pct) + '%';
+        }
+    });
+    document.addEventListener('mouseup', function() {
+        if (dragging) {
+            dragging = false;
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        }
+    });
+})();
+</script>
+<script data-goatcounter="https://biztoolkit.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
