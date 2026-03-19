@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Rate Calculator - Calculate Lost Income from After-Hours Work | BizToolkit</title>
+    <meta name="description" content="Free calculator for freelancers to discover how much money they lose by not charging premium rates for after-hours work. Get your boundary-setting toolkit.">
+    <meta name="keywords" content="freelancer calculator, hourly rate calculator, after hours premium, freelancer boundaries, freelance pricing">
+    <meta name="author" content="BizToolkit">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://biztoolkit-free.pages.dev/freelancer_rate_calculator.html">
+    <meta name="google-site-verification" content="DN6FN1ibJtUJYedl6ATxhc_i_FCimAbPVXljx1_2JwA">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Freelancer Rate Calculator - Calculate Lost Income from After-Hours Work">
+    <meta property="og:description" content="Free calculator for freelancers to discover how much money they lose by not charging premium rates for after-hours work.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://biztoolkit-free.pages.dev/freelancer_rate_calculator.html">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Freelancer Rate Calculator - Calculate Lost Income">
+    <meta name="twitter:description" content="Free calculator for freelancers to discover how much money they lose by not charging premium rates for after-hours work.">
+    
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Freelancer Rate Calculator",
+        "description": "Free calculator for freelancers to discover how much money they lose by not charging premium rates for after-hours work",
+        "url": "https://biztoolkit-free.pages.dev/freelancer_rate_calculator.html",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "BizToolkit"
+        }
+    }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: #1a1a2e;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #4CAF50;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            color: #1a1a2e;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .calculator-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .calculate-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .calculate-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+            display: none;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .result-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .result-label {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .teaser-section {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .teaser-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .teaser-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+        
+        .cta-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+            display: inline-block;
+        }
+        
+        .features-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .calculator-card {
+                padding: 1.5rem;
+            }
+            
+            .teaser-section {
+                padding: 2rem 1rem;
+            }
+            
+            .teaser-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .calculator-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">BizToolkit</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profit_margin_calculator.html">Profit Calculator</a></li>
+                <li><a href="break_even_calculator.html">Break-Even Calculator</a></li>
+                <li><a href="roi_calculator.html">ROI Calculator</a></li>
+                <li><a href="freelancer_rate_calculator.html">Rate Calculator</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Freelancer Rate Calculator</h1>
+            <p>Discover how much money you're losing by not charging premium rates for after-hours work</p>
+        </div>
+
+        <div class="calculator-card">
+            <form id="rateCalculator">
+                <div class="form-group">
+                    <label for="hourlyRate">Your Current Hourly Rate ($)</label>
+                    <input type="number" id="hourlyRate" min="1" step="0.01" required placeholder="e.g., 75">
+                </div>
+
+                <div class="form-group">
+                    <label for="afterHoursWeekly">Hours Worked After 8 PM (per week)</label>
+                    <input type="number" id="afterHoursWeekly" min="0" step="0.5" required placeholder="e.g., 10">
+                </div>
+
+                <div class="form-group">
+                    <label for="skillType">Your Skill Type</label>
+                    <select id="skillType" required>
+                        <option value="">Select your primary skill</option>
+                        <option value="1.5">Web Development</option>
+                        <option value="1.75">Graphic Design</option>
+                        <option value="2.0">Copywriting</option>
+                        <option value="1.5">Digital Marketing</option>
+                        <option value="2.25">Video Editing</option>
+                        <option value="1.75">Consulting</option>
+                        <option value="1.5">Virtual Assistant</option>
+                        <option value="2.0">Content Writing</option>
+                        <option value="1.75">Social Media Management</option>
+                        <option value="1.5">Other</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="calculate-btn">Calculate My Lost Income</button>
+            </form>
+
+            <div id="results" class="results">
+                <div class="result-item">
+                    <div class="result-label">Weekly Lost Income:</div>
+                    <div class="result-value" id="weeklyLoss">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Monthly Lost Income:</div>
+                    <div class="result-value" id="monthlyLoss">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Annual Lost Income:</div>
+                    <div class="result-value" id="annualLoss">$0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Recommended After-Hours Rate:</div>
+                    <div class="result-value" id="premiumRate">$0/hour</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="teaser-section">
+            <h2>Stop Leaving Money on the Table</h2>
+            <p>The numbers don't lie. You're losing thousands of dollars every year by not setting proper boundaries and premium rates for after-hours work.</p>
+            
+            <ul class="features-list">
+                <li>Email templates for setting boundaries with clients</li>
+                <li>Rate negotiation scripts that actually work</li>
+                <li>Time-blocking strategies for work-life balance</li>
+                <li>Client onboarding system to prevent scope creep</li>
+                <li>Premium rate calculator with industry benchmarks</li>
+                <li>Boundary-setting contract clauses</li>
+            </ul>
+            
+            <p>Get the complete Freelancer Boundary-Setting Toolkit and start charging what you're worth.</p>
+            <a href="#" class="cta-btn">Get Your Boundary Toolkit ($47)</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('rateCalculator').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const hourlyRate = parseFloat(document.getElementById('hourlyRate').value);
+            const afterHoursWeekly = parseFloat(document.getElementById('afterHoursWeekly').value);
+            const skillMultiplier = parseFloat(document.getElementById('skillType').value);
+            
+            if (!hourlyRate || !afterHoursWeekly || !skillMultiplier) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Calculate premium rate (base rate * skill multiplier)
+            const premiumRate = hourlyRate * skillMultiplier;
+            const currentWeeklyEarnings = hourlyRate * afterHoursWeekly;
+            const potentialWeeklyEarnings = premiumRate * afterHoursWeekly;
+            
+            // Calculate losses
+            const weeklyLoss = potentialWeeklyEarnings - currentWeeklyEarnings;
+            const monthlyLoss = weeklyLoss * 4.33; // Average weeks per month
+            const annualLoss = weeklyLoss * 52;
+            
+            // Display results
+            document.getElementById('weeklyLoss').textContent = `$${weeklyLoss.toFixed(2)}`;
+            document.getElementById('monthlyLoss').textContent = `$${monthlyLoss.toFixed(2)}`;
+            document.getElementById('annualLoss').textContent = `$${annualLoss.toFixed(2)}`;
+            document.getElementById('premiumRate').textContent = `$${premiumRate.toFixed(2)}/hour`;
+            
+            document.getElementById('results').classList.add('show');
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'nearest'
+            });
+        });
+    </script>
+
+    <script data-goatcounter="https://bztk.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
